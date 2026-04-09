@@ -1,72 +1,3 @@
-<?php
-$oceanos = [
-    [
-        "nombre" => "Océano Pacífico",
-        "area" => "165.25",
-        "profundidad" => "4,280",
-        "max_profundidad" => "10,994",
-        "fosa" => "Fosa de las Marianas",
-        "paises" => "55",
-        "emoji" => "🌊",
-        "color" => "#0077b6",
-        "dato" => "El más grande del mundo, cubre más de un tercio de la superficie terrestre.",
-        "fauna" => ["Ballena azul", "Tiburón blanco", "Mantarraya gigante", "Pulpo gigante del Pacífico"],
-        "curiosidad" => "Contiene más de 25,000 islas, más que todos los demás océanos juntos."
-    ],
-    [
-        "nombre" => "Océano Atlántico",
-        "area" => "106.46",
-        "profundidad" => "3,332",
-        "max_profundidad" => "8,376",
-        "fosa" => "Fosa de Puerto Rico",
-        "paises" => "41",
-        "emoji" => "🫧",
-        "color" => "#023e8a",
-        "dato" => "Separa América de Europa y África, fue la primera ruta de navegación transatlántica.",
-        "fauna" => ["Delfín nariz de botella", "Ballena jorobada", "Atún rojo", "Tortuga laúd"],
-        "curiosidad" => "El Atlántico se ensancha aproximadamente 2.5 cm cada año debido a la tectónica de placas."
-    ],
-    [
-        "nombre" => "Océano Índico",
-        "area" => "70.56",
-        "profundidad" => "3,897",
-        "max_profundidad" => "7,187",
-        "fosa" => "Fosa de Java",
-        "paises" => "37",
-        "emoji" => "🐋",
-        "color" => "#0096c7",
-        "dato" => "El más cálido del mundo y el único con corrientes estacionales que se invierten.",
-        "fauna" => ["Dugongo", "Pez vela", "Tortuga verde", "Tiburón ballena"],
-        "curiosidad" => "Alberga el 40% de la pesca de alta mar del mundo, vital para millones de personas."
-    ],
-    [
-        "nombre" => "Océano Antártico",
-        "area" => "21.96",
-        "profundidad" => "3,270",
-        "max_profundidad" => "7,235",
-        "fosa" => "Fosa de las Sandwich del Sur",
-        "paises" => "0",
-        "emoji" => "🧊",
-        "color" => "#48cae4",
-        "dato" => "Reconocido oficialmente en 2000, rodea completamente el continente antártico.",
-        "fauna" => ["Pingüino emperador", "Foca leopardo", "Krill antártico", "Orca"],
-        "curiosidad" => "Sus aguas son las más productivas del planeta en fitoplancton, base de toda la cadena alimentaria marina."
-    ],
-    [
-        "nombre" => "Océano Ártico",
-        "area" => "14.06",
-        "profundidad" => "1,205",
-        "max_profundidad" => "5,502",
-        "fosa" => "Cuenca del Ártico",
-        "paises" => "8",
-        "emoji" => "❄️",
-        "color" => "#90e0ef",
-        "dato" => "El más pequeño y superficial, cubierto de hielo la mayor parte del año.",
-        "fauna" => ["Oso polar", "Narval", "Morsa", "Beluga"],
-        "curiosidad" => "El hielo ártico marino ha disminuido más del 40% en las últimas décadas por el cambio climático."
-    ]
-];
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -96,7 +27,6 @@ $oceanos = [
             overflow-x: hidden;
         }
 
-        /* Animated ocean background */
         body::before {
             content: '';
             position: fixed;
@@ -109,7 +39,6 @@ $oceanos = [
             z-index: 0;
         }
 
-        /* Bubbles */
         .bubbles {
             position: fixed;
             inset: 0;
@@ -128,9 +57,9 @@ $oceanos = [
         }
 
         @keyframes rise {
-            0% { transform: translateY(0) scale(1); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 0.5; }
+            0%   { transform: translateY(0) scale(1); opacity: 0; }
+            10%  { opacity: 1; }
+            90%  { opacity: 0.5; }
             100% { transform: translateY(-110vh) scale(1.2); opacity: 0; }
         }
 
@@ -192,9 +121,7 @@ $oceanos = [
             animation: fadeUp 0.8s ease 0.8s forwards;
         }
 
-        .stat-item {
-            text-align: center;
-        }
+        .stat-item { text-align: center; }
 
         .stat-num {
             font-family: 'Playfair Display', serif;
@@ -304,8 +231,7 @@ $oceanos = [
         .card-glow {
             position: absolute;
             top: -100px; right: -100px;
-            width: 300px;
-            height: 300px;
+            width: 300px; height: 300px;
             border-radius: 50%;
             opacity: 0;
             transition: opacity 0.4s ease;
@@ -314,9 +240,7 @@ $oceanos = [
 
         .ocean-card:hover .card-glow { opacity: 0.08; }
 
-        .card-inner {
-            padding: 48px;
-        }
+        .card-inner { padding: 48px; }
 
         .card-header {
             display: flex;
@@ -357,7 +281,6 @@ $oceanos = [
             line-height: 1.5;
         }
 
-        /* Stats grid */
         .card-stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -396,7 +319,6 @@ $oceanos = [
             margin-top: 8px;
         }
 
-        /* Bottom row */
         .card-bottom {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -516,12 +438,11 @@ $oceanos = [
 </head>
 <body>
 
-<!-- Bubbles -->
 <div class="bubbles" id="bubbles"></div>
 
 <!-- Hero -->
 <section class="hero">
-    <p class="hero-label">Exploración Marina · <?= date('Y') ?></p>
+    <p class="hero-label">Exploración Marina · 2026</p>
     <h1>
         Los Océanos
         <span>del Mundo</span>
@@ -557,82 +478,266 @@ $oceanos = [
     Explorar
 </div>
 
-<!-- Cards -->
 <div class="section-title">
     <h2>Los Cinco Océanos</h2>
     <p>Datos, fauna y curiosidades de cada cuerpo oceánico</p>
 </div>
 
 <div class="cards-container">
-    <?php foreach ($oceanos as $i => $ocean): ?>
-    <div class="ocean-card card-reveal" style="transition-delay: <?= $i * 0.1 ?>s">
 
-        <!-- Top accent bar -->
-        <div class="card-accent" style="background: linear-gradient(90deg, <?= $ocean['color'] ?>, transparent)"></div>
-
-        <!-- Glow orb -->
-        <div class="card-glow" style="background: radial-gradient(circle, <?= $ocean['color'] ?>, transparent)"></div>
-
+    <!-- 01 · Océano Pacífico -->
+    <div class="ocean-card card-reveal" style="transition-delay:0s">
+        <div class="card-accent" style="background:linear-gradient(90deg,#0077b6,transparent)"></div>
+        <div class="card-glow" style="background:radial-gradient(circle,#0077b6,transparent)"></div>
         <div class="card-inner">
-
-            <!-- Header -->
             <div class="card-header">
-                <div class="card-emoji"><?= $ocean['emoji'] ?></div>
+                <div class="card-emoji">🌊</div>
                 <div class="card-title-block">
-                    <div class="card-number">Océano <?= str_pad($i + 1, 2, '0', STR_PAD_LEFT) ?></div>
-                    <h2 class="card-name"><?= $ocean['nombre'] ?></h2>
-                    <p class="card-dato"><?= $ocean['dato'] ?></p>
+                    <div class="card-number">Océano 01</div>
+                    <h2 class="card-name">Océano Pacífico</h2>
+                    <p class="card-dato">El más grande del mundo, cubre más de un tercio de la superficie terrestre.</p>
                 </div>
             </div>
-
-            <!-- Stats -->
             <div class="card-stats">
                 <div class="stat-box">
-                    <div class="stat-box-val"><?= $ocean['area'] ?><span class="stat-box-unit">M km²</span></div>
+                    <div class="stat-box-val">165.25<span class="stat-box-unit">M km²</span></div>
                     <div class="stat-box-label">Área total</div>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-box-val"><?= $ocean['profundidad'] ?><span class="stat-box-unit">m</span></div>
+                    <div class="stat-box-val">4,280<span class="stat-box-unit">m</span></div>
                     <div class="stat-box-label">Profundidad media</div>
                 </div>
                 <div class="stat-box">
-                    <div class="stat-box-val"><?= $ocean['max_profundidad'] ?><span class="stat-box-unit">m</span></div>
+                    <div class="stat-box-val">10,994<span class="stat-box-unit">m</span></div>
                     <div class="stat-box-label">Profundidad máxima</div>
                 </div>
-                <?php if ($ocean['paises'] > 0): ?>
                 <div class="stat-box">
-                    <div class="stat-box-val"><?= $ocean['paises'] ?></div>
+                    <div class="stat-box-val">55</div>
                     <div class="stat-box-label">Países costeros</div>
                 </div>
-                <?php endif; ?>
             </div>
-
-            <!-- Bottom -->
             <div class="card-bottom">
                 <div class="fauna-block">
                     <div class="block-label">🐠 Fauna representativa</div>
                     <ul class="fauna-list">
-                        <?php foreach ($ocean['fauna'] as $animal): ?>
-                        <li><?= $animal ?></li>
-                        <?php endforeach; ?>
+                        <li>Ballena azul</li>
+                        <li>Tiburón blanco</li>
+                        <li>Mantarraya gigante</li>
+                        <li>Pulpo gigante del Pacífico</li>
                     </ul>
                 </div>
                 <div class="curiosidad-block">
                     <div class="block-label">💡 Curiosidad</div>
-                    <p class="curiosidad-text"><?= $ocean['curiosidad'] ?></p>
-                    <span class="fosa-tag">📍 <?= $ocean['fosa'] ?></span>
+                    <p class="curiosidad-text">Contiene más de 25,000 islas, más que todos los demás océanos juntos.</p>
+                    <span class="fosa-tag">📍 Fosa de las Marianas</span>
                 </div>
             </div>
-
         </div>
     </div>
-    <?php endforeach; ?>
+
+    <!-- 02 · Océano Atlántico -->
+    <div class="ocean-card card-reveal" style="transition-delay:0.1s">
+        <div class="card-accent" style="background:linear-gradient(90deg,#023e8a,transparent)"></div>
+        <div class="card-glow" style="background:radial-gradient(circle,#023e8a,transparent)"></div>
+        <div class="card-inner">
+            <div class="card-header">
+                <div class="card-emoji">🫧</div>
+                <div class="card-title-block">
+                    <div class="card-number">Océano 02</div>
+                    <h2 class="card-name">Océano Atlántico</h2>
+                    <p class="card-dato">Separa América de Europa y África, fue la primera ruta de navegación transatlántica.</p>
+                </div>
+            </div>
+            <div class="card-stats">
+                <div class="stat-box">
+                    <div class="stat-box-val">106.46<span class="stat-box-unit">M km²</span></div>
+                    <div class="stat-box-label">Área total</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-val">3,332<span class="stat-box-unit">m</span></div>
+                    <div class="stat-box-label">Profundidad media</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-val">8,376<span class="stat-box-unit">m</span></div>
+                    <div class="stat-box-label">Profundidad máxima</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-val">41</div>
+                    <div class="stat-box-label">Países costeros</div>
+                </div>
+            </div>
+            <div class="card-bottom">
+                <div class="fauna-block">
+                    <div class="block-label">🐠 Fauna representativa</div>
+                    <ul class="fauna-list">
+                        <li>Delfín nariz de botella</li>
+                        <li>Ballena jorobada</li>
+                        <li>Atún rojo</li>
+                        <li>Tortuga laúd</li>
+                    </ul>
+                </div>
+                <div class="curiosidad-block">
+                    <div class="block-label">💡 Curiosidad</div>
+                    <p class="curiosidad-text">El Atlántico se ensancha aproximadamente 2.5 cm cada año debido a la tectónica de placas.</p>
+                    <span class="fosa-tag">📍 Fosa de Puerto Rico</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 03 · Océano Índico -->
+    <div class="ocean-card card-reveal" style="transition-delay:0.2s">
+        <div class="card-accent" style="background:linear-gradient(90deg,#0096c7,transparent)"></div>
+        <div class="card-glow" style="background:radial-gradient(circle,#0096c7,transparent)"></div>
+        <div class="card-inner">
+            <div class="card-header">
+                <div class="card-emoji">🐋</div>
+                <div class="card-title-block">
+                    <div class="card-number">Océano 03</div>
+                    <h2 class="card-name">Océano Índico</h2>
+                    <p class="card-dato">El más cálido del mundo y el único con corrientes estacionales que se invierten.</p>
+                </div>
+            </div>
+            <div class="card-stats">
+                <div class="stat-box">
+                    <div class="stat-box-val">70.56<span class="stat-box-unit">M km²</span></div>
+                    <div class="stat-box-label">Área total</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-val">3,897<span class="stat-box-unit">m</span></div>
+                    <div class="stat-box-label">Profundidad media</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-val">7,187<span class="stat-box-unit">m</span></div>
+                    <div class="stat-box-label">Profundidad máxima</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-val">37</div>
+                    <div class="stat-box-label">Países costeros</div>
+                </div>
+            </div>
+            <div class="card-bottom">
+                <div class="fauna-block">
+                    <div class="block-label">🐠 Fauna representativa</div>
+                    <ul class="fauna-list">
+                        <li>Dugongo</li>
+                        <li>Pez vela</li>
+                        <li>Tortuga verde</li>
+                        <li>Tiburón ballena</li>
+                    </ul>
+                </div>
+                <div class="curiosidad-block">
+                    <div class="block-label">💡 Curiosidad</div>
+                    <p class="curiosidad-text">Alberga el 40% de la pesca de alta mar del mundo, vital para millones de personas.</p>
+                    <span class="fosa-tag">📍 Fosa de Java</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 04 · Océano Antártico -->
+    <div class="ocean-card card-reveal" style="transition-delay:0.3s">
+        <div class="card-accent" style="background:linear-gradient(90deg,#48cae4,transparent)"></div>
+        <div class="card-glow" style="background:radial-gradient(circle,#48cae4,transparent)"></div>
+        <div class="card-inner">
+            <div class="card-header">
+                <div class="card-emoji">🧊</div>
+                <div class="card-title-block">
+                    <div class="card-number">Océano 04</div>
+                    <h2 class="card-name">Océano Antártico</h2>
+                    <p class="card-dato">Reconocido oficialmente en 2000, rodea completamente el continente antártico.</p>
+                </div>
+            </div>
+            <div class="card-stats">
+                <div class="stat-box">
+                    <div class="stat-box-val">21.96<span class="stat-box-unit">M km²</span></div>
+                    <div class="stat-box-label">Área total</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-val">3,270<span class="stat-box-unit">m</span></div>
+                    <div class="stat-box-label">Profundidad media</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-val">7,235<span class="stat-box-unit">m</span></div>
+                    <div class="stat-box-label">Profundidad máxima</div>
+                </div>
+                <!-- Sin países costeros, no se muestra el stat-box -->
+            </div>
+            <div class="card-bottom">
+                <div class="fauna-block">
+                    <div class="block-label">🐠 Fauna representativa</div>
+                    <ul class="fauna-list">
+                        <li>Pingüino emperador</li>
+                        <li>Foca leopardo</li>
+                        <li>Krill antártico</li>
+                        <li>Orca</li>
+                    </ul>
+                </div>
+                <div class="curiosidad-block">
+                    <div class="block-label">💡 Curiosidad</div>
+                    <p class="curiosidad-text">Sus aguas son las más productivas del planeta en fitoplancton, base de toda la cadena alimentaria marina.</p>
+                    <span class="fosa-tag">📍 Fosa de las Sandwich del Sur</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 05 · Océano Ártico -->
+    <div class="ocean-card card-reveal" style="transition-delay:0.4s">
+        <div class="card-accent" style="background:linear-gradient(90deg,#90e0ef,transparent)"></div>
+        <div class="card-glow" style="background:radial-gradient(circle,#90e0ef,transparent)"></div>
+        <div class="card-inner">
+            <div class="card-header">
+                <div class="card-emoji">❄️</div>
+                <div class="card-title-block">
+                    <div class="card-number">Océano 05</div>
+                    <h2 class="card-name">Océano Ártico</h2>
+                    <p class="card-dato">El más pequeño y superficial, cubierto de hielo la mayor parte del año.</p>
+                </div>
+            </div>
+            <div class="card-stats">
+                <div class="stat-box">
+                    <div class="stat-box-val">14.06<span class="stat-box-unit">M km²</span></div>
+                    <div class="stat-box-label">Área total</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-val">1,205<span class="stat-box-unit">m</span></div>
+                    <div class="stat-box-label">Profundidad media</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-val">5,502<span class="stat-box-unit">m</span></div>
+                    <div class="stat-box-label">Profundidad máxima</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-box-val">8</div>
+                    <div class="stat-box-label">Países costeros</div>
+                </div>
+            </div>
+            <div class="card-bottom">
+                <div class="fauna-block">
+                    <div class="block-label">🐠 Fauna representativa</div>
+                    <ul class="fauna-list">
+                        <li>Oso polar</li>
+                        <li>Narval</li>
+                        <li>Morsa</li>
+                        <li>Beluga</li>
+                    </ul>
+                </div>
+                <div class="curiosidad-block">
+                    <div class="block-label">💡 Curiosidad</div>
+                    <p class="curiosidad-text">El hielo ártico marino ha disminuido más del 40% en las últimas décadas por el cambio climático.</p>
+                    <span class="fosa-tag">📍 Cuenca del Ártico</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <!-- Footer -->
 <footer>
     <p class="footer-title">Los Océanos del Mundo</p>
-    <p>Generado con PHP · <?= date('d/m/Y') ?> · Datos basados en fuentes oceanográficas internacionales</p>
+    <p>Datos basados en fuentes oceanográficas internacionales · 2026</p>
 </footer>
 
 <script>

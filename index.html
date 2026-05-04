@@ -1,172 +1,400 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Servidor Web</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0d0d0d;
-            --surface: #141414;
-            --border: rgba(255,255,255,0.07);
-            --text: #f0ede8;
-            --muted: #6b6b6b;
-            --accent-skin: #0d7fc1;
-            --accent-ocean: #00b4d8;
-            --accent-blog: #c8a96e;
-            --white: #ffffff;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html, body { height: 100%; }
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: 'Outfit', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow-x: hidden;
-        }
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-            background-size: 150px;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.6;
-        }
-        .ambient { position: fixed; border-radius: 50%; filter: blur(100px); pointer-events: none; z-index: 0; }
-        .ambient-1 { width:500px;height:500px;top:-150px;left:-150px;background:rgba(0,180,216,0.04); }
-        .ambient-2 { width:400px;height:400px;bottom:-100px;right:-100px;background:rgba(200,169,110,0.04); }
-        .ambient-3 { width:350px;height:350px;top:40%;left:40%;background:rgba(13,127,193,0.03); }
-        main {
-            position: relative; z-index: 1; flex: 1;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            padding: 60px 24px; gap: 70px;
-        }
-        .header { text-align: center; animation: fadeUp 0.9s ease both; }
-        .header-eyebrow { font-size:0.65rem;letter-spacing:0.35em;text-transform:uppercase;color:var(--muted);margin-bottom:20px; }
-        .header h1 {
-            font-family:'Cormorant Garamond',serif;
-            font-size:clamp(2.8rem,6vw,5.5rem);
-            font-weight:300;line-height:1;letter-spacing:-0.01em;color:var(--white);
-        }
-        .header h1 em { font-style:italic;font-weight:600; }
-        .header-sub { margin-top:20px;font-size:0.9rem;font-weight:300;color:var(--muted);letter-spacing:0.03em; }
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px; width: 100%; max-width: 1100px;
-        }
-        .card {
-            position:relative;background:var(--surface);border:1px solid var(--border);
-            border-radius:20px;padding:44px 36px;text-decoration:none;color:inherit;
-            overflow:hidden;
-            transition:transform 0.35s cubic-bezier(0.4,0,0.2,1),border-color 0.35s ease,box-shadow 0.35s ease;
-            animation:fadeUp 0.9s ease both;
-        }
-        .card:nth-child(1){animation-delay:0.1s}
-        .card:nth-child(2){animation-delay:0.22s}
-        .card:nth-child(3){animation-delay:0.34s}
-        .card:hover{transform:translateY(-8px)}
-        .card.skin:hover  {border-color:rgba(13,127,193,0.45);box-shadow:0 40px 80px rgba(0,0,0,0.4),0 0 60px rgba(13,127,193,0.07)}
-        .card.ocean:hover {border-color:rgba(0,180,216,0.45);box-shadow:0 40px 80px rgba(0,0,0,0.4),0 0 60px rgba(0,180,216,0.07)}
-        .card.blog:hover  {border-color:rgba(200,169,110,0.45);box-shadow:0 40px 80px rgba(0,0,0,0.4),0 0 60px rgba(200,169,110,0.07)}
-        .card::before {
-            content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity 0.35s ease;
-        }
-        .card.skin::before  {background:linear-gradient(90deg,var(--accent-skin),transparent)}
-        .card.ocean::before {background:linear-gradient(90deg,var(--accent-ocean),transparent)}
-        .card.blog::before  {background:linear-gradient(90deg,var(--accent-blog),transparent)}
-        .card:hover::before{opacity:1}
-        .card::after {
-            content:'';position:absolute;top:-80px;right:-80px;width:200px;height:200px;
-            border-radius:50%;opacity:0;transition:opacity 0.5s ease;pointer-events:none;
-        }
-        .card.skin::after  {background:radial-gradient(circle,var(--accent-skin),transparent 70%)}
-        .card.ocean::after {background:radial-gradient(circle,var(--accent-ocean),transparent 70%)}
-        .card.blog::after  {background:radial-gradient(circle,var(--accent-blog),transparent 70%)}
-        .card:hover::after{opacity:0.07}
-        .card-icon{font-size:2.4rem;margin-bottom:28px;display:block;line-height:1;transition:transform 0.35s ease}
-        .card:hover .card-icon{transform:scale(1.1)}
-        .card-tag{font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;margin-bottom:12px;font-weight:500}
-        .card.skin .card-tag  {color:var(--accent-skin)}
-        .card.ocean .card-tag {color:var(--accent-ocean)}
-        .card.blog .card-tag  {color:var(--accent-blog)}
-        .card h2{font-family:'Cormorant Garamond',serif;font-size:1.75rem;font-weight:600;line-height:1.1;color:var(--white);margin-bottom:14px}
-        .card p{font-size:0.85rem;font-weight:300;color:var(--muted);line-height:1.65}
-        .card-arrow{display:inline-flex;align-items:center;gap:8px;margin-top:28px;font-size:0.75rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;transition:gap 0.3s ease}
-        .card.skin .card-arrow  {color:var(--accent-skin)}
-        .card.ocean .card-arrow {color:var(--accent-ocean)}
-        .card.blog .card-arrow  {color:var(--accent-blog)}
-        .card:hover .card-arrow{gap:14px}
-        .card-arrow svg{width:14px;height:14px;transition:transform 0.3s ease}
-        .card:hover .card-arrow svg{transform:translateX(4px)}
-        footer{position:relative;z-index:1;text-align:center;padding:28px;border-top:1px solid var(--border)}
-        footer p{font-size:0.72rem;color:var(--muted);letter-spacing:0.08em}
-        @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
-        @media(max-width:900px){.cards{grid-template-columns:1fr 1fr}.card:nth-child(3){grid-column:1/-1}}
-        @media(max-width:560px){.cards{grid-template-columns:1fr}.card:nth-child(3){grid-column:auto}.card{padding:36px 28px}main{gap:50px}}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Servidor Web</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080c10;
+  --surface: #0e1318;
+  --surface2: #131920;
+  --border: rgba(255,255,255,0.06);
+  --border-hover: rgba(255,255,255,0.14);
+  --text: #e8e2d9;
+  --muted: #52596a;
+  --muted2: #7a8494;
+  --skin: #3b9fd4;
+  --skin-glow: rgba(59,159,212,0.12);
+  --ocean: #00c4e0;
+  --ocean-glow: rgba(0,196,224,0.12);
+  --blog: #d4a96e;
+  --blog-glow: rgba(212,169,110,0.12);
+  --white: #ffffff;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Grid pattern bg */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+  background-size: 48px 48px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Radial vignette over grid */
+.bg-vignette {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 70% at 50% 50%, transparent 30%, var(--bg) 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Ambient light blobs */
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  animation: drift 18s ease-in-out infinite;
+}
+.blob-1 { width:600px;height:400px;top:-100px;left:-200px;background:rgba(0,196,224,0.035);animation-delay:0s; }
+.blob-2 { width:500px;height:500px;bottom:-150px;right:-100px;background:rgba(212,169,110,0.04);animation-delay:-6s; }
+.blob-3 { width:400px;height:300px;top:35%;left:35%;background:rgba(59,159,212,0.03);animation-delay:-12s; }
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(30px, -20px); }
+  66% { transform: translate(-20px, 30px); }
+}
+
+main {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 28px 60px;
+  gap: 80px;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  animation: fadeUp 1s cubic-bezier(0.16,1,0.3,1) both;
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.62rem;
+  letter-spacing: 0.38em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+.eyebrow-dot {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--ocean);
+  opacity: 0.7;
+  animation: pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity:0.4; transform:scale(1); }
+  50% { opacity:1; transform:scale(1.4); }
+}
+.header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 7vw, 6rem);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--white);
+}
+.header h1 em {
+  font-style: italic;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--ocean) 0%, var(--skin) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.header-line {
+  width: 40px; height: 1px;
+  background: linear-gradient(90deg, var(--ocean), transparent);
+  margin: 28px auto 20px;
+}
+.header-sub {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: var(--muted2);
+  letter-spacing: 0.04em;
+}
+
+/* Cards grid */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  width: 100%;
+  max-width: 1080px;
+}
+
+.card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 44px 36px 40px;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.4s ease, box-shadow 0.4s ease;
+  animation: fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) both;
+}
+.card:nth-child(1){ animation-delay: 0.1s }
+.card:nth-child(2){ animation-delay: 0.2s }
+.card:nth-child(3){ animation-delay: 0.3s }
+
+/* Inset glow top edge on hover */
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.skin::before  { background: radial-gradient(ellipse 80% 40% at 50% 0%, var(--skin-glow), transparent); }
+.ocean::before { background: radial-gradient(ellipse 80% 40% at 50% 0%, var(--ocean-glow), transparent); }
+.blog::before  { background: radial-gradient(ellipse 80% 40% at 50% 0%, var(--blog-glow), transparent); }
+.card:hover::before { opacity: 1; }
+
+/* Top accent line */
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), opacity 0.4s ease;
+  opacity: 0;
+}
+.skin::after  { background: linear-gradient(90deg, var(--skin), transparent 80%); }
+.ocean::after { background: linear-gradient(90deg, var(--ocean), transparent 80%); }
+.blog::after  { background: linear-gradient(90deg, var(--blog), transparent 80%); }
+.card:hover::after { transform: scaleX(1); opacity: 1; }
+
+.card:hover { transform: translateY(-9px); }
+.skin:hover  { border-color: rgba(59,159,212,0.35);  box-shadow: 0 32px 72px rgba(0,0,0,0.5), 0 0 0 1px rgba(59,159,212,0.08); }
+.ocean:hover { border-color: rgba(0,196,224,0.35);   box-shadow: 0 32px 72px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,196,224,0.08); }
+.blog:hover  { border-color: rgba(212,169,110,0.35); box-shadow: 0 32px 72px rgba(0,0,0,0.5), 0 0 0 1px rgba(212,169,110,0.08); }
+
+/* Icon container */
+.card-icon-wrap {
+  width: 48px; height: 48px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 28px;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  font-size: 20px;
+}
+.skin  .card-icon-wrap { background: rgba(59,159,212,0.1);  border: 1px solid rgba(59,159,212,0.2); }
+.ocean .card-icon-wrap { background: rgba(0,196,224,0.1);   border: 1px solid rgba(0,196,224,0.2); }
+.blog  .card-icon-wrap { background: rgba(212,169,110,0.1); border: 1px solid rgba(212,169,110,0.2); }
+.card:hover .card-icon-wrap { transform: scale(1.1) rotate(-4deg); }
+
+.card-tag {
+  font-size: 0.58rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.skin  .card-tag { color: var(--skin); }
+.ocean .card-tag { color: var(--ocean); }
+.blog  .card-tag { color: var(--blog); }
+
+.card h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.65rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+.card p {
+  font-size: 0.83rem;
+  font-weight: 300;
+  color: var(--muted2);
+  line-height: 1.7;
+}
+
+.card-footer {
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: gap 0.3s ease;
+}
+.skin  .card-arrow { color: var(--skin); }
+.ocean .card-arrow { color: var(--ocean); }
+.blog  .card-arrow { color: var(--blog); }
+.card:hover .card-arrow { gap: 14px; }
+
+.arrow-icon {
+  width: 14px; height: 14px;
+  transition: transform 0.3s ease;
+}
+.card:hover .arrow-icon { transform: translateX(3px); }
+
+/* Decorative number */
+.card-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1;
+  opacity: 0.04;
+  position: absolute;
+  bottom: 20px;
+  right: 28px;
+  pointer-events: none;
+  color: var(--white);
+  transition: opacity 0.4s ease;
+}
+.card:hover .card-num { opacity: 0.07; }
+
+/* Footer */
+footer {
+  position: relative;
+  z-index: 1;
+  padding: 24px 28px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+.footer-dot { width:3px;height:3px;border-radius:50%;background:var(--muted);opacity:0.5; }
+footer p {
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+}
+
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(32px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+@media (max-width:880px) {
+  .cards { grid-template-columns: 1fr 1fr; }
+  .card:nth-child(3) { grid-column: 1 / -1; }
+}
+@media (max-width:540px) {
+  .cards { grid-template-columns: 1fr; }
+  .card:nth-child(3) { grid-column: auto; }
+  .card { padding: 34px 26px 30px; }
+  main { padding: 60px 20px 40px; gap: 56px; }
+}
+</style>
 </head>
 <body>
 
-<div class="ambient ambient-1"></div>
-<div class="ambient ambient-2"></div>
-<div class="ambient ambient-3"></div>
+<div class="bg-grid"></div>
+<div class="bg-vignette"></div>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
 
 <main>
-    <header class="header">
-        <p class="header-eyebrow">Codigo fuente hecho por claude IA · Server</p>
-        <h1>Mi <em>Servidor</em> Web</h1>
-        <p class="header-sub">Selecciona una sección para continuar</p>
-    </header>
-
-    <div class="cards">
-
-        <a href="/Skin.html" class="card skin">
-            <span class="card-icon">✨</span>
-            <div class="card-tag">Sitio Web</div>
-            <h2>+SKIN</h2>
-            <p>Tienda de skincare premium. Productos naturales para nourish y rejuvenecer tu piel.</p>
-            <div class="card-arrow">
-                Visitar
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </div>
-        </a>
-
-        <a href="/test.html" class="card ocean">
-            <span class="card-icon">🌊</span>
-            <div class="card-tag">Página Web</div>
-            <h2>Los Océanos del Mundo</h2>
-            <p>Información detallada sobre los cinco océanos: datos, fauna y curiosidades.</p>
-            <div class="card-arrow">
-                Visitar
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </div>
-        </a>
-
-        <a href="/blog" class="card blog">
-            <span class="card-icon">✍️</span>
-            <div class="card-tag">WordPress</div>
-            <h2>Blog</h2>
-            <p>Accede al sitio WordPress para gestionar contenido y publicar artículos.</p>
-            <div class="card-arrow">
-                Ir al blog
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </div>
-        </a>
-
+  <header class="header">
+    <div class="eyebrow">
+      <span class="eyebrow-dot"></span>
+      Código Estructural · Server
+      <span class="eyebrow-dot"></span>
     </div>
+    <h1>Mi <em>Servidor</em><br>Web</h1>
+    <div class="header-line"></div>
+    <p class="header-sub">Servidor Web de Ezequiel Jimenez &mdash; 2026</p>
+  </header>
+
+  <div class="cards">
+
+    <a href="/Skin.html" class="card skin">
+      <div class="card-icon-wrap">✨</div>
+      <div class="card-tag">Sitio Web</div>
+      <h2>+SKIN</h2>
+      <p>Tienda de skincare premium. Productos naturales para nutrir y rejuvenecer tu piel.</p>
+      <div class="card-footer">
+        <div class="card-arrow">
+          Visitar
+          <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+      <span class="card-num">01</span>
+    </a>
+
+    <a href="/test.php" class="card ocean">
+      <div class="card-icon-wrap">🌊</div>
+      <div class="card-tag">Página PHP</div>
+      <h2>Los Océanos del Mundo</h2>
+      <p>Información detallada sobre los cinco océanos: datos, fauna y curiosidades.</p>
+      <div class="card-footer">
+        <div class="card-arrow">
+          Visitar
+          <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+      <span class="card-num">02</span>
+    </a>
+
+    <a href="/blog" class="card blog">
+      <div class="card-icon-wrap">✍️</div>
+      <div class="card-tag">WordPress</div>
+      <h2>Blog</h2>
+      <p>Accede al sitio WordPress para gestionar contenido y publicar artículos fácilmente.</p>
+      <div class="card-footer">
+        <div class="card-arrow">
+          Ir al blog
+          <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+      <span class="card-num">03</span>
+    </a>
+
+  </div>
 </main>
 
 <footer>
-    <p>Estudiante · Server · 2026 &mdash; Servidor local</p>
+  <p>Estudiante</p>
+  <span class="footer-dot"></span>
+  <p>Servidor local</p>
+  <span class="footer-dot"></span>
+  <p>2026</p>
 </footer>
 
 </body>

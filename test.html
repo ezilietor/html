@@ -1,299 +1,822 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>La Gran Comisión — Citas Bíblicas</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --gold: #c9a84c;
-      --gold-light: #e8c97a;
-      --gold-dim: #7a5f25;
-      --navy: #0a0f1e;
-      --navy-mid: #121b33;
-      --navy-light: #1c2a4a;
-      --cream: #f5ede0;
-      --cream-dim: #d6c8b2;
-      --white: #ffffff;
-      --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Los Océanos del Mundo · Experiencia inmersiva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep: #020818;
+            --abyss: #030d22;
+            --surface: #0a1628;
+            --glow: #00b4d8;
+            --foam: #caf0f8;
+            --biolum: #48cae4;
+            --gold: #f4d03f;
+            --text: #e8f4f8;
+            --muted: #7bb3c9;
+        }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
-      background-color: var(--navy);
-      color: var(--cream);
-      font-family: 'Lato', sans-serif;
-      font-weight: 300;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+        body {
+            background-color: var(--deep);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
 
-    /* Barra de progreso */
-    #progress-bar {
-      position: fixed; top: 0; left: 0; width: 0%; height: 3px;
-      background: var(--gold); z-index: 1000; transition: width 0.1s;
-    }
+        /* Canvas de fondo interactivo */
+        #oceanCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            z-index: 0;
+            pointer-events: none; /* Para que no interfiera con clics */
+        }
 
-    /* Fondo de Estrellas Refinado */
-    .stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
-    .stars span {
-      position: absolute; border-radius: 50%; background: var(--gold-light);
-      opacity: 0; animation: twinkle var(--dur, 4s) ease-in-out infinite;
-    }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0; transform: scale(0.5); }
-      50% { opacity: var(--op, 0.4); transform: scale(1); }
-    }
+        /* Capa de brillo adicional sobre el canvas */
+        .canvas-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 30%, rgba(2,8,24,0.4) 90%);
+            pointer-events: none;
+            z-index: 1;
+        }
 
-    /* HERO */
-    .hero {
-      position: relative; z-index: 1; min-height: 100vh;
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: center; text-align: center; padding: 60px 24px;
-      background: radial-gradient(circle at center, #1a2d5a 0%, var(--navy) 100%);
-    }
+        /* Mantenemos el resto del contenido por encima */
+        .hero, .scroll-hint, .section-title, .cards-container, footer {
+            position: relative;
+            z-index: 2;
+        }
 
-    .hero-subtitle {
-      font-family: 'Cinzel', serif; font-size: clamp(0.7rem, 2vw, 0.9rem);
-      letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase;
-      margin-bottom: 20px; opacity: 0; animation: fadeUp 1s ease forwards 0.3s;
-    }
+        /* Pequeña mejora en las tarjetas: sombra brillante al hover y transición */
+        .ocean-card {
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease, backdrop-filter 0.3s;
+        }
+        .ocean-card:hover {
+            backdrop-filter: blur(12px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(0,180,216,0.25);
+        }
 
-    .hero-title {
-      font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 10vw, 8rem);
-      font-weight: 300; line-height: 0.9; color: var(--white);
-      margin-bottom: 30px; opacity: 0; animation: fadeUp 1s ease forwards 0.6s;
-    }
+        /* Efecto de ola sutil en los títulos */
+        .hero h1 span {
+            display: inline-block;
+            animation: gentleWave 3s ease-in-out infinite;
+        }
+        @keyframes gentleWave {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
 
-    .hero-title em { font-style: italic; color: var(--gold-light); font-weight: 400; }
+        /* Adaptación para móviles: reducir carga de partículas (opcional) */
+        @media (max-width: 768px) {
+            .oceanCanvas { opacity: 0.7; }
+        }
 
-    .hero-desc {
-      max-width: 600px; font-size: 1.1rem; color: var(--cream-dim);
-      margin-bottom: 40px; opacity: 0; animation: fadeUp 1s ease forwards 0.9s;
-    }
+        /* El resto del CSS original se conserva intacto */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(0,180,216,0.07) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 70%, rgba(72,202,228,0.05) 0%, transparent 50%),
+                radial-gradient(ellipse 100% 80% at 50% 100%, rgba(2,62,138,0.3) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
 
-    /* BOTONES FILTRO */
-    .filter-bar {
-      display: flex; justify-content: center; flex-wrap: wrap;
-      gap: 12px; margin: 40px 0; z-index: 10; position: relative;
-    }
+        .bubbles {
+            display: none; /* Ocultamos las burbujas DOM porque usamos canvas */
+        }
 
-    .filter-btn {
-      font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.2em;
-      background: rgba(201,168,76,0.05); border: 1px solid rgba(201,168,76,0.3);
-      color: var(--gold); padding: 10px 22px; cursor: pointer;
-      transition: var(--transition); border-radius: 50px;
-    }
+        .hero {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 120px 20px 80px;
+        }
 
-    .filter-btn:hover, .filter-btn.active {
-      background: var(--gold); color: var(--navy); transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(201,168,76,0.3);
-    }
+        .hero-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--glow);
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.2s forwards;
+        }
 
-    /* GRID Y TARJETAS */
-    .quotes-section { max-width: 1200px; margin: 0 auto; padding: 0 24px 100px; position: relative; z-index: 1; }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            line-height: 0.95;
+            letter-spacing: -0.02em;
+            color: var(--foam);
+            text-shadow: 0 0 80px rgba(0,180,216,0.4);
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.4s forwards;
+        }
 
-    .quotes-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 30px; transition: all 0.5s ease;
-    }
+        .hero h1 span {
+            color: var(--glow);
+            display: block;
+        }
 
-    .quote-card {
-      background: rgba(18, 27, 51, 0.6);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(201,168,76,0.15);
-      padding: 45px 35px; position: relative; display: flex; flex-direction: column;
-      transition: var(--transition); opacity: 0; transform: translateY(20px);
-    }
+        .hero-desc {
+            max-width: 520px;
+            margin: 32px auto 0;
+            font-size: 1.05rem;
+            font-weight: 300;
+            color: var(--muted);
+            line-height: 1.7;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.6s forwards;
+        }
 
-    .quote-card.visible { opacity: 1; transform: translateY(0); }
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 64px;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 0.8s forwards;
+        }
 
-    .quote-card:hover {
-      border-color: var(--gold); transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    }
+        .stat-item { text-align: center; }
 
-    .quote-text {
-      font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
-      font-style: italic; color: var(--white); margin-bottom: 25px;
-      position: relative; line-height: 1.6;
-    }
+        .stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--glow);
+            line-height: 1;
+        }
 
-    .quote-ref {
-      font-family: 'Cinzel', serif; font-size: 0.75rem;
-      color: var(--gold); letter-spacing: 0.2em; margin-top: auto;
-    }
+        .stat-label {
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 6px;
+        }
 
-    /* Acciones de la tarjeta */
-    .card-actions {
-      margin-top: 20px; display: flex; gap: 15px; opacity: 0;
-      transition: var(--transition);
-    }
-    .quote-card:hover .card-actions { opacity: 1; }
+        .divider {
+            width: 1px;
+            height: 60px;
+            background: linear-gradient(to bottom, transparent, var(--glow), transparent);
+            margin: auto;
+        }
 
-    .action-btn {
-      background: none; border: none; color: var(--gold-dim);
-      cursor: pointer; font-size: 0.8rem; transition: color 0.3s;
-      display: flex; align-items: center; gap: 5px;
-    }
-    .action-btn:hover { color: var(--gold-light); }
+        .scroll-hint {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 20px;
+            color: var(--muted);
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeUp 0.8s ease 1.2s forwards;
+        }
 
-    /* FOOTER */
-    footer {
-      padding: 80px 24px; text-align: center; background: rgba(5, 8, 18, 1);
-      border-top: 1px solid rgba(201,168,76,0.1); position: relative; z-index: 1;
-    }
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, var(--glow), transparent);
+            animation: pulse 2s ease infinite;
+        }
 
-    .back-to-top {
-      position: fixed; bottom: 30px; right: 30px; background: var(--gold);
-      width: 45px; height: 45px; border-radius: 50%; display: flex;
-      align-items: center; justify-content: center; color: var(--navy);
-      text-decoration: none; opacity: 0; visibility: hidden;
-      transition: var(--transition); z-index: 100;
-    }
-    .back-to-top.show { opacity: 1; visibility: visible; }
+        @keyframes pulse { 0%,100%{opacity:0.3;} 50%{opacity:1;} }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        .section-title {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 80px 20px 40px;
+        }
 
-    @media (max-width: 768px) {
-      .hero-title { font-size: 4rem; }
-      .quotes-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+        .section-title h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.8rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--foam);
+        }
+
+        .section-title p {
+            color: var(--muted);
+            font-weight: 300;
+            margin-top: 12px;
+            font-size: 1rem;
+        }
+
+        .cards-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 24px 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .ocean-card {
+            position: relative;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .ocean-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 60px rgba(0,180,216,0.1);
+            border-color: rgba(0,180,216,0.3);
+        }
+
+        .card-accent {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+        }
+
+        .card-glow {
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 300px; height: 300px;
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .ocean-card:hover .card-glow { opacity: 0.08; }
+
+        .card-inner { padding: 48px; }
+
+        .card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+            margin-bottom: 36px;
+        }
+
+        .card-emoji {
+            font-size: 3rem;
+            line-height: 1;
+            filter: drop-shadow(0 0 20px rgba(0,180,216,0.6));
+        }
+
+        .card-title-block { flex: 1; }
+
+        .card-number {
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--glow);
+            margin-bottom: 8px;
+        }
+
+        .card-name {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 3vw, 2.4rem);
+            font-weight: 700;
+            color: var(--foam);
+            line-height: 1.1;
+        }
+
+        .card-dato {
+            font-size: 0.95rem;
+            color: var(--muted);
+            font-weight: 300;
+            margin-top: 8px;
+            line-height: 1.5;
+        }
+
+        .card-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 32px;
+        }
+
+        .stat-box {
+            background: rgba(255,255,255,0.03);
+            padding: 24px 20px;
+            text-align: center;
+        }
+
+        .stat-box-val {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--foam);
+            line-height: 1;
+        }
+
+        .stat-box-unit {
+            font-size: 0.65rem;
+            color: var(--glow);
+            margin-left: 3px;
+        }
+
+        .stat-box-label {
+            font-size: 0.68rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 8px;
+        }
+
+        .card-bottom {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .fauna-block, .curiosidad-block {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .block-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--glow);
+            margin-bottom: 14px;
+        }
+
+        .fauna-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .fauna-list li {
+            font-size: 0.85rem;
+            color: var(--text);
+            font-weight: 300;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .fauna-list li::before {
+            content: '';
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--glow);
+            flex-shrink: 0;
+            box-shadow: 0 0 8px var(--glow);
+        }
+
+        .curiosidad-text {
+            font-size: 0.9rem;
+            font-weight: 300;
+            color: var(--muted);
+            line-height: 1.65;
+            font-style: italic;
+        }
+
+        .fosa-tag {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background: rgba(0,180,216,0.12);
+            border: 1px solid rgba(0,180,216,0.25);
+            color: var(--glow);
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        footer {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 60px 20px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        footer p {
+            color: var(--muted);
+            font-size: 0.8rem;
+            font-weight: 300;
+            letter-spacing: 0.08em;
+        }
+
+        footer .footer-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            color: var(--foam);
+            margin-bottom: 12px;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .card-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .card-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .card-inner { padding: 28px 20px; }
+            .card-header { flex-direction: column; gap: 12px; }
+            .card-bottom { grid-template-columns: 1fr; }
+            .stats-row { gap: 30px; }
+            .divider { display: none; }
+        }
+    </style>
 </head>
 <body>
 
-  <div id="progress-bar"></div>
+<!-- Canvas interactivo de fondo -->
+<canvas id="oceanCanvas"></canvas>
+<div class="canvas-overlay"></div>
 
-  <div class="stars" id="stars"></div>
-
-  <section class="hero">
-    <p class="hero-subtitle">La Palabra que Transforma</p>
-    <h1 class="hero-title">La Gran<br/><em>Comisión</em></h1>
+<!-- Hero y contenido (sin burbujas DOM) -->
+<section class="hero">
+    <p class="hero-label">Exploración Marina · 2026</p>
+    <h1>
+        Los Océanos
+        <span>del Mundo</span>
+    </h1>
     <p class="hero-desc">
-      Un compendio de sabiduría bíblica para inspirar la misión de llevar esperanza a cada rincón de la tierra.
+        El océano cubre el 71% de la superficie terrestre y contiene el 97% del agua de nuestro planeta. Descubre los cinco grandes cuerpos de agua que moldean la vida en la Tierra.
     </p>
-    <div class="scroll-cta" onclick="window.scrollTo({top: window.innerHeight, behavior:'smooth'})">
-      <div style="width: 1px; height: 60px; background: linear-gradient(var(--gold), transparent); margin: 0 auto;"></div>
+    <div class="stats-row">
+        <div class="stat-item">
+            <div class="stat-num">5</div>
+            <div class="stat-label">Océanos</div>
+        </div>
+        <div class="divider"></div>
+        <div class="stat-item">
+            <div class="stat-num">71%</div>
+            <div class="stat-label">Superficie terrestre</div>
+        </div>
+        <div class="divider"></div>
+        <div class="stat-item">
+            <div class="stat-num">3.7km</div>
+            <div class="stat-label">Profundidad media</div>
+        </div>
+        <div class="divider"></div>
+        <div class="stat-item">
+            <div class="stat-num">97%</div>
+            <div class="stat-label">Agua del planeta</div>
+        </div>
     </div>
-  </section>
+</section>
 
-  <section class="quotes-section">
-    <div class="filter-bar" id="filterBar">
-      <button class="filter-btn active" data-filter="all">Todas las promesas</button>
-      <button class="filter-btn" data-filter="mision">Misión</button>
-      <button class="filter-btn" data-filter="salvacion">Salvación</button>
-      <button class="filter-btn" data-filter="poder">Poder</button>
-      <button class="filter-btn" data-filter="fruto">Fruto</button>
-    </div>
+<div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Explorar
+</div>
 
-    <div class="quotes-grid" id="quotesGrid"></div>
-  </section>
+<div class="section-title">
+    <h2>Los Cinco Océanos</h2>
+    <p>Datos, fauna y curiosidades de cada cuerpo oceánico</p>
+</div>
 
-  <footer>
-    <p style="font-family: 'Cinzel'; color: var(--gold); letter-spacing: 2px; margin-bottom: 10px;">Evangelismo Bíblico</p>
-    <p style="font-style: italic; color: var(--cream-dim);">"Haced todo para la gloria de Dios"</p>
-  </footer>
-
-  <a href="#" class="back-to-top" id="backToTop">↑</a>
-
-  <script>
-    // Generar estrellas
-    const starsEl = document.getElementById('stars');
-    for (let i = 0; i < 100; i++) {
-      const s = document.createElement('span');
-      const size = Math.random() * 2 + 1;
-      s.style.cssText = `
-        width:${size}px; height:${size}px;
-        top:${Math.random()*100}%; left:${Math.random()*100}%;
-        --dur:${3 + Math.random()*4}s;
-        --op:${0.1 + Math.random()*0.5};
-      `;
-      starsEl.appendChild(s);
-    }
-
-    const quotes = [
-      { text: "Id, y haced discípulos a todas las naciones, bautizándolos en el nombre del Padre, y del Hijo, y del Espíritu Santo.", ref: "Mateo 28:19", cat: "mision" },
-      { text: "Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna.", ref: "Juan 3:16", cat: "salvacion" },
-      { text: "Recibiréis poder, cuando haya venido sobre vosotros el Espíritu Santo, y me seréis testigos hasta lo último de la tierra.", ref: "Hechos 1:8", cat: "poder" },
-      { text: "¿Cómo, pues, invocarán a aquel en el cual no han creído? ¿Y cómo oirán sin haber quien les predique?", ref: "Romanos 10:14", cat: "mision" },
-      { text: "No me avergüenzo del evangelio, porque es poder de Dios para salvación a todo aquel que cree.", ref: "Romanos 1:16", cat: "poder" },
-      { text: "La mies es mucha, mas los obreros pocos; rogad, pues, al Señor de la mies, que envíe obreros a su mies.", ref: "Lucas 10:2", cat: "mision" },
-      { text: "El fruto del justo es árbol de vida; y el que gana almas es sabio.", ref: "Proverbios 11:30", cat: "fruto" },
-      { text: "Así que la fe es por el oír, y el oír, por la palabra de Dios.", ref: "Romanos 10:17", cat: "poder" },
-      { text: "Los que sembraron con lágrimas, con regocijo segarán.", ref: "Salmos 126:5", cat: "fruto" }
-    ];
-
-    function renderCards(filter = 'all') {
-      const grid = document.getElementById('quotesGrid');
-      grid.style.opacity = '0';
-      
-      setTimeout(() => {
-        grid.innerHTML = '';
-        const filtered = filter === 'all' ? quotes : quotes.filter(q => q.cat === filter);
-        
-        filtered.forEach((q, i) => {
-          const card = document.createElement('div');
-          card.className = 'quote-card';
-          card.innerHTML = `
-            <p class="quote-text">"${q.text}"</p>
-            <div class="quote-ref">${q.ref}</div>
-            <div class="card-actions">
-              <button class="action-btn" onclick="copyQuote('${q.text} ${q.ref}')">📋 Copiar</button>
-              <button class="action-btn" onclick="shareQuote('${q.ref}')">🔗 Compartir</button>
+<div class="cards-container">
+    <!-- Aquí se mantienen exactamente las mismas tarjetas (Pacífico, Atlántico, Índico, Antártico, Ártico) -->
+    <!-- 01 · Océano Pacífico -->
+    <div class="ocean-card card-reveal" style="transition-delay:0s">
+        <div class="card-accent" style="background:linear-gradient(90deg,#0077b6,transparent)"></div>
+        <div class="card-glow" style="background:radial-gradient(circle,#0077b6,transparent)"></div>
+        <div class="card-inner">
+            <div class="card-header">
+                <div class="card-emoji">🌊</div>
+                <div class="card-title-block">
+                    <div class="card-number">Océano 01</div>
+                    <h2 class="card-name">Océano Pacífico</h2>
+                    <p class="card-dato">El más grande del mundo, cubre más de un tercio de la superficie terrestre.</p>
+                </div>
             </div>
-          `;
-          grid.appendChild(card);
-          setTimeout(() => card.classList.add('visible'), i * 100);
-        });
-        grid.style.opacity = '1';
-      }, 300);
+            <div class="card-stats">
+                <div class="stat-box"><div class="stat-box-val">165.25<span class="stat-box-unit">M km²</span></div><div class="stat-box-label">Área total</div></div>
+                <div class="stat-box"><div class="stat-box-val">4,280<span class="stat-box-unit">m</span></div><div class="stat-box-label">Profundidad media</div></div>
+                <div class="stat-box"><div class="stat-box-val">10,994<span class="stat-box-unit">m</span></div><div class="stat-box-label">Profundidad máxima</div></div>
+                <div class="stat-box"><div class="stat-box-val">55</div><div class="stat-box-label">Países costeros</div></div>
+            </div>
+            <div class="card-bottom">
+                <div class="fauna-block"><div class="block-label">🐠 Fauna representativa</div><ul class="fauna-list"><li>Ballena azul</li><li>Tiburón blanco</li><li>Mantarraya gigante</li><li>Pulpo gigante del Pacífico</li></ul></div>
+                <div class="curiosidad-block"><div class="block-label">💡 Curiosidad</div><p class="curiosidad-text">Contiene más de 25,000 islas, más que todos los demás océanos juntos.</p><span class="fosa-tag">📍 Fosa de las Marianas</span></div>
+            </div>
+        </div>
+    </div>
+    <!-- 02 · Océano Atlántico -->
+    <div class="ocean-card card-reveal" style="transition-delay:0.1s">
+        <div class="card-accent" style="background:linear-gradient(90deg,#023e8a,transparent)"></div>
+        <div class="card-glow" style="background:radial-gradient(circle,#023e8a,transparent)"></div>
+        <div class="card-inner">
+            <div class="card-header">
+                <div class="card-emoji">🫧</div>
+                <div class="card-title-block"><div class="card-number">Océano 02</div><h2 class="card-name">Océano Atlántico</h2><p class="card-dato">Separa América de Europa y África, fue la primera ruta de navegación transatlántica.</p></div>
+            </div>
+            <div class="card-stats">
+                <div class="stat-box"><div class="stat-box-val">106.46<span class="stat-box-unit">M km²</span></div><div class="stat-box-label">Área total</div></div>
+                <div class="stat-box"><div class="stat-box-val">3,332<span class="stat-box-unit">m</span></div><div class="stat-box-label">Profundidad media</div></div>
+                <div class="stat-box"><div class="stat-box-val">8,376<span class="stat-box-unit">m</span></div><div class="stat-box-label">Profundidad máxima</div></div>
+                <div class="stat-box"><div class="stat-box-val">41</div><div class="stat-box-label">Países costeros</div></div>
+            </div>
+            <div class="card-bottom">
+                <div class="fauna-block"><div class="block-label">🐠 Fauna representativa</div><ul class="fauna-list"><li>Delfín nariz de botella</li><li>Ballena jorobada</li><li>Atún rojo</li><li>Tortuga laúd</li></ul></div>
+                <div class="curiosidad-block"><div class="block-label">💡 Curiosidad</div><p class="curiosidad-text">El Atlántico se ensancha aproximadamente 2.5 cm cada año debido a la tectónica de placas.</p><span class="fosa-tag">📍 Fosa de Puerto Rico</span></div>
+            </div>
+        </div>
+    </div>
+    <!-- 03 · Océano Índico -->
+    <div class="ocean-card card-reveal" style="transition-delay:0.2s">
+        <div class="card-accent" style="background:linear-gradient(90deg,#0096c7,transparent)"></div>
+        <div class="card-glow" style="background:radial-gradient(circle,#0096c7,transparent)"></div>
+        <div class="card-inner">
+            <div class="card-header">
+                <div class="card-emoji">🐋</div>
+                <div class="card-title-block"><div class="card-number">Océano 03</div><h2 class="card-name">Océano Índico</h2><p class="card-dato">El más cálido del mundo y el único con corrientes estacionales que se invierten.</p></div>
+            </div>
+            <div class="card-stats">
+                <div class="stat-box"><div class="stat-box-val">70.56<span class="stat-box-unit">M km²</span></div><div class="stat-box-label">Área total</div></div>
+                <div class="stat-box"><div class="stat-box-val">3,897<span class="stat-box-unit">m</span></div><div class="stat-box-label">Profundidad media</div></div>
+                <div class="stat-box"><div class="stat-box-val">7,187<span class="stat-box-unit">m</span></div><div class="stat-box-label">Profundidad máxima</div></div>
+                <div class="stat-box"><div class="stat-box-val">37</div><div class="stat-box-label">Países costeros</div></div>
+            </div>
+            <div class="card-bottom">
+                <div class="fauna-block"><div class="block-label">🐠 Fauna representativa</div><ul class="fauna-list"><li>Dugongo</li><li>Pez vela</li><li>Tortuga verde</li><li>Tiburón ballena</li></ul></div>
+                <div class="curiosidad-block"><div class="block-label">💡 Curiosidad</div><p class="curiosidad-text">Alberga el 40% de la pesca de alta mar del mundo, vital para millones de personas.</p><span class="fosa-tag">📍 Fosa de Java</span></div>
+            </div>
+        </div>
+    </div>
+    <!-- 04 · Océano Antártico -->
+    <div class="ocean-card card-reveal" style="transition-delay:0.3s">
+        <div class="card-accent" style="background:linear-gradient(90deg,#48cae4,transparent)"></div>
+        <div class="card-glow" style="background:radial-gradient(circle,#48cae4,transparent)"></div>
+        <div class="card-inner">
+            <div class="card-header">
+                <div class="card-emoji">🧊</div>
+                <div class="card-title-block"><div class="card-number">Océano 04</div><h2 class="card-name">Océano Antártico</h2><p class="card-dato">Reconocido oficialmente en 2000, rodea completamente el continente antártico.</p></div>
+            </div>
+            <div class="card-stats">
+                <div class="stat-box"><div class="stat-box-val">21.96<span class="stat-box-unit">M km²</span></div><div class="stat-box-label">Área total</div></div>
+                <div class="stat-box"><div class="stat-box-val">3,270<span class="stat-box-unit">m</span></div><div class="stat-box-label">Profundidad media</div></div>
+                <div class="stat-box"><div class="stat-box-val">7,235<span class="stat-box-unit">m</span></div><div class="stat-box-label">Profundidad máxima</div></div>
+            </div>
+            <div class="card-bottom">
+                <div class="fauna-block"><div class="block-label">🐠 Fauna representativa</div><ul class="fauna-list"><li>Pingüino emperador</li><li>Foca leopardo</li><li>Krill antártico</li><li>Orca</li></ul></div>
+                <div class="curiosidad-block"><div class="block-label">💡 Curiosidad</div><p class="curiosidad-text">Sus aguas son las más productivas del planeta en fitoplancton, base de toda la cadena alimentaria marina.</p><span class="fosa-tag">📍 Fosa de las Sandwich del Sur</span></div>
+            </div>
+        </div>
+    </div>
+    <!-- 05 · Océano Ártico -->
+    <div class="ocean-card card-reveal" style="transition-delay:0.4s">
+        <div class="card-accent" style="background:linear-gradient(90deg,#90e0ef,transparent)"></div>
+        <div class="card-glow" style="background:radial-gradient(circle,#90e0ef,transparent)"></div>
+        <div class="card-inner">
+            <div class="card-header">
+                <div class="card-emoji">❄️</div>
+                <div class="card-title-block"><div class="card-number">Océano 05</div><h2 class="card-name">Océano Ártico</h2><p class="card-dato">El más pequeño y superficial, cubierto de hielo la mayor parte del año.</p></div>
+            </div>
+            <div class="card-stats">
+                <div class="stat-box"><div class="stat-box-val">14.06<span class="stat-box-unit">M km²</span></div><div class="stat-box-label">Área total</div></div>
+                <div class="stat-box"><div class="stat-box-val">1,205<span class="stat-box-unit">m</span></div><div class="stat-box-label">Profundidad media</div></div>
+                <div class="stat-box"><div class="stat-box-val">5,502<span class="stat-box-unit">m</span></div><div class="stat-box-label">Profundidad máxima</div></div>
+                <div class="stat-box"><div class="stat-box-val">8</div><div class="stat-box-label">Países costeros</div></div>
+            </div>
+            <div class="card-bottom">
+                <div class="fauna-block"><div class="block-label">🐠 Fauna representativa</div><ul class="fauna-list"><li>Oso polar</li><li>Narval</li><li>Morsa</li><li>Beluga</li></ul></div>
+                <div class="curiosidad-block"><div class="block-label">💡 Curiosidad</div><p class="curiosidad-text">El hielo ártico marino ha disminuido más del 40% en las últimas décadas por el cambio climático.</p><span class="fosa-tag">📍 Cuenca del Ártico</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p class="footer-title">Los Océanos del Mundo</p>
+    <p>Datos basados en fuentes oceanográficas internacionales · 2026</p>
+</footer>
+
+<script>
+    // ----- CANVAS INTERACTIVO: OCÉANO DINÁMICO CON PARTÍCULAS Y PEZ CARDUMEN -----
+    const canvas = document.getElementById('oceanCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let mouseX = 0, mouseY = 0;
+    let time = 0;
+
+    // Partículas (plancton / burbujas)
+    const PARTICLE_COUNT = 120;
+    let particles = [];
+    // Peces (cardumen)
+    const FISH_COUNT = 18;
+    let fish = [];
+
+    class Particle {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.size = Math.random() * 2.5 + 0.8;
+            this.speedX = (Math.random() - 0.5) * 0.4;
+            this.speedY = (Math.random() - 0.5) * 0.3 + 0.2; // tiende a subir
+            this.opacity = Math.random() * 0.5 + 0.2;
+            this.color = `rgba(100, 210, 250, ${this.opacity})`;
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+            // efecto de mouse: repelencia suave
+            const dx = this.x - mouseX;
+            const dy = this.y - mouseY;
+            const dist = Math.hypot(dx, dy);
+            if (dist < 80) {
+                const angle = Math.atan2(dy, dx);
+                const force = (80 - dist) / 80 * 1.2;
+                this.x += Math.cos(angle) * force;
+                this.y += Math.sin(angle) * force;
+            }
+            if (this.x < 0) this.x = width;
+            if (this.x > width) this.x = 0;
+            if (this.y < 0) this.y = height;
+            if (this.y > height) this.y = 0;
+        }
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = 'rgba(0,180,216,0.5)';
+        }
     }
 
-    // Copiar al portapapeles
-    function copyQuote(text) {
-      navigator.clipboard.writeText(text);
-      alert("Cita copiada con éxito");
+    class Fish {
+        constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.vx = (Math.random() - 0.5) * 0.6;
+            this.vy = (Math.random() - 0.5) * 0.4;
+            this.size = Math.random() * 10 + 5;
+            this.angle = 0;
+        }
+        update() {
+            // Movimiento ondulante + tendencia a seguir el mouse ligeramente
+            const dx = mouseX - this.x;
+            const dy = mouseY - this.y;
+            const dist = Math.hypot(dx, dy);
+            if (dist < 150 && dist > 5) {
+                this.vx += dx / dist * 0.03;
+                this.vy += dy / dist * 0.03;
+            }
+            // límite de velocidad
+            let spd = Math.hypot(this.vx, this.vy);
+            if (spd > 2) { this.vx = (this.vx / spd) * 2; this.vy = (this.vy / spd) * 2; }
+            this.x += this.vx;
+            this.y += this.vy;
+            // reborde suave (wrap)
+            if (this.x < -20) this.x = width + 20;
+            if (this.x > width + 20) this.x = -20;
+            if (this.y < -20) this.y = height + 20;
+            if (this.y > height + 20) this.y = -20;
+            this.angle = Math.atan2(this.vy, this.vx);
+        }
+        draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate(this.angle);
+            ctx.beginPath();
+            // cuerpo del pez estilo silueta
+            ctx.moveTo(this.size, 0);
+            ctx.lineTo(-this.size * 0.8, -this.size * 0.5);
+            ctx.lineTo(-this.size * 0.4, 0);
+            ctx.lineTo(-this.size * 0.8, this.size * 0.5);
+            ctx.closePath();
+            ctx.fillStyle = `rgba(0, 170, 210, 0.7)`;
+            ctx.fill();
+            ctx.shadowBlur = 6;
+            ctx.fillStyle = `rgba(200, 230, 255, 0.9)`;
+            ctx.beginPath();
+            ctx.ellipse(this.size * 0.4, 0, this.size * 0.25, this.size * 0.2, 0, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.restore();
+        }
     }
 
-    // Compartir (Web Share API)
-    function shareQuote(ref) {
-      if (navigator.share) {
-        navigator.share({ title: 'Cita Bíblica', text: ref, url: window.location.href });
-      } else {
-        alert("Enlace listo para compartir: " + window.location.href);
-      }
+    // Dibujar ondas de fondo
+    function drawBackgroundWaves() {
+        const grad = ctx.createLinearGradient(0, 0, 0, height);
+        grad.addColorStop(0, '#02112a');
+        grad.addColorStop(0.5, '#022b44');
+        grad.addColorStop(1, '#011725');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, width, height);
+
+        // Líneas de corriente ondulantes
+        ctx.save();
+        ctx.globalAlpha = 0.25;
+        ctx.beginPath();
+        for (let i = 0; i < 12; i++) {
+            const yOff = i * (height / 12);
+            ctx.beginPath();
+            for (let x = 0; x < width; x += 30) {
+                const y = yOff + Math.sin(x * 0.008 + time * 0.002 + i) * 15;
+                if (x === 0) ctx.moveTo(x, y);
+                else ctx.lineTo(x, y);
+            }
+            ctx.strokeStyle = `rgba(0, 200, 240, 0.4)`;
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+        }
+        ctx.restore();
+
+        // Resplandor del mouse (luz submarina)
+        ctx.shadowBlur = 0;
+        ctx.beginPath();
+        const gradGlow = ctx.createRadialGradient(mouseX, mouseY, 5, mouseX, mouseY, 120);
+        gradGlow.addColorStop(0, 'rgba(0,200,240,0.25)');
+        gradGlow.addColorStop(1, 'transparent');
+        ctx.fillStyle = gradGlow;
+        ctx.fillRect(0, 0, width, height);
     }
 
-    // Barra de progreso y botón volver arriba
-    window.onscroll = function() {
-      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = (winScroll / height) * 100;
-      document.getElementById("progress-bar").style.width = scrolled + "%";
+    function resizeCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+        // Reiniciar partículas y peces según nuevo tamaño
+        particles = [];
+        for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
+        fish = [];
+        for (let i = 0; i < FISH_COUNT; i++) fish.push(new Fish());
+    }
 
-      const btt = document.getElementById("backToTop");
-      if (winScroll > 500) btt.classList.add("show");
-      else btt.classList.remove("show");
-    };
+    function animate() {
+        if (!ctx) return;
+        time++;
+        drawBackgroundWaves();
+        // Actualizar y dibujar partículas
+        for (let p of particles) {
+            p.update();
+            p.draw();
+        }
+        // Peces
+        for (let f of fish) {
+            f.update();
+            f.draw();
+        }
+        requestAnimationFrame(animate);
+    }
 
-    // Eventos de Filtro
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.onclick = () => {
-        document.querySelector('.filter-btn.active').classList.remove('active');
-        btn.classList.add('active');
-        renderCards(btn.dataset.filter);
-      };
+    window.addEventListener('resize', () => {
+        resizeCanvas();
     });
+    window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+    resizeCanvas();
+    animate();
 
-    // Carga inicial
-    renderCards();
-  </script>
+    // Scroll reveal original (no se toca)
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.card-reveal').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>

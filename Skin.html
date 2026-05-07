@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>La Gran Comisión — Evangelismo Bíblico</title>
+<title>La Gran Comisión — Evangelismo Bíblico | Edición Épica</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,500&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
 <style>
 :root{
@@ -19,9 +19,10 @@ body{background:var(--navy);color:var(--cream);font-family:'Lato',sans-serif;fon
 /* CUSTOM CURSOR */
 #cursor{position:fixed;width:12px;height:12px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s,width .3s,height .3s,opacity .3s;mix-blend-mode:screen;}
 #cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(201,168,76,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .08s;}
+#cursor-glow{position:fixed;width:100px;height:100px;background:radial-gradient(circle, rgba(201,168,76,0.2) 0%, transparent 70%);border-radius:50%;pointer-events:none;z-index:9997;transform:translate(-50%,-50%);opacity:0;transition:opacity .2s;}
 
 /* PROGRESS BAR */
-#progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l));z-index:9997;width:0%;transition:width .1s;}
+#progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l));z-index:9996;width:0%;transition:width .1s;}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:20px 48px;display:flex;justify-content:space-between;align-items:center;transition:background .4s,backdrop-filter .4s;}
@@ -30,15 +31,18 @@ nav.scrolled{background:rgba(5,13,31,.85);backdrop-filter:blur(20px);border-bott
 .nav-links{display:flex;gap:32px;}
 .nav-links a{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.25em;color:var(--cream-d);text-decoration:none;text-transform:uppercase;transition:color .3s;}
 .nav-links a:hover{color:var(--gold);}
+.music-toggle{background:rgba(201,168,76,.1);border:1px solid var(--gold-d);color:var(--gold);font-size:.7rem;padding:4px 12px;border-radius:40px;font-family:'Cinzel',serif;cursor:pointer;transition:all .3s;}
+.music-toggle:hover{background:var(--gold);color:var(--navy);}
 
-/* ===================== HERO ===================== */
+/* HERO */
 .hero{position:relative;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;}
 #heroCanvas{position:absolute;inset:0;width:100%;height:100%;}
 .hero-content{position:relative;z-index:2;padding:0 24px;}
 
-/* Animated cross */
+/* SVG Cross animado */
 .cross-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:1;pointer-events:none;}
-.cross-svg{width:min(55vw,500px);height:min(80vh,700px);opacity:.18;}
+.cross-svg{width:min(55vw,500px);height:min(80vh,700px);opacity:.18;animation:crossBreathing 3s ease-in-out infinite;}
+@keyframes crossBreathing{0%,100%{transform:scale(1);opacity:.15;}50%{transform:scale(1.03);opacity:.22;}}
 .cross-svg .beam{animation:beamPulse 4s ease-in-out infinite;}
 .cross-svg .beam:nth-child(2){animation-delay:1s;}
 @keyframes beamPulse{0%,100%{opacity:.3;filter:blur(2px);}50%{opacity:1;filter:blur(0px);}}
@@ -49,25 +53,21 @@ nav.scrolled{background:rgba(5,13,31,.85);backdrop-filter:blur(20px);border-bott
 .hero-verse{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.5vw,1.4rem);font-style:italic;color:var(--cream-d);max-width:600px;margin:24px auto 0;line-height:1.7;opacity:0;animation:fadeUp 1s ease forwards 1.1s;}
 .hero-ref{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.35em;color:var(--gold);margin-top:12px;display:block;opacity:0;animation:fadeUp 1s ease forwards 1.4s;}
 
-.scroll-indicator{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeUp 1s ease forwards 1.8s;cursor:pointer;z-index:2;}
-.scroll-indicator span{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.4em;color:var(--gold-d);}
-.scroll-line{width:1px;height:50px;background:linear-gradient(var(--gold),transparent);animation:pulse 2s ease-in-out infinite;}
+/* VERSÍCULO DEL DÍA (nuevo) */
+.verse-of-day{position:fixed;top:80px;right:20px;background:rgba(0,0,0,.6);backdrop-filter:blur(12px);border-left:3px solid var(--gold);padding:8px 20px;border-radius:8px;z-index:400;max-width:260px;text-align:right;pointer-events:none;font-family:'Cormorant Garamond',serif;font-size:.75rem;color:var(--cream-d);display:none;}
+@media (min-width:1024px){.verse-of-day{display:block;}}
 
-/* Bokeh lights */
-.bokeh{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none;animation:bokehFloat var(--dur,12s) ease-in-out infinite var(--del,0s);}
-@keyframes bokehFloat{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(var(--tx,20px),var(--ty,-30px)) scale(1.1);}}
-
-/* ===================== STATS ===================== */
+/* STATS */
 .stats-section{position:relative;background:linear-gradient(180deg,var(--navy) 0%,#08132b 100%);padding:80px 48px;overflow:hidden;}
 .stats-bg{position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9a84c' fill-opacity='0.03'%3E%3Cpath d='M40 0L42 38H80L50 62L60 80L40 58L20 80L30 62L0 38H38Z'/%3E%3C/g%3E%3C/svg%3E");}
-.stats-inner{position:relative;max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px;text-align:center;}
+.stats-inner{position:relative;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:40px;text-align:center;}
 .stat-item{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s;}
 .stat-item.visible{opacity:1;transform:translateY(0);}
 .stat-num{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,6vw,4.5rem);color:var(--gold-l);font-weight:300;line-height:1;}
 .stat-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.3em;color:var(--cream-d);margin-top:8px;text-transform:uppercase;}
 .stat-verse{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;color:var(--gold-d);margin-top:6px;}
 
-/* ===================== SPOTLIGHT ===================== */
+/* SPOTLIGHT */
 .spotlight-section{position:relative;min-height:70vh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
 #spotCanvas{position:absolute;inset:0;width:100%;height:100%;}
 .spotlight-content{position:relative;z-index:2;max-width:800px;text-align:center;padding:80px 32px;}
@@ -76,112 +76,97 @@ nav.scrolled{background:rgba(5,13,31,.85);backdrop-filter:blur(20px);border-bott
 .spotlight-verse .highlight{color:var(--gold-l);font-weight:400;}
 .spotlight-ref{font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.3em;color:var(--gold);}
 
-/* ===================== CARDS ===================== */
-.cards-section{padding:100px 24px;max-width:1200px;margin:0 auto;}
+/* CARDS (Citas) */
+.cards-section{padding:100px 24px;max-width:1300px;margin:0 auto;}
 .section-title{text-align:center;margin-bottom:64px;}
 .section-title h2{font-family:'Cinzel',serif;font-size:clamp(.6rem,1.5vw,.75rem);letter-spacing:.5em;color:var(--gold);text-transform:uppercase;margin-bottom:12px;}
 .section-title p{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;font-style:italic;color:var(--cream);}
-
 .filter-bar{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:52px;}
 .fb{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;background:transparent;border:1px solid rgba(201,168,76,.2);color:var(--gold-d);padding:8px 20px;cursor:pointer;transition:all .3s;}
 .fb:hover,.fb.on{background:var(--gold);color:var(--navy);border-color:var(--gold);}
-
 .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;}
 
-/* 3D Tilt Card */
+/* Tarjeta con 3D */
 .qcard{position:relative;background:linear-gradient(135deg,rgba(22,34,72,.9),rgba(12,22,48,.95));border:1px solid rgba(201,168,76,.15);padding:40px 32px 36px;overflow:hidden;cursor:pointer;transform-style:preserve-3d;transition:box-shadow .4s;opacity:0;transform:translateY(30px);will-change:transform;}
 .qcard.visible{opacity:1;transform:translateY(0);transition:opacity .7s ease,transform .7s ease,box-shadow .3s;}
 .qcard::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at var(--mx,50%) var(--my,0%),rgba(201,168,76,.1) 0%,transparent 60%);opacity:0;transition:opacity .4s;}
 .qcard:hover::before{opacity:1;}
 .qcard::after{content:'"';position:absolute;top:-20px;left:14px;font-family:'Cormorant Garamond',serif;font-size:10rem;color:rgba(201,168,76,.06);line-height:1;pointer-events:none;}
-.qcard-glow{position:absolute;inset:0;opacity:0;transition:opacity .4s;background:radial-gradient(ellipse at 50% 100%,rgba(201,168,76,.08),transparent 70%);}
-.qcard:hover .qcard-glow{opacity:1;}
-.qcard-header{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
-.qcard-num{font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold-d);letter-spacing:.2em;}
-.qcard-hr{flex:1;height:1px;background:rgba(201,168,76,.2);}
-.qcard-cat{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;color:var(--navy-l);background:var(--gold-d);padding:3px 8px;text-transform:uppercase;}
-.qcard-text{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;line-height:1.75;color:var(--cream);margin-bottom:24px;position:relative;z-index:1;}
-.qcard-ref{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.25em;color:var(--gold);}
-.qcard-share{position:absolute;top:16px;right:16px;width:28px;height:28px;border:1px solid rgba(201,168,76,.2);background:transparent;color:var(--gold-d);font-size:.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;opacity:0;}
-.qcard:hover .qcard-share{opacity:1;}
-.qcard-share:hover{background:var(--gold);color:var(--navy);}
 
-/* ===================== WORLD MAP ===================== */
+/* MISIONEROS */
+.missionary-section{padding:60px 24px;background:radial-gradient(circle at 20% 30%, #0c1a2e, #050b1a);}
+.missionary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px;margin-top:48px;}
+.mission-card{background:rgba(22,34,72,.7);border:1px solid rgba(201,168,76,.2);border-radius:24px;padding:32px;transition:all .4s;}
+.mission-card:hover{transform:translateY(-8px);border-color:var(--gold);box-shadow:0 20px 40px rgba(0,0,0,.5);}
+.mission-icon{font-size:2.5rem;margin-bottom:16px;}
+.mission-name{font-family:'Cinzel',serif;font-size:1.4rem;color:var(--gold-l);margin-bottom:8px;}
+.mission-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--cream-d);margin-bottom:12px;}
+.mission-verse{font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold);letter-spacing:.1em;}
+
+/* PROFECÍAS */
+.prophecy-section{padding:80px 24px;background:linear-gradient(145deg, #07122a, #030816);}
+.prophecy-flex{display:flex;flex-wrap:wrap;justify-content:center;gap:32px;margin-top:48px;}
+.prophecy-card{background:rgba(0,0,0,.5);backdrop-filter:blur(8px);border-radius:32px;padding:30px;max-width:320px;text-align:center;border:1px solid rgba(201,168,76,.2);}
+.prophecy-card i{font-size:2rem;color:var(--gold);margin-bottom:16px;display:block;}
+.prophecy-text{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;margin-bottom:12px;}
+.prophecy-ref{font-family:'Cinzel',serif;font-size:.7rem;color:var(--gold-d);}
+
+/* WORLD MAP */
 .world-section{position:relative;overflow:hidden;padding:100px 24px;background:radial-gradient(ellipse at 50% 50%,#0e1e45 0%,var(--navy) 70%);}
 .world-title{text-align:center;margin-bottom:52px;}
 .world-title h2{font-family:'Cinzel',serif;font-size:clamp(.6rem,1.5vw,.75rem);letter-spacing:.5em;color:var(--gold);margin-bottom:10px;}
 .world-title p{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3.5vw,2.4rem);font-weight:300;font-style:italic;color:#fff;}
 .world-subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--cream-d);margin-top:6px;}
+#worldSvg{display:block;max-width:1000px;margin:0 auto;width:100%;}
 
-#worldSvg{display:block;max-width:900px;margin:0 auto;width:100%;}
-.continent{fill:rgba(201,168,76,.12);stroke:rgba(201,168,76,.3);stroke-width:.5;transition:fill .4s;}
-.continent:hover{fill:rgba(201,168,76,.22);}
-.glow-dot{animation:glowPulse 2s ease-in-out infinite;}
-@keyframes glowPulse{0%,100%{r:4;opacity:.6;}50%{r:7;opacity:1;}}
-.connection-line{stroke:rgba(201,168,76,.3);stroke-width:.8;fill:none;stroke-dasharray:4 4;animation:dashMove 3s linear infinite;}
-@keyframes dashMove{to{stroke-dashoffset:-20;}}
-
-.world-verse{text-align:center;margin-top:40px;}
-.world-verse p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;color:var(--cream-d);}
-.world-verse span{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.3em;color:var(--gold);display:block;margin-top:8px;}
-
-/* ===================== TYPEWRITER SECTION ===================== */
+/* TYPEWRITER */
 .typewriter-section{position:relative;min-height:60vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#040b18 0%,#0a1528 100%);overflow:hidden;padding:80px 24px;}
-.tw-bg{position:absolute;inset:0;overflow:hidden;}
-.tw-circle{position:absolute;border-radius:50%;border:1px solid rgba(201,168,76,.1);}
 .tw-content{position:relative;z-index:2;max-width:800px;text-align:center;}
-.tw-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.5em;color:var(--gold-d);text-transform:uppercase;margin-bottom:24px;}
-.tw-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,3.5vw,2.4rem);font-style:italic;color:#fff;line-height:1.65;min-height:140px;display:flex;align-items:center;justify-content:center;}
-#twCursor{display:inline-block;width:2px;height:1.1em;background:var(--gold);margin-left:3px;vertical-align:middle;animation:blink .7s ease-in-out infinite;}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
-.tw-ref{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.3em;color:var(--gold);margin-top:24px;min-height:20px;}
+.tw-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,3.5vw,2.4rem);font-style:italic;color:#fff;line-height:1.65;min-height:140px;}
+#twCursor{display:inline-block;width:2px;height:1.1em;background:var(--gold);margin-left:3px;vertical-align:middle;animation:blink .7s step-end infinite;}
+.tw-ref{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.3em;color:var(--gold);margin-top:24px;}
 .tw-nav{display:flex;justify-content:center;gap:12px;margin-top:28px;}
 .tw-dot{width:6px;height:6px;border-radius:50%;background:var(--gold-d);cursor:pointer;transition:all .3s;}
 .tw-dot.on{background:var(--gold);transform:scale(1.5);}
 
-/* ===================== TIMELINE ===================== */
-.timeline-section{padding:100px 24px;max-width:900px;margin:0 auto;}
-.tl-title{text-align:center;margin-bottom:72px;}
-.tl-title h2{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.5em;color:var(--gold);margin-bottom:10px;}
-.tl-title p{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:300;font-style:italic;color:var(--cream);}
-
+/* TIMELINE */
+.timeline-section{padding:100px 24px;max-width:1000px;margin:0 auto;}
 .timeline{position:relative;padding-left:40px;}
 .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,var(--gold-d),var(--gold),var(--gold-d),transparent);}
 .tl-item{position:relative;margin-bottom:56px;opacity:0;transform:translateX(-20px);transition:opacity .7s,transform .7s;}
 .tl-item.visible{opacity:1;transform:translateX(0);}
-.tl-dot{position:absolute;left:-44px;top:4px;width:9px;height:9px;background:var(--gold);border-radius:50%;box-shadow:0 0 0 3px rgba(201,168,76,.2),0 0 16px var(--gold);}
-.tl-book{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:8px;}
-.tl-verse{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--cream);line-height:1.7;}
-.tl-ref{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;color:var(--gold-d);margin-top:8px;}
+.tl-dot{position:absolute;left:-44px;top:4px;width:9px;height:9px;background:var(--gold);border-radius:50%;box-shadow:0 0 0 3px rgba(201,168,76,.2),0 0 16px var(--gold);animation:pulseDot 2s infinite;}
+@keyframes pulseDot{0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
+.tl-book{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;}
+.tl-verse{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--cream);margin-top:6px;}
 
-/* ===================== FLAME CTA ===================== */
-.flame-section{position:relative;overflow:hidden;min-height:50vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 24px;}
+/* FLAME CTA / ALMAS CONTADOR */
+.flame-section{position:relative;overflow:hidden;min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px;}
 #flameCanvas{position:absolute;inset:0;width:100%;height:100%;}
 .flame-content{position:relative;z-index:2;}
-.flame-content h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:300;color:#fff;font-style:italic;margin-bottom:16px;}
-.flame-content p{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--cream-d);font-style:italic;max-width:500px;margin:0 auto 32px;}
-.cta-btn{display:inline-block;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;color:var(--navy);background:var(--gold);padding:14px 40px;cursor:pointer;border:none;transition:all .3s;text-decoration:none;}
+.soul-counter{margin-top:20px;font-family:'Cinzel',serif;background:rgba(0,0,0,.6);padding:10px 24px;border-radius:60px;display:inline-block;}
+.soul-counter span{font-size:1.8rem;color:var(--gold);font-weight:bold;margin-right:8px;}
+.cta-btn{display:inline-block;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;color:var(--navy);background:var(--gold);padding:14px 40px;cursor:pointer;border:none;transition:all .3s;margin-top:20px;}
 .cta-btn:hover{background:var(--gold-l);box-shadow:0 0 40px rgba(201,168,76,.5);}
 
-/* ===================== FOOTER ===================== */
-footer{position:relative;z-index:1;background:var(--navy);border-top:1px solid rgba(201,168,76,.1);padding:48px 24px;text-align:center;}
-.footer-cross{font-size:1.4rem;color:var(--gold-d);margin-bottom:16px;display:block;animation:glowCross 3s ease-in-out infinite;}
-@keyframes glowCross{0%,100%{text-shadow:0 0 10px rgba(201,168,76,.2);}50%{text-shadow:0 0 30px rgba(201,168,76,.8);}}
+/* FOOTER */
+footer{background:var(--navy);border-top:1px solid rgba(201,168,76,.1);padding:48px 24px;text-align:center;}
+.footer-cross{font-size:1.8rem;color:var(--gold-d);margin-bottom:16px;display:block;animation:glowCross 3s ease-in-out infinite;}
 footer p{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-d);font-size:.9rem;}
 
-/* ===================== UTILITY ===================== */
-@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
-@keyframes pulse{0%,100%{opacity:.4;transform:scaleY(.8);}50%{opacity:1;transform:scaleY(1);}}
-
-/* NOTIFICATION */
-#notify{position:fixed;bottom:24px;right:24px;background:var(--gold);color:var(--navy);font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.2em;padding:12px 24px;z-index:9999;opacity:0;transform:translateY(10px);transition:all .4s;pointer-events:none;}
+/* NOTIFICACION */
+#notify{position:fixed;bottom:24px;right:24px;background:var(--gold);color:var(--navy);font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.2em;padding:12px 24px;z-index:9999;opacity:0;transform:translateY(10px);transition:all .4s;pointer-events:none;border-radius:40px;}
 #notify.show{opacity:1;transform:translateY(0);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
 
 @media(max-width:600px){
   nav{padding:16px 20px;}
   .nav-links{display:none;}
   .timeline{padding-left:28px;}
   .tl-dot{left:-33px;}
+  .music-toggle{font-size:.5rem;padding:2px 8px;}
 }
 </style>
 </head>
@@ -189,575 +174,318 @@ footer p{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--go
 
 <div id="cursor"></div>
 <div id="cursor-ring"></div>
+<div id="cursor-glow"></div>
 <div id="progress"></div>
-<div id="notify">¡Versículo copiado! ✓</div>
+<div id="notify">✟ Versículo copiado ✟</div>
 
-<!-- NAV -->
 <nav id="mainNav">
-  <div class="nav-logo">✟ La Gran Comisión</div>
+  <div class="nav-logo">⚔️ LA GRAN COMISIÓN</div>
   <div class="nav-links">
-    <a href="#citas">Citas</a>
-    <a href="#mundo">Al Mundo</a>
-    <a href="#timeline">Cronología</a>
+    <a href="#citas">CITAS</a>
+    <a href="#mundo">MUNDO</a>
+    <a href="#timeline">CRONOLOGÍA</a>
+    <a href="#misioneros">MISIONEROS</a>
   </div>
+  <button class="music-toggle" id="musicBtn">🎵 ACTIVAR MÚSICA</button>
 </nav>
 
-<!-- HERO -->
+<!-- Hero -->
 <section class="hero" id="home">
   <canvas id="heroCanvas"></canvas>
-
-  <!-- SVG Cross Beams -->
   <div class="cross-wrap">
     <svg class="cross-svg" viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="beamGrad" cx="50%" cy="30%" r="50%">
-          <stop offset="0%" stop-color="#e8d48a" stop-opacity="1"/>
-          <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
-        </radialGradient>
-        <filter id="glow">
-          <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-          <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-      </defs>
-      <!-- Vertical beam -->
+      <defs><radialGradient id="beamGrad" cx="50%" cy="30%" r="50%"><stop offset="0%" stop-color="#e8d48a" stop-opacity="1"/><stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/></radialGradient><filter id="glow"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
       <rect class="beam" x="142" y="0" width="16" height="420" fill="url(#beamGrad)" filter="url(#glow)"/>
-      <!-- Horizontal beam -->
       <rect class="beam" x="0" y="110" width="300" height="14" fill="url(#beamGrad)" filter="url(#glow)"/>
-      <!-- Center glow -->
-      <circle cx="150" cy="117" r="22" fill="#e8d48a" opacity=".6" filter="url(#glow)">
-        <animate attributeName="r" values="18;26;18" dur="3s" repeatCount="indefinite"/>
-        <animate attributeName="opacity" values=".5;.9;.5" dur="3s" repeatCount="indefinite"/>
-      </circle>
+      <circle cx="150" cy="117" r="22" fill="#e8d48a" opacity=".6" filter="url(#glow)"><animate attributeName="r" values="18;28;18" dur="3s" repeatCount="indefinite"/></circle>
     </svg>
   </div>
 
-  <!-- Bokeh -->
-  <div class="bokeh" style="width:300px;height:300px;background:rgba(201,168,76,.07);top:10%;left:5%;--tx:40px;--ty:-20px;--dur:14s;--del:0s;"></div>
-  <div class="bokeh" style="width:200px;height:200px;background:rgba(201,168,76,.05);top:60%;right:8%;--tx:-30px;--ty:20px;--dur:10s;--del:3s;"></div>
-  <div class="bokeh" style="width:150px;height:150px;background:rgba(139,26,26,.08);bottom:15%;left:20%;--tx:20px;--ty:-40px;--dur:16s;--del:6s;"></div>
-
   <div class="hero-content">
-    <p class="hero-eyebrow">✟ &nbsp; Palabras de Vida Eterna &nbsp; ✟</p>
+    <p class="hero-eyebrow">✟ &nbsp; EL MANDATO MISIONERO &nbsp; ✟</p>
     <h1 class="hero-h1">La Gran<em>Comisión</em></h1>
     <p class="hero-verse" id="heroVerse">"Id por todo el mundo y predicad el evangelio a toda criatura."</p>
     <span class="hero-ref" id="heroRef">— Marcos 16:15</span>
   </div>
-
-  <div class="scroll-indicator" onclick="document.querySelector('.stats-section').scrollIntoView({behavior:'smooth'})">
-    <span>Descubrir</span>
-    <div class="scroll-line"></div>
+  <div class="scroll-indicator" style="position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;opacity:0;animation:fadeUp 1s forwards 1.8s;cursor:pointer;z-index:2;" onclick="document.querySelector('.stats-section').scrollIntoView({behavior:'smooth'})">
+    <span style="font-family:'Cinzel';font-size:.55rem;letter-spacing:.4em;color:var(--gold-d);">EXPLORAR</span>
+    <div style="width:1px;height:50px;background:linear-gradient(var(--gold),transparent);animation:pulse 2s infinite;"></div>
   </div>
 </section>
 
-<!-- STATS -->
+<!-- Stats -->
 <section class="stats-section">
   <div class="stats-bg"></div>
   <div class="stats-inner">
-    <div class="stat-item">
-      <div class="stat-num" data-target="27">0</div>
-      <div class="stat-label">Libros del Nuevo Testamento</div>
-      <div class="stat-verse">Todo lleno del Evangelio</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num" data-target="12">0</div>
-      <div class="stat-label">Apóstoles Enviados</div>
-      <div class="stat-verse">Marcos 6:7</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num" data-target="3000">0</div>
-      <div class="stat-label">Almas en Pentecostés</div>
-      <div class="stat-verse">Hechos 2:41</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num" data-target="∞" data-real="∞">∞</div>
-      <div class="stat-label">Alcance de Su Amor</div>
-      <div class="stat-verse">Efesios 3:18</div>
-    </div>
+    <div class="stat-item"><div class="stat-num" data-target="27">0</div><div class="stat-label">NT · Libros</div><div class="stat-verse">2 Timoteo 3:16</div></div>
+    <div class="stat-item"><div class="stat-num" data-target="12">0</div><div class="stat-label">Apóstoles</div><div class="stat-verse">Marcos 6:7</div></div>
+    <div class="stat-item"><div class="stat-num" data-target="3000">0</div><div class="stat-label">Almas Pentecostés</div><div class="stat-verse">Hechos 2:41</div></div>
+    <div class="stat-item"><div class="stat-num" data-target="∞" data-real="∞">∞</div><div class="stat-label">Gracia infinita</div><div class="stat-verse">Efesios 2:8</div></div>
   </div>
 </section>
 
-<!-- SPOTLIGHT -->
+<!-- Spotlight -->
 <section class="spotlight-section">
   <canvas id="spotCanvas"></canvas>
   <div class="spotlight-content">
-    <span class="spotlight-tag">✟ El Poder del Evangelio ✟</span>
-    <p class="spotlight-verse">
-      "Porque no me avergüenzo del evangelio, porque es 
-      <span class="highlight">poder de Dios para salvación</span>
-      a todo aquel que cree; al judío primeramente, y también al griego."
-    </p>
+    <span class="spotlight-tag">✟ PODER PARA TESTIFICAR ✟</span>
+    <p class="spotlight-verse">"No me avergüenzo del evangelio, porque es <span class="highlight">poder de Dios para salvación</span> a todo aquel que cree."</p>
     <div class="spotlight-ref">Romanos 1:16</div>
   </div>
 </section>
 
-<!-- CARDS -->
+<!-- Cards Citas Bíblicas (30 versículos) -->
 <section class="cards-section" id="citas">
-  <div class="section-title">
-    <h2>✟ Escrituras Sobre Evangelismo</h2>
-    <p>Palabras Eternas que nos Impulsan</p>
-  </div>
+  <div class="section-title"><h2>✟ ESCRITURAS SOBRE EVANGELISMO</h2><p>30 promesas que encienden el corazón</p></div>
   <div class="filter-bar" id="filterBar">
     <button class="fb on" data-f="all">Todas</button>
-    <button class="fb" data-f="mision">Misión</button>
-    <button class="fb" data-f="salvacion">Salvación</button>
-    <button class="fb" data-f="poder">Poder</button>
-    <button class="fb" data-f="fruto">Fruto</button>
+    <button class="fb" data-f="mision">Misión</button><button class="fb" data-f="salvacion">Salvación</button>
+    <button class="fb" data-f="poder">Poder</button><button class="fb" data-f="fruto">Fruto</button>
+    <button class="fb" data-f="amor">Amor</button><button class="fb" data-f="discipulado">Discipulado</button>
   </div>
   <div class="cards-grid" id="cardsGrid"></div>
 </section>
 
-<!-- WORLD MAP -->
+<!-- Misioneros del NT (nuevo) -->
+<section class="missionary-section" id="misioneros">
+  <div class="section-title"><h2>⚔️ TESTIGOS VALIENTES</h2><p>Ellos llevaron el evangelio hasta el fin</p></div>
+  <div class="missionary-grid" id="missionaryGrid"></div>
+</section>
+
+<!-- Profecías Cumplidas (nuevo) -->
+<section class="prophecy-section">
+  <div class="section-title"><h2>📜 PROFECÍAS QUE ANUNCIARON EL EVANGELIO</h2><p>Antes de que Cristo viniera, ya estaba escrito</p></div>
+  <div class="prophecy-flex">
+    <div class="prophecy-card"><i>📖</i><div class="prophecy-text">"Cuán hermosos son los pies del que trae alegres nuevas"</div><div class="prophecy-ref">Isaías 52:7</div></div>
+    <div class="prophecy-card"><i>🔥</i><div class="prophecy-text">"Derramaré mi Espíritu sobre toda carne, y profetizarán"</div><div class="prophecy-ref">Joel 2:28</div></div>
+    <div class="prophecy-card"><i>🌍</i><div class="prophecy-text">"Desde el nacimiento del sol hasta su ocaso, grande será mi nombre entre las naciones"</div><div class="prophecy-ref">Malaquías 1:11</div></div>
+  </div>
+</section>
+
+<!-- Mapa mundial mejorado -->
 <section class="world-section" id="mundo">
-  <div class="world-title">
-    <h2>✟ Hasta lo Último de la Tierra</h2>
-    <p>Un Mensaje para Toda Nación</p>
-    <div class="world-subtitle">"…y me seréis testigos en Jerusalén, en toda Judea, en Samaria, y hasta lo último de la tierra." — Hechos 1:8</div>
-  </div>
-
-  <!-- Simplified world map SVG with glowing dots -->
-  <svg id="worldSvg" viewBox="0 0 900 450" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <radialGradient id="dotGrad" cx="50%" cy="50%" r="50%">
-        <stop offset="0%" stop-color="#e8d48a"/>
-        <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
-      </radialGradient>
-      <filter id="dotGlow">
-        <feGaussianBlur stdDeviation="3" result="b"/>
-        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-    </defs>
-
-    <!-- Grid lines -->
-    <g stroke="rgba(201,168,76,0.06)" stroke-width="1">
-      <line x1="0" y1="150" x2="900" y2="150"/>
-      <line x1="0" y1="225" x2="900" y2="225"/>
-      <line x1="0" y1="300" x2="900" y2="300"/>
-      <line x1="225" y1="0" x2="225" y2="450"/>
-      <line x1="450" y1="0" x2="450" y2="450"/>
-      <line x1="675" y1="0" x2="675" y2="450"/>
+  <div class="world-title"><h2>✟ HASTA LO ÚLTIMO DE LA TIERRA</h2><p>"Me seréis testigos..."</p><div class="world-subtitle">Hechos 1:8</div></div>
+  <svg id="worldSvg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+    <defs><radialGradient id="dotGrad" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e8d48a"/><stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/></radialGradient><filter id="dotGlow"><feGaussianBlur stdDeviation="3"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    <g stroke="rgba(201,168,76,0.06)" stroke-width="1"><line x1="0" y1="166" x2="1000" y2="166"/><line x1="0" y1="250" x2="1000" y2="250"/><line x1="0" y1="333" x2="1000" y2="333"/><line x1="250" y1="0" x2="250" y2="500"/><line x1="500" y1="0" x2="500" y2="500"/><line x1="750" y1="0" x2="750" y2="500"/></g>
+    <path class="continent" d="M100,70 L180,60 L220,80 L240,110 L230,160 L210,200 L190,220 L160,230 L140,210 L120,180 L100,150 Z" fill="rgba(201,168,76,.12)" stroke="rgba(201,168,76,.3)" stroke-width=".5"/>
+    <path class="continent" d="M190,250 L240,240 L270,260 L280,310 L270,360 L250,400 L220,410 L195,390 L175,350 L168,300 L175,275 Z" fill="rgba(201,168,76,.12)" stroke="rgba(201,168,76,.3)" stroke-width=".5"/>
+    <path class="continent" d="M400,70 L460,65 L490,80 L500,110 L480,130 L450,140 L420,130 L400,110 Z"/>
+    <path class="continent" d="M410,150 L470,140 L510,160 L520,220 L510,290 L490,340 L460,360 L430,355 L405,320 L390,260 L390,200 Z"/>
+    <path class="continent" d="M510,60 L620,50 L720,70 L780,100 L800,140 L770,170 L720,180 L660,170 L600,180 L550,160 L520,130 L510,100 Z"/>
+    <path class="continent" d="M730,280 L810,270 L850,290 L860,330 L840,360 L800,375 L750,365 L720,340 L710,305 Z"/>
+    <!-- Jerusalem center -->
+    <circle cx="500" cy="170" r="9" fill="#e8d48a" filter="url(#dotGlow)"><animate attributeName="r" values="7;14;7" dur="2s" repeatCount="indefinite"/></circle>
+    <text x="505" y="163" font-family="serif" font-size="8" fill="#e8d48a">Jerusalén</text>
+    <!-- Líneas de conexión a ciudades misioneras -->
+    <g stroke="rgba(201,168,76,.4)" stroke-width="1" stroke-dasharray="4 4" fill="none">
+      <line x1="500" y1="170" x2="180" y2="200"/><line x1="500" y1="170" x2="420" y2="110"/><line x1="500" y1="170" x2="680" y2="140"/><line x1="500" y1="170" x2="550" y2="260"/><line x1="500" y1="170" x2="250" y2="280"/><line x1="500" y1="170" x2="800" y2="320"/>
     </g>
-
-    <!-- North America -->
-    <path class="continent" d="M90,70 L160,60 L200,80 L220,110 L210,160 L190,200 L170,220 L140,230 L120,210 L100,180 L85,150 L70,120 Z"/>
-    <!-- South America -->
-    <path class="continent" d="M170,250 L220,240 L250,260 L260,310 L250,360 L230,390 L200,400 L175,380 L155,340 L148,290 L155,265 Z"/>
-    <!-- Europe -->
-    <path class="continent" d="M370,70 L430,65 L460,80 L470,110 L450,130 L420,140 L390,130 L370,110 Z"/>
-    <!-- Africa -->
-    <path class="continent" d="M380,150 L440,140 L480,160 L490,220 L480,290 L460,340 L430,360 L400,355 L375,320 L360,260 L360,200 Z"/>
-    <!-- Asia -->
-    <path class="continent" d="M470,60 L580,50 L680,70 L740,100 L760,140 L730,170 L680,180 L620,170 L560,180 L510,160 L480,130 L468,100 Z"/>
-    <!-- Australia -->
-    <path class="continent" d="M680,260 L760,250 L800,270 L810,310 L790,340 L750,355 L700,345 L670,320 L660,285 Z"/>
-
-    <!-- Connection lines from Jerusalem (≈450,155) -->
-    <g>
-      <line class="connection-line" x1="450" y1="155" x2="130" y2="150" style="--delay:0s"/>
-      <line class="connection-line" x1="450" y1="155" x2="200" y2="310" style="--delay:1s"/>
-      <line class="connection-line" x1="450" y1="155" x2="410" y2="95" style="--delay:.5s"/>
-      <line class="connection-line" x1="450" y1="155" x2="425" y2="240" style="--delay:1.5s"/>
-      <line class="connection-line" x1="450" y1="155" x2="630" y2="120" style="--delay:.3s"/>
-      <line class="connection-line" x1="450" y1="155" x2="740" y2="300" style="--delay:.8s"/>
-    </g>
-
-    <!-- Jerusalem dot (origin) -->
-    <circle cx="450" cy="155" r="8" fill="#e8d48a" filter="url(#dotGlow)">
-      <animate attributeName="r" values="6;12;6" dur="2s" repeatCount="indefinite"/>
-      <animate attributeName="opacity" values=".8;1;.8" dur="2s" repeatCount="indefinite"/>
-    </circle>
-    <text x="455" y="148" font-family="serif" font-size="8" fill="#e8d48a" opacity=".7">Jerusalén</text>
-
-    <!-- City dots -->
-    <circle class="glow-dot" cx="130" cy="150" r="5" fill="var(--gold)" filter="url(#dotGlow)" style="animation-delay:.4s"/>
-    <circle class="glow-dot" cx="200" cy="310" r="4" fill="var(--gold)" filter="url(#dotGlow)" style="animation-delay:.8s"/>
-    <circle class="glow-dot" cx="410" cy="95" r="4" fill="var(--gold)" filter="url(#dotGlow)" style="animation-delay:1.2s"/>
-    <circle class="glow-dot" cx="425" cy="240" r="4" fill="var(--gold)" filter="url(#dotGlow)" style="animation-delay:.2s"/>
-    <circle class="glow-dot" cx="630" cy="120" r="5" fill="var(--gold)" filter="url(#dotGlow)" style="animation-delay:1.6s"/>
-    <circle class="glow-dot" cx="740" cy="300" r="4" fill="var(--gold)" filter="url(#dotGlow)" style="animation-delay:.6s"/>
-
-    <!-- Labels -->
-    <text x="100" y="145" font-family="serif" font-size="7" fill="rgba(201,168,76,.6)">América</text>
-    <text x="400" y="88" font-family="serif" font-size="7" fill="rgba(201,168,76,.6)">Europa</text>
-    <text x="415" y="235" font-family="serif" font-size="7" fill="rgba(201,168,76,.6)">África</text>
-    <text x="620" y="112" font-family="serif" font-size="7" fill="rgba(201,168,76,.6)">Asia</text>
-    <text x="720" y="295" font-family="serif" font-size="7" fill="rgba(201,168,76,.6)">Oceanía</text>
+    <!-- Ciudades -->
+    <circle cx="180" cy="200" r="4" fill="var(--gold)" filter="url(#dotGlow)"><animate attributeName="r" values="3;6;3" dur="3s" repeatCount="indefinite"/></circle><text x="170" y="195" font-size="6" fill="var(--gold-d)">Roma</text>
+    <circle cx="420" cy="110" r="4" fill="var(--gold)"/><text x="410" y="105" font-size="6" fill="var(--gold-d)">Antioquía</text>
+    <circle cx="680" cy="140" r="4" fill="var(--gold)"/><text x="670" y="135" font-size="6" fill="var(--gold-d)">Éfeso</text>
+    <circle cx="550" cy="260" r="4" fill="var(--gold)"/><text x="540" y="255" font-size="6" fill="var(--gold-d)">Corinto</text>
+    <circle cx="250" cy="280" r="4" fill="var(--gold)"/><text x="240" y="275" font-size="6" fill="var(--gold-d)">Alejandría</text>
+    <circle cx="800" cy="320" r="4" fill="var(--gold)"/><text x="790" y="315" font-size="6" fill="var(--gold-d)">Damasco</text>
   </svg>
-
-  <div class="world-verse">
-    <p>"Haced discípulos a todas las naciones."</p>
-    <span>Mateo 28:19</span>
-  </div>
+  <div class="world-verse" style="text-align:center;margin-top:30px;"><p>"Haced discípulos a todas las naciones"</p><span>Mateo 28:19</span></div>
 </section>
 
-<!-- TYPEWRITER -->
+<!-- Typewriter versículos -->
 <section class="typewriter-section">
-  <div class="tw-bg">
-    <div class="tw-circle" style="width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
-    <div class="tw-circle" style="width:400px;height:400px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
-    <div class="tw-circle" style="width:200px;height:200px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
-  </div>
-  <div class="tw-content">
-    <div class="tw-label">✟ Versículo en Vivo</div>
-    <div class="tw-text"><span id="twText"></span><span id="twCursor"></span></div>
-    <div class="tw-ref" id="twRef"></div>
-    <div class="tw-nav" id="twNav"></div>
-  </div>
+  <div class="tw-content"><div class="tw-label">✟ VERSÍCULO VIVO</div><div class="tw-text"><span id="twText"></span><span id="twCursor"></span></div><div class="tw-ref" id="twRef"></div><div class="tw-nav" id="twNav"></div></div>
 </section>
 
-<!-- TIMELINE -->
+<!-- Timeline ampliada -->
 <section class="timeline-section" id="timeline">
-  <div class="tl-title">
-    <h2>✟ A través de las Escrituras</h2>
-    <p>El hilo dorado del Evangelismo</p>
-  </div>
+  <div class="tl-title"><h2>✟ A TRAVÉS DE LAS ESCRITURAS</h2><p>El hilo dorado del evangelismo</p></div>
   <div class="timeline" id="timeline"></div>
 </section>
 
-<!-- FLAME CTA -->
+<!-- Flame + Contador de almas -->
 <section class="flame-section">
   <canvas id="flameCanvas"></canvas>
   <div class="flame-content">
-    <h2>¿Estás listo para ser testigo?</h2>
-    <p>"El que gana almas es sabio." — Proverbios 11:30</p>
-    <button class="cta-btn" onclick="document.getElementById('citas').scrollIntoView({behavior:'smooth'})">Leer las Escrituras ✟</button>
+    <h2 style="font-family:'Cormorant Garamond';font-size:clamp(2rem,5vw,3.5rem);font-style:italic;">🔥 ¿Estás listo para ser testigo?</h2>
+    <p style="font-style:italic;">"El que gana almas es sabio" — Proverbios 11:30</p>
+    <div class="soul-counter"><span id="soulCount">3000</span> almas alcanzadas hasta hoy</div>
+    <button class="cta-btn" onclick="document.getElementById('citas').scrollIntoView({behavior:'smooth'})">🔥 LEER LAS ESCRITURAS 🔥</button>
   </div>
 </section>
 
-<footer>
-  <span class="footer-cross">✟</span>
-  <p>"Porque de tal manera amó Dios al mundo…" — Juan 3:16</p>
-</footer>
+<footer><span class="footer-cross">✟</span><p>"Porque de tal manera amó Dios al mundo..." — Juan 3:16</p><p style="margin-top:12px;">© La Gran Comisión · 2026</p></footer>
 
 <script>
-/* ============ DATA ============ */
-const quotes=[
+// ========== DATOS BÍBLICOS AMPLIADOS (30 citas) ==========
+const quotes = [
   {text:"Id, y haced discípulos a todas las naciones, bautizándolos en el nombre del Padre, y del Hijo, y del Espíritu Santo.",ref:"Mateo 28:19",n:"01",cat:"mision"},
   {text:"Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna.",ref:"Juan 3:16",n:"02",cat:"salvacion"},
   {text:"Recibiréis poder, cuando haya venido sobre vosotros el Espíritu Santo, y me seréis testigos en Jerusalén, en toda Judea, en Samaria, y hasta lo último de la tierra.",ref:"Hechos 1:8",n:"03",cat:"poder"},
   {text:"¿Cómo, pues, invocarán a aquel en el cual no han creído? ¿Y cómo creerán en aquel de quien no han oído? ¿Y cómo oirán sin haber quien les predique?",ref:"Romanos 10:14",n:"04",cat:"mision"},
-  {text:"No me avergüenzo del evangelio, porque es poder de Dios para salvación a todo aquel que cree; al judío primeramente, y también al griego.",ref:"Romanos 1:16",n:"05",cat:"poder"},
+  {text:"No me avergüenzo del evangelio, porque es poder de Dios para salvación a todo aquel que cree.",ref:"Romanos 1:16",n:"05",cat:"poder"},
   {text:"La mies es mucha, mas los obreros pocos; rogad, pues, al Señor de la mies, que envíe obreros a su mies.",ref:"Lucas 10:2",n:"06",cat:"mision"},
   {text:"Todo aquel que invocare el nombre del Señor, será salvo.",ref:"Romanos 10:13",n:"07",cat:"salvacion"},
   {text:"El fruto del justo es árbol de vida; y el que gana almas es sabio.",ref:"Proverbios 11:30",n:"08",cat:"fruto"},
-  {text:"Predicad la palabra; que instes a tiempo y fuera de tiempo; redarguye, reprende, exhorta con toda paciencia y doctrina.",ref:"2 Timoteo 4:2",n:"09",cat:"mision"},
+  {text:"Predicad la palabra; que instes a tiempo y fuera de tiempo.",ref:"2 Timoteo 4:2",n:"09",cat:"mision"},
   {text:"La fe es por el oír, y el oír, por la palabra de Dios.",ref:"Romanos 10:17",n:"10",cat:"poder"},
-  {text:"Los que sembraron con lágrimas, con regocijo segarán. Irá andando y llorando el que lleva la preciosa semilla; mas volverá con regocijo, trayendo sus gavillas.",ref:"Salmos 126:5–6",n:"11",cat:"fruto"},
-  {text:"Vosotros sois linaje escogido, real sacerdocio, nación santa, pueblo adquirido por Dios, para que anunciéis las virtudes de aquel que os llamó de las tinieblas a su luz admirable.",ref:"1 Pedro 2:9",n:"12",cat:"mision"},
+  {text:"Los que sembraron con lágrimas, con regocijo segarán.",ref:"Salmos 126:5-6",n:"11",cat:"fruto"},
+  {text:"Vosotros sois linaje escogido, real sacerdocio, nación santa, pueblo adquirido por Dios, para que anunciéis las virtudes de aquel que os llamó.",ref:"1 Pedro 2:9",n:"12",cat:"mision"},
+  {text:"Un mandamiento nuevo os doy: Que os améis unos a otros; como yo os he amado.",ref:"Juan 13:34",n:"13",cat:"amor"},
+  {text:"El amor de Cristo nos constriñe, porque estamos convencidos de que uno murió por todos.",ref:"2 Corintios 5:14",n:"14",cat:"amor"},
+  {text:"En esto conocerán todos que sois mis discípulos, si tuviereis amor los unos con los otros.",ref:"Juan 13:35",n:"15",cat:"discipulado"},
+  {text:"Si alguno quiere venir en pos de mí, niéguese a sí mismo, tome su cruz cada día, y sígame.",ref:"Lucas 9:23",n:"16",cat:"discipulado"},
+  {text:"El que cree en mí, como dice la Escritura, de su interior correrán ríos de agua viva.",ref:"Juan 7:38",n:"17",cat:"poder"},
+  {text:"Cercano está Jehová a los quebrantados de corazón; y salva a los contritos de espíritu.",ref:"Salmos 34:18",n:"18",cat:"salvacion"},
+  {text:"Pero el Señor me ha enviado a predicar el evangelio a los pobres, a sanar a los quebrantados de corazón.",ref:"Lucas 4:18",n:"19",cat:"mision"},
+  {text:"Yo estoy con vosotros todos los días, hasta el fin del mundo.",ref:"Mateo 28:20",n:"20",cat:"mision"},
+  {text:"El que cree en el Hijo tiene vida eterna; pero el que rehúsa creer en el Hijo no verá la vida.",ref:"Juan 3:36",n:"21",cat:"salvacion"},
+  {text:"Por tanto, nosotros somos embajadores en nombre de Cristo, como si Dios rogase por medio de nosotros.",ref:"2 Corintios 5:20",n:"22",cat:"mision"},
+  {text:"Anunciad a Cristo, exhortando y enseñando a todo hombre en toda sabiduría.",ref:"Colosenses 1:28",n:"23",cat:"discipulado"},
+  {text:"Tú pues, sufre penalidades como buen soldado de Jesucristo.",ref:"2 Timoteo 2:3",n:"24",cat:"fruto"},
+  {text:"Porque el Señor nos mandó, diciendo: Te he puesto para luz de las naciones, a fin de que seas para salvación hasta lo último de la tierra.",ref:"Hechos 13:47",n:"25",cat:"mision"},
+  {text:"Así que la fe es por el oír, y el oír, por la palabra de Dios.",ref:"Romanos 10:17",n:"26",cat:"poder"},
+  {text:"Pero tenéis la unción del Santo, y conocéis todas las cosas.",ref:"1 Juan 2:20",n:"27",cat:"poder"},
+  {text:"Porque el amor de Dios se ha derramado en nuestros corazones por el Espíritu Santo.",ref:"Romanos 5:5",n:"28",cat:"amor"},
+  {text:"El que me sigue no andará en tinieblas, sino que tendrá la luz de la vida.",ref:"Juan 8:12",n:"29",cat:"discipulado"},
+  {text:"Cantad a Jehová toda la tierra, anunciad de día en día su salvación.",ref:"1 Crónicas 16:23",n:"30",cat:"fruto"},
 ];
 
-const typeVerses=[
+const typeVerses = [
   {text:"Vosotros sois la luz del mundo; una ciudad asentada sobre un monte no se puede esconder.",ref:"Mateo 5:14"},
   {text:"Estad siempre preparados para presentar defensa con mansedumbre y reverencia ante todo el que os demande razón de la esperanza que hay en vosotros.",ref:"1 Pedro 3:15"},
   {text:"El Espíritu del Señor está sobre mí, por cuanto me ha ungido para dar buenas nuevas a los pobres.",ref:"Lucas 4:18"},
-  {text:"Así alumbre vuestra luz delante de los hombres, para que vean vuestras buenas obras y glorifiquen a vuestro Padre que está en los cielos.",ref:"Mateo 5:16"},
+  {text:"Así alumbre vuestra luz delante de los hombres, para que vean vuestras buenas obras y glorifiquen a vuestro Padre.",ref:"Mateo 5:16"},
   {text:"He aquí que no se ha acortado la mano de Jehová para salvar, ni se ha agravado su oído para oír.",ref:"Isaías 59:1"},
+  {text:"Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree no se pierda.",ref:"Juan 3:16"},
 ];
 
-const timelineData=[
-  {book:"Isaías 52:7",text:"¡Cuán hermosos son sobre los montes los pies del que trae alegres nuevas, del que anuncia la paz…"},
-  {book:"Mateo 4:17",text:"Desde entonces comenzó Jesús a predicar, y a decir: Arrepentíos, porque el reino de los cielos se ha acercado."},
+const timelineData = [
+  {book:"Isaías 52:7",text:"¡Cuán hermosos son los pies del que trae alegres nuevas, del que anuncia la paz!"},
+  {book:"Jonás 3:2",text:"Levántate y ve a Nínive, la gran ciudad, y proclama en ella el mensaje que yo te diré."},
+  {book:"Mateo 4:17",text:"Desde entonces comenzó Jesús a predicar: Arrepentíos, porque el reino de los cielos se ha acercado."},
   {book:"Marcos 16:15",text:"Id por todo el mundo y predicad el evangelio a toda criatura."},
   {book:"Hechos 2:38",text:"Pedro les dijo: Arrepentíos, y bautícese cada uno de vosotros en el nombre de Jesucristo para perdón de los pecados."},
   {book:"Hechos 8:4",text:"Pero los que fueron esparcidos iban por todas partes anunciando el evangelio."},
-  {book:"Romanos 15:20",text:"Y de esta manera me esforcé a predicar el evangelio, no donde Cristo ya hubiese sido nombrado, para no edificar sobre fundamento ajeno."},
+  {book:"Hechos 13:2",text:"Apartadme a Bernabé y a Saulo para la obra a que los he llamado."},
+  {book:"Romanos 15:20",text:"Y de esta manera me esforcé a predicar el evangelio, no donde Cristo ya hubiese sido nombrado."},
+  {book:"1 Corintios 9:16",text:"¡Ay de mí si no anunciare el evangelio!"},
   {book:"Apocalipsis 14:6",text:"Vi volar por en medio del cielo a otro ángel, que tenía el evangelio eterno para predicarlo a los moradores de la tierra."},
 ];
 
-/* ============ CURSOR ============ */
-const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
-document.addEventListener('mousemove',e=>{
-  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
-  ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';
-});
-document.addEventListener('mousedown',()=>{cur.style.transform='translate(-50%,-50%) scale(1.8)';});
-document.addEventListener('mouseup',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';});
-document.querySelectorAll('button,a,.fb,.qcard').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';});
-  el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';});
-});
+const missionaries = [
+  {name:"Pablo",icon:"⚡",text:"De perseguidor a apóstol de los gentiles. Viajó más de 10,000 millas predicando.",verse:"Romanos 1:16"},
+  {name:"Pedro",icon:"🐟",text:"Negó a Cristo pero fue restaurado para predicar en Pentecostés (3,000 almas).",verse:"Hechos 2:41"},
+  {name:"Felipe",icon:"👣",text:"Evangelizó a Samaria y al eunuco etíope, abriendo camino a África.",verse:"Hechos 8:26-40"},
+  {name:"Bernabé",icon:"🤝",text:"Hijo de consolación, animó a Pablo y llevó el mensaje a Chipre.",verse:"Hechos 11:24"},
+  {name:"Junías",icon:"🌹",text:"Mujer apóstol, destacada entre los mensajeros del evangelio.",verse:"Romanos 16:7"},
+  {name:"Timoteo",icon:"🔥",text:"Discípulo fiel que continuó la obra de Pablo en Éfeso.",verse:"2 Timoteo 4:5"},
+];
 
-/* ============ PROGRESS ============ */
-const progBar=document.getElementById('progress');
-window.addEventListener('scroll',()=>{
-  const pct=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;
-  progBar.style.width=pct+'%';
-});
+// ========== FUNCIONES COMPARTIDAS ==========
+function copyVerse(e,text){ e.stopPropagation(); navigator.clipboard.writeText(text).catch(()=>{}); document.getElementById('notify').classList.add('show'); setTimeout(()=>document.getElementById('notify').classList.remove('show'),2500); }
 
-/* ============ NAV ============ */
-window.addEventListener('scroll',()=>{
-  document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>60);
-});
-
-/* ============ HERO CANVAS - PARTICLES ============ */
-(function(){
-  const cv=document.getElementById('heroCanvas');
-  const ctx=cv.getContext('2d');
-  let W,H,particles=[];
-  function resize(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;}
-  resize();window.addEventListener('resize',resize);
-
-  function Particle(){
-    this.reset=function(){
-      this.x=Math.random()*W;this.y=Math.random()*H;
-      this.r=Math.random()*1.8+.4;this.vx=(Math.random()-.5)*.3;
-      this.vy=-(Math.random()*.5+.1);this.life=0;this.maxLife=120+Math.random()*180;
-      this.hue=40+Math.random()*20;
-    };this.reset();this.life=Math.random()*this.maxLife;
-    this.update=function(){
-      this.x+=this.vx;this.y+=this.vy;this.life++;
-      if(this.life>this.maxLife)this.reset();
-    };
-    this.draw=function(){
-      const t=this.life/this.maxLife;
-      const a=t<.2?t/.2:t>.8?(1-t)/.2:1;
-      ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
-      ctx.fillStyle=`hsla(${this.hue},70%,70%,${a*.7})`;ctx.fill();
-    };
-  }
-  for(let i=0;i<120;i++){const p=new Particle();particles.push(p);}
-
-  // Connection lines
-  function drawLines(){
-    for(let i=0;i<particles.length;i++){
-      for(let j=i+1;j<particles.length;j++){
-        const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
-        const d=Math.sqrt(dx*dx+dy*dy);
-        if(d<80){
-          ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);
-          ctx.strokeStyle=`rgba(201,168,76,${(1-d/80)*.1})`;ctx.lineWidth=.5;ctx.stroke();
-        }
-      }
-    }
-  }
-
-  function loop(){
-    ctx.clearRect(0,0,W,H);
-    // gradient bg
-    const g=ctx.createRadialGradient(W/2,H*.3,0,W/2,H*.3,Math.max(W,H)*.7);
-    g.addColorStop(0,'rgba(18,34,80,.8)');g.addColorStop(1,'rgba(5,13,31,1)');
-    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-    drawLines();
-    particles.forEach(p=>{p.update();p.draw();});
-    requestAnimationFrame(loop);
-  }
-  loop();
-})();
-
-/* ============ SPOTLIGHT CANVAS ============ */
-(function(){
-  const cv=document.getElementById('spotCanvas');
-  const ctx=cv.getContext('2d');
-  let W,H,t=0;
-  function resize(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;}
-  resize();window.addEventListener('resize',resize);
-  function loop(){
-    t+=.005;
-    ctx.fillStyle='rgba(4,11,24,.04)';ctx.fillRect(0,0,W,H);
-    // Moving spotlight
-    const cx=W/2+Math.sin(t)*W*.15,cy=H/2+Math.cos(t*.7)*H*.1;
-    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,280);
-    g.addColorStop(0,'rgba(201,168,76,.12)');g.addColorStop(1,'transparent');
-    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-    // Secondary
-    const cx2=W/2+Math.sin(t*1.3+2)*W*.12,cy2=H/2+Math.cos(t*.9)*H*.12;
-    const g2=ctx.createRadialGradient(cx2,cy2,0,cx2,cy2,200);
-    g2.addColorStop(0,'rgba(139,26,26,.08)');g2.addColorStop(1,'transparent');
-    ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);
-    requestAnimationFrame(loop);
-  }
-  ctx.fillStyle='rgba(4,11,24,1)';ctx.fillRect(0,0,W,H);
-  loop();
-})();
-
-/* ============ FLAME CANVAS ============ */
-(function(){
-  const cv=document.getElementById('flameCanvas');
-  const ctx=cv.getContext('2d');
-  let W,H;
-  function resize(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;}
-  resize();window.addEventListener('resize',resize);
-  const particles=[];
-  function FP(){
-    this.reset=function(){
-      this.x=W/2+(Math.random()-.5)*80;this.y=H*.8;
-      this.vx=(Math.random()-.5)*1.5;this.vy=-(Math.random()*4+2);
-      this.life=0;this.maxLife=60+Math.random()*40;
-      this.r=Math.random()*8+4;
-    };this.reset();this.life=Math.random()*this.maxLife;
-  }
-  for(let i=0;i<60;i++){const p=new FP();particles.push(p);}
-  function loop(){
-    ctx.fillStyle='rgba(4,11,24,.2)';ctx.fillRect(0,0,W,H);
-    particles.forEach(p=>{
-      p.life++;p.x+=p.vx;p.y+=p.vy;p.vy*=.98;p.vx+=(Math.random()-.5)*.3;
-      if(p.life>p.maxLife)p.reset();
-      const t=p.life/p.maxLife;
-      const a=(t<.3?t/.3:1-t)*0.7;
-      const hue=t<.5?20:40;
-      const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*(1-t*.5));
-      g.addColorStop(0,`hsla(${hue},100%,75%,${a})`);
-      g.addColorStop(1,`hsla(${hue},100%,40%,0)`);
-      ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
-    });
-    requestAnimationFrame(loop);
-  }
-  ctx.fillStyle='rgba(4,11,24,1)';ctx.fillRect(0,0,W,H);loop();
-})();
-
-/* ============ CARDS ============ */
-const grid=document.getElementById('cardsGrid');
-let activeFilter='all';
-
-function renderCards(f){
+// Render Citas
+function renderCards(filter){
+  const grid=document.getElementById('cardsGrid');
+  const list=filter==='all'?quotes:quotes.filter(q=>q.cat===filter);
   grid.innerHTML='';
-  const list=f==='all'?quotes:quotes.filter(q=>q.cat===f);
   list.forEach((q,i)=>{
-    const d=document.createElement('div');
-    d.className='qcard';
-    d.style.transitionDelay=`${i*.06}s`;
-    d.innerHTML=`
-      <div class="qcard-glow"></div>
-      <button class="qcard-share" title="Copiar" onclick="copyVerse(event,'${q.text.replace(/'/g,"\\'")} — ${q.ref}')">✟</button>
-      <div class="qcard-header">
-        <span class="qcard-num">${q.n}</span>
-        <div class="qcard-hr"></div>
-        <span class="qcard-cat">${q.cat}</span>
-      </div>
-      <p class="qcard-text">"${q.text}"</p>
-      <div class="qcard-ref">${q.ref}</div>`;
-    // 3D tilt
-    d.addEventListener('mousemove',e=>{
-      const r=d.getBoundingClientRect();
-      const x=(e.clientX-r.left)/r.width-.5;
-      const y=(e.clientY-r.top)/r.height-.5;
-      d.style.transform=`perspective(600px) rotateY(${x*12}deg) rotateX(${-y*8}deg) translateY(-4px)`;
-      d.style.setProperty('--mx',`${(x+.5)*100}%`);
-      d.style.setProperty('--my',`${(y+.5)*100}%`);
-    });
-    d.addEventListener('mouseleave',()=>{d.style.transform='';});
-    grid.appendChild(d);
-    setTimeout(()=>d.classList.add('visible'),50+i*80);
+    const card=document.createElement('div');
+    card.className='qcard';
+    card.style.transitionDelay=`${i*0.02}s`;
+    card.innerHTML=`<div class="qcard-glow"></div><button class="qcard-share" style="position:absolute;top:16px;right:16px;background:transparent;border:1px solid rgba(201,168,76,.2);color:var(--gold-d);width:28px;height:28px;border-radius:50%;cursor:pointer;opacity:0;transition:opacity .3s;" onclick="copyVerse(event,'${q.text.replace(/'/g,"\\'")} — ${q.ref}')">✟</button><div class="qcard-header" style="display:flex;gap:10px;margin-bottom:20px;"><span class="qcard-num" style="font-family:Cinzel;font-size:.65rem;color:var(--gold-d);">${q.n}</span><div class="qcard-hr" style="flex:1;height:1px;background:rgba(201,168,76,.2);"></div><span class="qcard-cat" style="background:var(--gold-d);padding:3px 8px;color:var(--navy);">${q.cat}</span></div><p class="qcard-text" style="font-family:'Cormorant Garamond';font-size:1.1rem;font-style:italic;">"${q.text}"</p><div class="qcard-ref" style="font-family:Cinzel;font-size:.68rem;letter-spacing:.25em;color:var(--gold);">${q.ref}</div>`;
+    card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5;const y=(e.clientY-r.top)/r.height-.5;card.style.transform=`perspective(600px) rotateY(${x*12}deg) rotateX(${-y*8}deg) translateY(-4px)`;card.style.setProperty('--mx',`${(x+.5)*100}%`);card.style.setProperty('--my',`${(y+.5)*100}%`);});
+    card.addEventListener('mouseleave',()=>{card.style.transform='';});
+    grid.appendChild(card);
+    setTimeout(()=>card.classList.add('visible'),50);
   });
 }
+document.getElementById('filterBar')?.querySelectorAll('.fb').forEach(btn=>{btn.onclick=()=>{document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');renderCards(btn.dataset.f);};});
 renderCards('all');
 
-document.getElementById('filterBar').querySelectorAll('.fb').forEach(btn=>{
-  btn.onclick=()=>{
-    document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
-    btn.classList.add('on');
-    renderCards(btn.dataset.f);
-  };
+// Render Misioneros
+function renderMissionaries(){
+  const grid=document.getElementById('missionaryGrid');
+  if(!grid)return;
+  grid.innerHTML=missionaries.map(m=>`<div class="mission-card"><div class="mission-icon">${m.icon}</div><div class="mission-name">${m.name}</div><div class="mission-text">${m.text}</div><div class="mission-verse">${m.verse}</div></div>`).join('');
+}
+renderMissionaries();
+
+// Timeline
+const tlContainer=document.getElementById('timeline');
+timelineData.forEach((item,i)=>{const div=document.createElement('div');div.className='tl-item';div.style.transitionDelay=`${i*0.05}s`;div.innerHTML=`<div class="tl-dot"></div><div class="tl-book">${item.book}</div><div class="tl-verse">"${item.text}"</div>`;tlContainer.appendChild(div);});
+
+// Intersection Observers
+const obsTimeline=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obsTimeline.unobserve(e.target);}});},{threshold:.2});
+document.querySelectorAll('.tl-item').forEach(el=>obsTimeline.observe(el));
+
+const obsStats=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');const numEl=e.target.querySelector('.stat-num');const target=numEl.dataset.target;if(target!=='∞'){let cur=0;const step=Math.ceil(parseInt(target)/70);const iv=setInterval(()=>{cur=Math.min(cur+step,parseInt(target));numEl.textContent=cur.toLocaleString();if(cur>=parseInt(target))clearInterval(iv);},20);}obsStats.unobserve(e.target);}});},{threshold:.3});
+document.querySelectorAll('.stat-item').forEach(el=>obsStats.observe(el));
+
+// Typewriter
+let twIdx=0,twTimeout=null,twActive=false;
+const twTextSpan=document.getElementById('twText');
+const twRefSpan=document.getElementById('twRef');
+const twNavDiv=document.getElementById('twNav');
+function buildTwNav(){twNavDiv.innerHTML=typeVerses.map((_,i)=>`<div class="tw-dot ${i===0?'on':''}" data-idx="${i}"></div>`).join('');document.querySelectorAll('.tw-dot').forEach(d=>d.addEventListener('click',(e)=>{const idx=parseInt(e.target.dataset.idx);if(!isNaN(idx))setTwVerse(idx);}));}
+function setTwVerse(idx){if(twTimeout)clearTimeout(twTimeout);twIdx=idx;twTextSpan.textContent='';twRefSpan.textContent='';document.querySelectorAll('.tw-dot').forEach((d,i)=>d.classList.toggle('on',i===idx));typeVerse(typeVerses[idx].text,typeVerses[idx].ref);}
+function typeVerse(text,ref,i=0){if(i===0)twTextSpan.textContent='';if(i<text.length){twTextSpan.textContent+=text[i];twTimeout=setTimeout(()=>typeVerse(text,ref,i+1),28);}else{twRefSpan.textContent='— '+ref;twTimeout=setTimeout(()=>{twIdx=(twIdx+1)%typeVerses.length;setTwVerse(twIdx);},4500);}}
+buildTwNav();const twObs=new IntersectionObserver(entries=>{if(entries[0].isIntersecting && !twActive){setTwVerse(0);twActive=true;twObs.disconnect();}},{threshold:.3});twObs.observe(document.querySelector('.typewriter-section'));
+
+// Contador de almas (simulación épica)
+let soulCount=3000;
+const soulSpan=document.getElementById('soulCount');
+if(soulSpan){
+  const inc=setInterval(()=>{if(soulCount<20000){soulCount+=Math.floor(Math.random()*70)+30;soulSpan.innerText=soulCount.toLocaleString();}else clearInterval(inc);},3000);
+}
+
+// Música de fondo (opcional, archivo de prueba)
+const musicBtn=document.getElementById('musicBtn');
+let audio=null;
+musicBtn?.addEventListener('click',()=>{
+  if(!audio){audio=new Audio('https://cdn.pixabay.com/download/audio/2022/10/25/audio_9c7e7c3b2e.mp3?filename=meditation-118190.mp3');audio.loop=true;audio.volume=0.3;}
+  if(audio.paused){audio.play();musicBtn.textContent='🎵 PAUSAR MÚSICA';}else{audio.pause();musicBtn.textContent='🎵 ACTIVAR MÚSICA';}
 });
 
-/* ============ COPY ============ */
-function copyVerse(e,text){
-  e.stopPropagation();
-  navigator.clipboard.writeText(text).catch(()=>{});
-  const n=document.getElementById('notify');
-  n.classList.add('show');
-  setTimeout(()=>n.classList.remove('show'),2500);
-}
+// CURSOR EFECTOS
+const curDiv=document.getElementById('cursor'),ringDiv=document.getElementById('cursor-ring'),glowDiv=document.getElementById('cursor-glow');
+document.addEventListener('mousemove',e=>{curDiv.style.left=e.clientX+'px';curDiv.style.top=e.clientY+'px';ringDiv.style.left=e.clientX+'px';ringDiv.style.top=e.clientY+'px';if(glowDiv){glowDiv.style.left=e.clientX+'px';glowDiv.style.top=e.clientY+'px';glowDiv.style.opacity='0.6';setTimeout(()=>{if(glowDiv)glowDiv.style.opacity='0';},200);}});
+document.querySelectorAll('button,a,.fb,.qcard,.mission-card,.cta-btn').forEach(el=>{el.addEventListener('mouseenter',()=>{curDiv.style.width='20px';curDiv.style.height='20px';});el.addEventListener('mouseleave',()=>{curDiv.style.width='12px';curDiv.style.height='12px';});});
 
-/* ============ STATS COUNTER ============ */
-function animCount(el,target){
-  if(isNaN(target))return;
-  let cur=0;const step=Math.ceil(target/80);
-  const iv=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=cur.toLocaleString();if(cur>=target)clearInterval(iv);},16);
-}
-const statsObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.classList.add('visible');
-      const numEl=e.target.querySelector('.stat-num');
-      const t=numEl.dataset.target;
-      if(t!=='∞')animCount(numEl,parseInt(t));
-      statsObs.unobserve(e.target);
-    }
-  });
-},{threshold:.3});
-document.querySelectorAll('.stat-item').forEach(el=>statsObs.observe(el));
+// PROGRESS BAR
+window.addEventListener('scroll',()=>{const pct=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;document.getElementById('progress').style.width=pct+'%';document.getElementById('mainNav')?.classList.toggle('scrolled',window.scrollY>60);});
 
-/* ============ TYPEWRITER ============ */
-let twIdx=0,twTyping=false,twTimeout=null;
-const twText=document.getElementById('twText');
-const twRef=document.getElementById('twRef');
-const twNav=document.getElementById('twNav');
-
-function buildNav(){
-  twNav.innerHTML='';
-  typeVerses.forEach((_,i)=>{
-    const d=document.createElement('div');
-    d.className='tw-dot'+(i===0?' on':'');
-    d.onclick=()=>setTwVerse(i);
-    twNav.appendChild(d);
-  });
-}
-buildNav();
-
-function setTwVerse(idx){
-  if(twTimeout)clearTimeout(twTimeout);
-  twIdx=idx;
-  twText.textContent='';twRef.textContent='';
-  document.querySelectorAll('.tw-dot').forEach((d,i)=>d.classList.toggle('on',i===idx));
-  typeVerse(typeVerses[idx].text,typeVerses[idx].ref);
-}
-
-function typeVerse(text,ref,i=0){
-  if(i===0)twText.textContent='';
-  if(i<text.length){
-    twText.textContent+=text[i];
-    twTimeout=setTimeout(()=>typeVerse(text,ref,i+1),28);
-  } else {
-    twRef.textContent='— '+ref;
-    twTimeout=setTimeout(()=>{
-      twIdx=(twIdx+1)%typeVerses.length;
-      document.querySelectorAll('.tw-dot').forEach((d,i)=>d.classList.toggle('on',i===twIdx));
-      erase(text,ref);
-    },4000);
+// CANVAS: Hero (partículas formando cruz al pasar mouse)
+const heroCanvas=document.getElementById('heroCanvas');
+let hctx, hW, hH, hParticles=[], hMouse={x:null,y:null};
+function resizeHero(){if(heroCanvas){hW=heroCanvas.width=heroCanvas.offsetWidth;hH=heroCanvas.height=heroCanvas.offsetHeight;}}
+window.addEventListener('resize',resizeHero); resizeHero();
+if(heroCanvas){
+  hctx=heroCanvas.getContext('2d');
+  for(let i=0;i<180;i++){hParticles.push({x:Math.random()*hW,y:Math.random()*hH,r:Math.random()*2+0.5,vx:(Math.random()-.5)*0.3,vy:-(Math.random()*0.5+0.1),life:Math.random()*200});}
+  function drawHero(){
+    if(!hctx)return;
+    const grad=hctx.createLinearGradient(0,0,0,hH);grad.addColorStop(0,'#050d1f');grad.addColorStop(1,'#0a1530');
+    hctx.fillStyle=grad;hctx.fillRect(0,0,hW,hH);
+    hParticles.forEach(p=>{p.x+=p.vx; p.y+=p.vy; if(p.y<0)p.y=hH; if(p.x<0)p.x=hW; if(p.x>hW)p.x=0; p.life++;
+      const dist= hMouse.x && Math.hypot(p.x-hMouse.x,p.y-hMouse.y)<70 ? 1.5 : 1;
+      hctx.beginPath();hctx.arc(p.x,p.y,p.r*dist,0,Math.PI*2);
+      hctx.fillStyle=`rgba(201,168,76,${0.3+Math.sin(p.life*0.05)*0.2})`;hctx.fill();
+    });
+    requestAnimationFrame(drawHero);
   }
+  heroCanvas.addEventListener('mousemove',e=>{const rect=heroCanvas.getBoundingClientRect();hMouse.x=e.clientX-rect.left;hMouse.y=e.clientY-rect.top;});
+  drawHero();
 }
 
-function erase(text,ref,i=text.length){
-  if(i>0){
-    twText.textContent=text.slice(0,i-1);
-    twTimeout=setTimeout(()=>erase(text,ref,i-1),12);
-  } else {
-    twRef.textContent='';
-    twTimeout=setTimeout(()=>typeVerse(typeVerses[twIdx].text,typeVerses[twIdx].ref),400);
-  }
-}
+// Spot canvas (efecto de luz)
+const spotCanvas=document.getElementById('spotCanvas');
+if(spotCanvas){let sctx,sW,sH,t=0;function resizeSpot(){sW=spotCanvas.width=spotCanvas.offsetWidth;sH=spotCanvas.height=spotCanvas.offsetHeight;}resizeSpot();window.addEventListener('resize',resizeSpot);sctx=spotCanvas.getContext('2d');function drawSpot(){t+=0.005;sctx.fillStyle='rgba(5,13,31,0.1)';sctx.fillRect(0,0,sW,sH);const cx=sW/2+Math.sin(t)*sW*0.1,cy=sH/2+Math.cos(t*0.7)*sH*0.1;const grad=sctx.createRadialGradient(cx,cy,0,cx,cy,250);grad.addColorStop(0,'rgba(201,168,76,0.15)');grad.addColorStop(1,'transparent');sctx.fillStyle=grad;sctx.fillRect(0,0,sW,sH);requestAnimationFrame(drawSpot);}drawSpot();}
 
-// Start typewriter when section visible
-const twObs=new IntersectionObserver(entries=>{
-  if(entries[0].isIntersecting&&twText.textContent===''){
-    setTwVerse(0);twObs.disconnect();
-  }
-},{threshold:.3});
-twObs.observe(document.querySelector('.typewriter-section'));
-
-/* ============ TIMELINE ============ */
-const tlEl=document.getElementById('timeline');
-timelineData.forEach((item,i)=>{
-  const div=document.createElement('div');
-  div.className='tl-item';
-  div.style.transitionDelay=`${i*.1}s`;
-  div.innerHTML=`
-    <div class="tl-dot"></div>
-    <div class="tl-book">${item.book}</div>
-    <div class="tl-verse">"${item.text}"</div>`;
-  tlEl.appendChild(div);
-});
-
-const tlObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');tlObs.unobserve(e.target);}});
-},{threshold:.2});
-document.querySelectorAll('.tl-item').forEach(el=>tlObs.observe(el));
-
-/* ============ GENERIC INTERSECTION ============ */
-const genObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');genObs.unobserve(e.target);}});
-},{threshold:.1});
-document.querySelectorAll('.featured-quote').forEach(el=>genObs.observe(el));
+// Flame canvas
+const flameCanvas=document.getElementById('flameCanvas');
+if(flameCanvas){let fctx,fW,fH,fParticles=[];function resizeFlame(){fW=flameCanvas.width=flameCanvas.offsetWidth;fH=flameCanvas.height=flameCanvas.offsetHeight;}resizeFlame();window.addEventListener('resize',resizeFlame);fctx=flameCanvas.getContext('2d');for(let i=0;i<80;i++){fParticles.push({x:fW/2+(Math.random()-.5)*80,y:fH-20,vx:(Math.random()-.5)*1.2,vy:-(Math.random()*4+3),life:0,maxLife:60+Math.random()*50,r:Math.random()*8+4});}function drawFlame(){fctx.fillStyle='rgba(5,13,31,0.2)';fctx.fillRect(0,0,fW,fH);fParticles.forEach(p=>{p.life++;p.x+=p.vx;p.y+=p.vy;if(p.life>p.maxLife||p.y<0){p.x=fW/2+(Math.random()-.5)*80;p.y=fH-10;p.life=0;p.maxLife=60+Math.random()*50;p.vx=(Math.random()-.5)*1.2;p.vy=-(Math.random()*4+3);}const t=p.life/p.maxLife;const a=(t<0.3?t/0.3:1-t)*0.7;const grad=fctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*(1-t*0.5));grad.addColorStop(0,`hsla(40,100%,65%,${a})`);grad.addColorStop(1,`hsla(20,100%,45%,0)`);fctx.fillStyle=grad;fctx.beginPath();fctx.arc(p.x,p.y,p.r,0,Math.PI*2);fctx.fill();});requestAnimationFrame(drawFlame);}drawFlame();}
 </script>
 </body>
 </html>

@@ -1,701 +1,763 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>La Gran Comisión — Citas Bíblicas sobre el Evangelismo</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
-  <style>
-    :root {
-      --gold: #c9a84c;
-      --gold-light: #e8c97a;
-      --gold-dim: #7a5f25;
-      --navy: #0a0f1e;
-      --navy-mid: #121b33;
-      --navy-light: #1c2a4a;
-      --cream: #f5ede0;
-      --cream-dim: #d6c8b2;
-      --white: #ffffff;
-    }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>La Gran Comisión — Evangelismo Bíblico</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,500&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --gold:#c9a84c;--gold-l:#e8d48a;--gold-d:#7a5f25;
+  --navy:#050d1f;--navy-m:#0c1630;--navy-l:#162248;
+  --cream:#f5ede0;--cream-d:#c4b69a;
+  --red:#8b1a1a;--white:#fff;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--navy);color:var(--cream);font-family:'Lato',sans-serif;font-weight:300;overflow-x:hidden;cursor:none;}
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* CUSTOM CURSOR */
+#cursor{position:fixed;width:12px;height:12px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s,width .3s,height .3s,opacity .3s;mix-blend-mode:screen;}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(201,168,76,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .08s;}
 
-    html { scroll-behavior: smooth; }
+/* PROGRESS BAR */
+#progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l));z-index:9997;width:0%;transition:width .1s;}
 
-    body {
-      background-color: var(--navy);
-      color: var(--cream);
-      font-family: 'Lato', sans-serif;
-      font-weight: 300;
-      overflow-x: hidden;
-    }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;padding:20px 48px;display:flex;justify-content:space-between;align-items:center;transition:background .4s,backdrop-filter .4s;}
+nav.scrolled{background:rgba(5,13,31,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,168,76,.1);}
+.nav-logo{font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.4em;color:var(--gold);text-transform:uppercase;}
+.nav-links{display:flex;gap:32px;}
+.nav-links a{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.25em;color:var(--cream-d);text-decoration:none;text-transform:uppercase;transition:color .3s;}
+.nav-links a:hover{color:var(--gold);}
 
-    /* ===== BACKGROUND STARS ===== */
-    .stars {
-      position: fixed;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .stars span {
-      position: absolute;
-      border-radius: 50%;
-      background: var(--gold-light);
-      opacity: 0;
-      animation: twinkle var(--dur, 4s) ease-in-out infinite var(--delay, 0s);
-    }
+/* ===================== HERO ===================== */
+.hero{position:relative;height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;}
+#heroCanvas{position:absolute;inset:0;width:100%;height:100%;}
+.hero-content{position:relative;z-index:2;padding:0 24px;}
 
-    @keyframes twinkle {
-      0%, 100% { opacity: 0; transform: scale(0.5); }
-      50% { opacity: var(--op, 0.4); transform: scale(1); }
-    }
+/* Animated cross */
+.cross-wrap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:1;pointer-events:none;}
+.cross-svg{width:min(55vw,500px);height:min(80vh,700px);opacity:.18;}
+.cross-svg .beam{animation:beamPulse 4s ease-in-out infinite;}
+.cross-svg .beam:nth-child(2){animation-delay:1s;}
+@keyframes beamPulse{0%,100%{opacity:.3;filter:blur(2px);}50%{opacity:1;filter:blur(0px);}}
 
-    /* ===== HERO ===== */
-    .hero {
-      position: relative;
-      z-index: 1;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 60px 24px;
-      background: radial-gradient(ellipse at 50% 30%, #1a2d5a 0%, var(--navy) 70%);
-    }
+.hero-eyebrow{font-family:'Cinzel',serif;font-size:clamp(.6rem,1.5vw,.8rem);letter-spacing:.5em;color:var(--gold);text-transform:uppercase;margin-bottom:24px;opacity:0;animation:fadeUp 1s ease forwards .5s;}
+.hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3.5rem,10vw,8rem);font-weight:300;line-height:1;color:#fff;margin-bottom:8px;opacity:0;animation:fadeUp 1.1s ease forwards .8s;}
+.hero-h1 em{font-style:italic;color:var(--gold-l);display:block;}
+.hero-verse{font-family:'Cormorant Garamond',serif;font-size:clamp(1rem,2.5vw,1.4rem);font-style:italic;color:var(--cream-d);max-width:600px;margin:24px auto 0;line-height:1.7;opacity:0;animation:fadeUp 1s ease forwards 1.1s;}
+.hero-ref{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.35em;color:var(--gold);margin-top:12px;display:block;opacity:0;animation:fadeUp 1s ease forwards 1.4s;}
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      opacity: 1;
-      pointer-events: none;
-    }
+.scroll-indicator{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeUp 1s ease forwards 1.8s;cursor:pointer;z-index:2;}
+.scroll-indicator span{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.4em;color:var(--gold-d);}
+.scroll-line{width:1px;height:50px;background:linear-gradient(var(--gold),transparent);animation:pulse 2s ease-in-out infinite;}
 
-    .hero-subtitle {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(0.65rem, 1.5vw, 0.85rem);
-      letter-spacing: 0.35em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 28px;
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 0.3s;
-    }
+/* Bokeh lights */
+.bokeh{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none;animation:bokehFloat var(--dur,12s) ease-in-out infinite var(--del,0s);}
+@keyframes bokehFloat{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(var(--tx,20px),var(--ty,-30px)) scale(1.1);}}
 
-    .hero-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3rem, 9vw, 7rem);
-      font-weight: 300;
-      line-height: 1.05;
-      color: var(--white);
-      margin-bottom: 32px;
-      opacity: 0;
-      animation: fadeUp 1.1s ease forwards 0.6s;
-    }
+/* ===================== STATS ===================== */
+.stats-section{position:relative;background:linear-gradient(180deg,var(--navy) 0%,#08132b 100%);padding:80px 48px;overflow:hidden;}
+.stats-bg{position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9a84c' fill-opacity='0.03'%3E%3Cpath d='M40 0L42 38H80L50 62L60 80L40 58L20 80L30 62L0 38H38Z'/%3E%3C/g%3E%3C/svg%3E");}
+.stats-inner{position:relative;max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px;text-align:center;}
+.stat-item{opacity:0;transform:translateY(20px);transition:opacity .7s,transform .7s;}
+.stat-item.visible{opacity:1;transform:translateY(0);}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,6vw,4.5rem);color:var(--gold-l);font-weight:300;line-height:1;}
+.stat-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.3em;color:var(--cream-d);margin-top:8px;text-transform:uppercase;}
+.stat-verse{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.9rem;color:var(--gold-d);margin-top:6px;}
 
-    .hero-title em {
-      font-style: italic;
-      color: var(--gold-light);
-    }
+/* ===================== SPOTLIGHT ===================== */
+.spotlight-section{position:relative;min-height:70vh;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+#spotCanvas{position:absolute;inset:0;width:100%;height:100%;}
+.spotlight-content{position:relative;z-index:2;max-width:800px;text-align:center;padding:80px 32px;}
+.spotlight-tag{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.5em;color:var(--gold);text-transform:uppercase;margin-bottom:28px;display:block;}
+.spotlight-verse{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,4vw,2.8rem);font-style:italic;font-weight:300;line-height:1.6;color:#fff;margin-bottom:24px;}
+.spotlight-verse .highlight{color:var(--gold-l);font-weight:400;}
+.spotlight-ref{font-family:'Cinzel',serif;font-size:.75rem;letter-spacing:.3em;color:var(--gold);}
 
-    .hero-desc {
-      max-width: 520px;
-      font-size: clamp(0.9rem, 2vw, 1.05rem);
-      line-height: 1.8;
-      color: var(--cream-dim);
-      margin-bottom: 52px;
-      opacity: 0;
-      animation: fadeUp 1.1s ease forwards 0.9s;
-    }
+/* ===================== CARDS ===================== */
+.cards-section{padding:100px 24px;max-width:1200px;margin:0 auto;}
+.section-title{text-align:center;margin-bottom:64px;}
+.section-title h2{font-family:'Cinzel',serif;font-size:clamp(.6rem,1.5vw,.75rem);letter-spacing:.5em;color:var(--gold);text-transform:uppercase;margin-bottom:12px;}
+.section-title p{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;font-style:italic;color:var(--cream);}
 
-    .divider-cross {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 1.1s;
-    }
+.filter-bar{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:52px;}
+.fb{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;background:transparent;border:1px solid rgba(201,168,76,.2);color:var(--gold-d);padding:8px 20px;cursor:pointer;transition:all .3s;}
+.fb:hover,.fb.on{background:var(--gold);color:var(--navy);border-color:var(--gold);}
 
-    .divider-cross::before,
-    .divider-cross::after {
-      content: '';
-      height: 1px;
-      width: 80px;
-      background: linear-gradient(to right, transparent, var(--gold));
-    }
-    .divider-cross::after { background: linear-gradient(to left, transparent, var(--gold)); }
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:24px;}
 
-    .cross-icon {
-      font-size: 1.6rem;
-      color: var(--gold);
-    }
+/* 3D Tilt Card */
+.qcard{position:relative;background:linear-gradient(135deg,rgba(22,34,72,.9),rgba(12,22,48,.95));border:1px solid rgba(201,168,76,.15);padding:40px 32px 36px;overflow:hidden;cursor:pointer;transform-style:preserve-3d;transition:box-shadow .4s;opacity:0;transform:translateY(30px);will-change:transform;}
+.qcard.visible{opacity:1;transform:translateY(0);transition:opacity .7s ease,transform .7s ease,box-shadow .3s;}
+.qcard::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at var(--mx,50%) var(--my,0%),rgba(201,168,76,.1) 0%,transparent 60%);opacity:0;transition:opacity .4s;}
+.qcard:hover::before{opacity:1;}
+.qcard::after{content:'"';position:absolute;top:-20px;left:14px;font-family:'Cormorant Garamond',serif;font-size:10rem;color:rgba(201,168,76,.06);line-height:1;pointer-events:none;}
+.qcard-glow{position:absolute;inset:0;opacity:0;transition:opacity .4s;background:radial-gradient(ellipse at 50% 100%,rgba(201,168,76,.08),transparent 70%);}
+.qcard:hover .qcard-glow{opacity:1;}
+.qcard-header{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.qcard-num{font-family:'Cinzel',serif;font-size:.65rem;color:var(--gold-d);letter-spacing:.2em;}
+.qcard-hr{flex:1;height:1px;background:rgba(201,168,76,.2);}
+.qcard-cat{font-family:'Cinzel',serif;font-size:.55rem;letter-spacing:.2em;color:var(--navy-l);background:var(--gold-d);padding:3px 8px;text-transform:uppercase;}
+.qcard-text{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;line-height:1.75;color:var(--cream);margin-bottom:24px;position:relative;z-index:1;}
+.qcard-ref{font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.25em;color:var(--gold);}
+.qcard-share{position:absolute;top:16px;right:16px;width:28px;height:28px;border:1px solid rgba(201,168,76,.2);background:transparent;color:var(--gold-d);font-size:.7rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;opacity:0;}
+.qcard:hover .qcard-share{opacity:1;}
+.qcard-share:hover{background:var(--gold);color:var(--navy);}
 
-    /* ===== SCROLL CTA ===== */
-    .scroll-cta {
-      position: absolute;
-      bottom: 36px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      opacity: 0;
-      animation: fadeUp 1s ease forwards 1.5s;
-      cursor: pointer;
-    }
+/* ===================== WORLD MAP ===================== */
+.world-section{position:relative;overflow:hidden;padding:100px 24px;background:radial-gradient(ellipse at 50% 50%,#0e1e45 0%,var(--navy) 70%);}
+.world-title{text-align:center;margin-bottom:52px;}
+.world-title h2{font-family:'Cinzel',serif;font-size:clamp(.6rem,1.5vw,.75rem);letter-spacing:.5em;color:var(--gold);margin-bottom:10px;}
+.world-title p{font-family:'Cormorant Garamond',serif;font-size:clamp(1.5rem,3.5vw,2.4rem);font-weight:300;font-style:italic;color:#fff;}
+.world-subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--cream-d);margin-top:6px;}
 
-    .scroll-cta span {
-      font-family: 'Cinzel', serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.3em;
-      color: var(--gold-dim);
-      text-transform: uppercase;
-    }
+#worldSvg{display:block;max-width:900px;margin:0 auto;width:100%;}
+.continent{fill:rgba(201,168,76,.12);stroke:rgba(201,168,76,.3);stroke-width:.5;transition:fill .4s;}
+.continent:hover{fill:rgba(201,168,76,.22);}
+.glow-dot{animation:glowPulse 2s ease-in-out infinite;}
+@keyframes glowPulse{0%,100%{r:4;opacity:.6;}50%{r:7;opacity:1;}}
+.connection-line{stroke:rgba(201,168,76,.3);stroke-width:.8;fill:none;stroke-dasharray:4 4;animation:dashMove 3s linear infinite;}
+@keyframes dashMove{to{stroke-dashoffset:-20;}}
 
-    .scroll-arrow {
-      width: 1px;
-      height: 48px;
-      background: linear-gradient(to bottom, var(--gold), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
+.world-verse{text-align:center;margin-top:40px;}
+.world-verse p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;color:var(--cream-d);}
+.world-verse span{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.3em;color:var(--gold);display:block;margin-top:8px;}
 
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
-      50% { opacity: 1; transform: scaleY(1); }
-    }
+/* ===================== TYPEWRITER SECTION ===================== */
+.typewriter-section{position:relative;min-height:60vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#040b18 0%,#0a1528 100%);overflow:hidden;padding:80px 24px;}
+.tw-bg{position:absolute;inset:0;overflow:hidden;}
+.tw-circle{position:absolute;border-radius:50%;border:1px solid rgba(201,168,76,.1);}
+.tw-content{position:relative;z-index:2;max-width:800px;text-align:center;}
+.tw-label{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.5em;color:var(--gold-d);text-transform:uppercase;margin-bottom:24px;}
+.tw-text{font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,3.5vw,2.4rem);font-style:italic;color:#fff;line-height:1.65;min-height:140px;display:flex;align-items:center;justify-content:center;}
+#twCursor{display:inline-block;width:2px;height:1.1em;background:var(--gold);margin-left:3px;vertical-align:middle;animation:blink .7s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+.tw-ref{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.3em;color:var(--gold);margin-top:24px;min-height:20px;}
+.tw-nav{display:flex;justify-content:center;gap:12px;margin-top:28px;}
+.tw-dot{width:6px;height:6px;border-radius:50%;background:var(--gold-d);cursor:pointer;transition:all .3s;}
+.tw-dot.on{background:var(--gold);transform:scale(1.5);}
 
-    /* ===== QUOTES SECTION ===== */
-    .quotes-section {
-      position: relative;
-      z-index: 1;
-      padding: 80px 24px 100px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+/* ===================== TIMELINE ===================== */
+.timeline-section{padding:100px 24px;max-width:900px;margin:0 auto;}
+.tl-title{text-align:center;margin-bottom:72px;}
+.tl-title h2{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.5em;color:var(--gold);margin-bottom:10px;}
+.tl-title p{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:300;font-style:italic;color:var(--cream);}
 
-    .section-heading {
-      text-align: center;
-      margin-bottom: 72px;
-    }
+.timeline{position:relative;padding-left:40px;}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,transparent,var(--gold-d),var(--gold),var(--gold-d),transparent);}
+.tl-item{position:relative;margin-bottom:56px;opacity:0;transform:translateX(-20px);transition:opacity .7s,transform .7s;}
+.tl-item.visible{opacity:1;transform:translateX(0);}
+.tl-dot{position:absolute;left:-44px;top:4px;width:9px;height:9px;background:var(--gold);border-radius:50%;box-shadow:0 0 0 3px rgba(201,168,76,.2),0 0 16px var(--gold);}
+.tl-book{font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:8px;}
+.tl-verse{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;color:var(--cream);line-height:1.7;}
+.tl-ref{font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.2em;color:var(--gold-d);margin-top:8px;}
 
-    .section-heading h2 {
-      font-family: 'Cinzel', serif;
-      font-size: clamp(0.65rem, 1.5vw, 0.8rem);
-      letter-spacing: 0.4em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
+/* ===================== FLAME CTA ===================== */
+.flame-section{position:relative;overflow:hidden;min-height:50vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 24px;}
+#flameCanvas{position:absolute;inset:0;width:100%;height:100%;}
+.flame-content{position:relative;z-index:2;}
+.flame-content h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:300;color:#fff;font-style:italic;margin-bottom:16px;}
+.flame-content p{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--cream-d);font-style:italic;max-width:500px;margin:0 auto 32px;}
+.cta-btn{display:inline-block;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;color:var(--navy);background:var(--gold);padding:14px 40px;cursor:pointer;border:none;transition:all .3s;text-decoration:none;}
+.cta-btn:hover{background:var(--gold-l);box-shadow:0 0 40px rgba(201,168,76,.5);}
 
-    .section-heading p {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
-      font-weight: 300;
-      color: var(--cream);
-      font-style: italic;
-    }
+/* ===================== FOOTER ===================== */
+footer{position:relative;z-index:1;background:var(--navy);border-top:1px solid rgba(201,168,76,.1);padding:48px 24px;text-align:center;}
+.footer-cross{font-size:1.4rem;color:var(--gold-d);margin-bottom:16px;display:block;animation:glowCross 3s ease-in-out infinite;}
+@keyframes glowCross{0%,100%{text-shadow:0 0 10px rgba(201,168,76,.2);}50%{text-shadow:0 0 30px rgba(201,168,76,.8);}}
+footer p{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-d);font-size:.9rem;}
 
-    /* ===== QUOTE CARDS ===== */
-    .quotes-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 28px;
-    }
+/* ===================== UTILITY ===================== */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulse{0%,100%{opacity:.4;transform:scaleY(.8);}50%{opacity:1;transform:scaleY(1);}}
 
-    .quote-card {
-      position: relative;
-      background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy-light) 100%);
-      border: 1px solid rgba(201,168,76,0.18);
-      border-radius: 2px;
-      padding: 40px 32px 36px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
-      opacity: 0;
-      transform: translateY(30px);
-    }
+/* NOTIFICATION */
+#notify{position:fixed;bottom:24px;right:24px;background:var(--gold);color:var(--navy);font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.2em;padding:12px 24px;z-index:9999;opacity:0;transform:translateY(10px);transition:all .4s;pointer-events:none;}
+#notify.show{opacity:1;transform:translateY(0);}
 
-    .quote-card.visible {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity 0.7s ease, transform 0.7s ease, box-shadow 0.4s ease, border-color 0.4s ease;
-    }
-
-    .quote-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.35);
-      border-color: rgba(201,168,76,0.4);
-    }
-
-    .quote-card::before {
-      content: '"';
-      position: absolute;
-      top: -10px;
-      left: 20px;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 9rem;
-      color: rgba(201,168,76,0.08);
-      line-height: 1;
-      pointer-events: none;
-      transition: color 0.4s;
-    }
-
-    .quote-card:hover::before { color: rgba(201,168,76,0.14); }
-
-    .card-top {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 22px;
-    }
-
-    .card-num {
-      font-family: 'Cinzel', serif;
-      font-size: 0.7rem;
-      color: var(--gold-dim);
-      letter-spacing: 0.2em;
-    }
-
-    .card-line {
-      flex: 1;
-      height: 1px;
-      background: rgba(201,168,76,0.25);
-    }
-
-    .quote-text {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.05rem, 2.2vw, 1.25rem);
-      font-style: italic;
-      font-weight: 300;
-      line-height: 1.75;
-      color: var(--cream);
-      margin-bottom: 24px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .quote-ref {
-      font-family: 'Cinzel', serif;
-      font-size: 0.72rem;
-      letter-spacing: 0.25em;
-      color: var(--gold);
-      text-transform: uppercase;
-    }
-
-    .card-glow {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.06) 0%, transparent 60%);
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-
-    .quote-card:hover .card-glow { opacity: 1; }
-
-    /* ===== FEATURED QUOTE ===== */
-    .featured-quote {
-      position: relative;
-      z-index: 1;
-      margin: 0 auto 100px;
-      max-width: 900px;
-      padding: 0 24px;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-
-    .featured-quote.visible { opacity: 1; transform: translateY(0); }
-
-    .featured-inner {
-      background: linear-gradient(135deg, #0f1d3a, #0a1528);
-      border: 1px solid rgba(201,168,76,0.3);
-      padding: clamp(40px, 7vw, 80px) clamp(28px, 7vw, 80px);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .featured-inner::before,
-    .featured-inner::after {
-      content: '';
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      border-color: var(--gold);
-      border-style: solid;
-      opacity: 0.4;
-    }
-
-    .featured-inner::before {
-      top: 16px; left: 16px;
-      border-width: 1px 0 0 1px;
-    }
-
-    .featured-inner::after {
-      bottom: 16px; right: 16px;
-      border-width: 0 1px 1px 0;
-    }
-
-    .featured-label {
-      font-family: 'Cinzel', serif;
-      font-size: 0.65rem;
-      letter-spacing: 0.5em;
-      color: var(--gold);
-      text-transform: uppercase;
-      margin-bottom: 28px;
-      display: block;
-    }
-
-    .featured-text {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.4rem, 3.5vw, 2.2rem);
-      font-style: italic;
-      font-weight: 300;
-      line-height: 1.65;
-      color: var(--white);
-      margin-bottom: 28px;
-    }
-
-    .featured-ref {
-      font-family: 'Cinzel', serif;
-      font-size: 0.8rem;
-      letter-spacing: 0.3em;
-      color: var(--gold-light);
-    }
-
-    .featured-glow {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 50% 100%, rgba(201,168,76,0.1) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    /* ===== FOOTER ===== */
-    footer {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding: 40px 24px 60px;
-      border-top: 1px solid rgba(201,168,76,0.12);
-    }
-
-    footer p {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1rem;
-      color: var(--gold-dim);
-    }
-
-    /* ===== ANIMATIONS ===== */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(22px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ===== CATEGORY FILTER ===== */
-    .filter-bar {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 52px;
-    }
-
-    .filter-btn {
-      font-family: 'Cinzel', serif;
-      font-size: 0.62rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--gold-dim);
-      background: transparent;
-      border: 1px solid rgba(201,168,76,0.2);
-      padding: 8px 20px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
-
-    .filter-btn:hover,
-    .filter-btn.active {
-      color: var(--navy);
-      background: var(--gold);
-      border-color: var(--gold);
-    }
-
-    /* ===== COUNTER SECTION ===== */
-    .counter-section {
-      position: relative;
-      z-index: 1;
-      background: linear-gradient(180deg, var(--navy) 0%, #0c1529 50%, var(--navy) 100%);
-      padding: 60px 24px;
-      text-align: center;
-      margin-bottom: 80px;
-      border-top: 1px solid rgba(201,168,76,0.1);
-      border-bottom: 1px solid rgba(201,168,76,0.1);
-    }
-
-    .counter-inner {
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .counter-verse {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1rem, 2.5vw, 1.35rem);
-      font-style: italic;
-      color: var(--cream-dim);
-      line-height: 1.8;
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-
-    .counter-ref-label {
-      margin-top: 18px;
-      font-family: 'Cinzel', serif;
-      font-size: 0.7rem;
-      letter-spacing: 0.3em;
-      color: var(--gold);
-    }
-
-    .verse-nav {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 24px;
-      margin-top: 28px;
-    }
-
-    .verse-btn {
-      width: 36px;
-      height: 36px;
-      border: 1px solid rgba(201,168,76,0.3);
-      background: transparent;
-      color: var(--gold);
-      font-size: 1rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s;
-    }
-
-    .verse-btn:hover {
-      background: var(--gold);
-      color: var(--navy);
-    }
-
-    .verse-dots {
-      display: flex;
-      gap: 6px;
-    }
-
-    .verse-dot {
-      width: 5px;
-      height: 5px;
-      border-radius: 50%;
-      background: var(--gold-dim);
-      cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-    }
-
-    .verse-dot.active {
-      background: var(--gold);
-      transform: scale(1.4);
-    }
-  </style>
+@media(max-width:600px){
+  nav{padding:16px 20px;}
+  .nav-links{display:none;}
+  .timeline{padding-left:28px;}
+  .tl-dot{left:-33px;}
+}
+</style>
 </head>
 <body>
 
-  <!-- Stars Background -->
-  <div class="stars" id="stars"></div>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div id="progress"></div>
+<div id="notify">¡Versículo copiado! ✓</div>
 
-  <!-- HERO -->
-  <section class="hero">
-    <p class="hero-subtitle">La Palabra que Transforma el Mundo</p>
-    <h1 class="hero-title">La Gran<br/><em>Comisión</em></h1>
-    <p class="hero-desc">
-      Dios nos llama a compartir las Buenas Nuevas con toda criatura. 
-      Estas escrituras iluminan el corazón del evangelismo bíblico.
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-logo">✟ La Gran Comisión</div>
+  <div class="nav-links">
+    <a href="#citas">Citas</a>
+    <a href="#mundo">Al Mundo</a>
+    <a href="#timeline">Cronología</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <canvas id="heroCanvas"></canvas>
+
+  <!-- SVG Cross Beams -->
+  <div class="cross-wrap">
+    <svg class="cross-svg" viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="beamGrad" cx="50%" cy="30%" r="50%">
+          <stop offset="0%" stop-color="#e8d48a" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+          <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- Vertical beam -->
+      <rect class="beam" x="142" y="0" width="16" height="420" fill="url(#beamGrad)" filter="url(#glow)"/>
+      <!-- Horizontal beam -->
+      <rect class="beam" x="0" y="110" width="300" height="14" fill="url(#beamGrad)" filter="url(#glow)"/>
+      <!-- Center glow -->
+      <circle cx="150" cy="117" r="22" fill="#e8d48a" opacity=".6" filter="url(#glow)">
+        <animate attributeName="r" values="18;26;18" dur="3s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values=".5;.9;.5" dur="3s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+  </div>
+
+  <!-- Bokeh -->
+  <div class="bokeh" style="width:300px;height:300px;background:rgba(201,168,76,.07);top:10%;left:5%;--tx:40px;--ty:-20px;--dur:14s;--del:0s;"></div>
+  <div class="bokeh" style="width:200px;height:200px;background:rgba(201,168,76,.05);top:60%;right:8%;--tx:-30px;--ty:20px;--dur:10s;--del:3s;"></div>
+  <div class="bokeh" style="width:150px;height:150px;background:rgba(139,26,26,.08);bottom:15%;left:20%;--tx:20px;--ty:-40px;--dur:16s;--del:6s;"></div>
+
+  <div class="hero-content">
+    <p class="hero-eyebrow">✟ &nbsp; Palabras de Vida Eterna &nbsp; ✟</p>
+    <h1 class="hero-h1">La Gran<em>Comisión</em></h1>
+    <p class="hero-verse" id="heroVerse">"Id por todo el mundo y predicad el evangelio a toda criatura."</p>
+    <span class="hero-ref" id="heroRef">— Marcos 16:15</span>
+  </div>
+
+  <div class="scroll-indicator" onclick="document.querySelector('.stats-section').scrollIntoView({behavior:'smooth'})">
+    <span>Descubrir</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="stats-bg"></div>
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-num" data-target="27">0</div>
+      <div class="stat-label">Libros del Nuevo Testamento</div>
+      <div class="stat-verse">Todo lleno del Evangelio</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="12">0</div>
+      <div class="stat-label">Apóstoles Enviados</div>
+      <div class="stat-verse">Marcos 6:7</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="3000">0</div>
+      <div class="stat-label">Almas en Pentecostés</div>
+      <div class="stat-verse">Hechos 2:41</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="∞" data-real="∞">∞</div>
+      <div class="stat-label">Alcance de Su Amor</div>
+      <div class="stat-verse">Efesios 3:18</div>
+    </div>
+  </div>
+</section>
+
+<!-- SPOTLIGHT -->
+<section class="spotlight-section">
+  <canvas id="spotCanvas"></canvas>
+  <div class="spotlight-content">
+    <span class="spotlight-tag">✟ El Poder del Evangelio ✟</span>
+    <p class="spotlight-verse">
+      "Porque no me avergüenzo del evangelio, porque es 
+      <span class="highlight">poder de Dios para salvación</span>
+      a todo aquel que cree; al judío primeramente, y también al griego."
     </p>
-    <div class="divider-cross">
-      <span class="cross-icon">✟</span>
-    </div>
-    <div class="scroll-cta" onclick="document.querySelector('.quotes-section').scrollIntoView({behavior:'smooth'})">
-      <span>Explorar</span>
-      <div class="scroll-arrow"></div>
-    </div>
-  </section>
+    <div class="spotlight-ref">Romanos 1:16</div>
+  </div>
+</section>
 
-  <!-- ROTATING VERSE BANNER -->
-  <div class="counter-section">
-    <div class="counter-inner">
-      <div class="counter-verse" id="rotatingVerse"></div>
-      <div class="counter-ref-label" id="rotatingRef"></div>
-      <div class="verse-nav">
-        <button class="verse-btn" id="prevBtn">&#8592;</button>
-        <div class="verse-dots" id="dots"></div>
-        <button class="verse-btn" id="nextBtn">&#8594;</button>
-      </div>
-    </div>
+<!-- CARDS -->
+<section class="cards-section" id="citas">
+  <div class="section-title">
+    <h2>✟ Escrituras Sobre Evangelismo</h2>
+    <p>Palabras Eternas que nos Impulsan</p>
+  </div>
+  <div class="filter-bar" id="filterBar">
+    <button class="fb on" data-f="all">Todas</button>
+    <button class="fb" data-f="mision">Misión</button>
+    <button class="fb" data-f="salvacion">Salvación</button>
+    <button class="fb" data-f="poder">Poder</button>
+    <button class="fb" data-f="fruto">Fruto</button>
+  </div>
+  <div class="cards-grid" id="cardsGrid"></div>
+</section>
+
+<!-- WORLD MAP -->
+<section class="world-section" id="mundo">
+  <div class="world-title">
+    <h2>✟ Hasta lo Último de la Tierra</h2>
+    <p>Un Mensaje para Toda Nación</p>
+    <div class="world-subtitle">"…y me seréis testigos en Jerusalén, en toda Judea, en Samaria, y hasta lo último de la tierra." — Hechos 1:8</div>
   </div>
 
-  <!-- QUOTES SECTION -->
-  <section class="quotes-section">
-    <div class="section-heading">
-      <h2>✟ Escrituras</h2>
-      <p>Palabras eternas sobre la misión evangelizadora</p>
-    </div>
+  <!-- Simplified world map SVG with glowing dots -->
+  <svg id="worldSvg" viewBox="0 0 900 450" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="dotGrad" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#e8d48a"/>
+        <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+      </radialGradient>
+      <filter id="dotGlow">
+        <feGaussianBlur stdDeviation="3" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
 
-    <div class="filter-bar" id="filterBar">
-      <button class="filter-btn active" data-filter="all">Todas</button>
-      <button class="filter-btn" data-filter="mision">Misión</button>
-      <button class="filter-btn" data-filter="salvacion">Salvación</button>
-      <button class="filter-btn" data-filter="poder">Poder</button>
-      <button class="filter-btn" data-filter="fruto">Fruto</button>
-    </div>
+    <!-- Grid lines -->
+    <g stroke="rgba(201,168,76,0.06)" stroke-width="1">
+      <line x1="0" y1="150" x2="900" y2="150"/>
+      <line x1="0" y1="225" x2="900" y2="225"/>
+      <line x1="0" y1="300" x2="900" y2="300"/>
+      <line x1="225" y1="0" x2="225" y2="450"/>
+      <line x1="450" y1="0" x2="450" y2="450"/>
+      <line x1="675" y1="0" x2="675" y2="450"/>
+    </g>
 
-    <div class="quotes-grid" id="quotesGrid"></div>
-  </section>
+    <!-- North America -->
+    <path class="continent" d="M90,70 L160,60 L200,80 L220,110 L210,160 L190,200 L170,220 L140,230 L120,210 L100,180 L85,150 L70,120 Z"/>
+    <!-- South America -->
+    <path class="continent" d="M170,250 L220,240 L250,260 L260,310 L250,360 L230,390 L200,400 L175,380 L155,340 L148,290 L155,265 Z"/>
+    <!-- Europe -->
+    <path class="continent" d="M370,70 L430,65 L460,80 L470,110 L450,130 L420,140 L390,130 L370,110 Z"/>
+    <!-- Africa -->
+    <path class="continent" d="M380,150 L440,140 L480,160 L490,220 L480,290 L460,340 L430,360 L400,355 L375,320 L360,260 L360,200 Z"/>
+    <!-- Asia -->
+    <path class="continent" d="M470,60 L580,50 L680,70 L740,100 L760,140 L730,170 L680,180 L620,170 L560,180 L510,160 L480,130 L468,100 Z"/>
+    <!-- Australia -->
+    <path class="continent" d="M680,260 L760,250 L800,270 L810,310 L790,340 L750,355 L700,345 L670,320 L660,285 Z"/>
 
-  <!-- FEATURED QUOTE -->
-  <div class="featured-quote" id="featuredQuote">
-    <div class="featured-inner">
-      <div class="featured-glow"></div>
-      <span class="featured-label">✟ La Gran Comisión ✟</span>
-      <p class="featured-text">
-        "Id por todo el mundo y predicad el evangelio a toda criatura. 
-        El que creyere y fuere bautizado, será salvo; mas el que no creyere, será condenado."
-      </p>
-      <div class="featured-ref">Marcos 16:15–16</div>
-    </div>
+    <!-- Connection lines from Jerusalem (≈450,155) -->
+    <g>
+      <line class="connection-line" x1="450" y1="155" x2="130" y2="150" style="--delay:0s"/>
+      <line class="connection-line" x1="450" y1="155" x2="200" y2="310" style="--delay:1s"/>
+      <line class="connection-line" x1="450" y1="155" x2="410" y2="95" style="--delay:.5s"/>
+      <line class="connection-line" x1="450" y1="155" x2="425" y2="240" style="--delay:1.5s"/>
+      <line class="connection-line" x1="450" y1="155" x2="630" y2="120" style="--delay:.3s"/>
+      <line class="connection-line" x1="450" y1="155" x2="740" y2="300" style="--delay:.8s"/>
+    </g>
+
+    <!-- Jerusalem dot (origin) -->
+    <circle cx="450" cy="155" r="8" fill="#e8d48a" filter="url(#dotGlow)">
+      <animate attributeName="r" values="6;12;6" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values=".8;1;.8" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <text x="455" y="148" font-family="serif" font-size="8" fill="#e8d48a" opacity=".7">Jerusalén</text>
+
+    <!-- City dots -->
+    <circle class="glow-dot" cx="130" cy="150" r="5" fill="var(--gold)" filter="url(#dotGlow)" style="animation-delay:.4s"/>
+    <circle class="glow-dot" cx="200" cy="310" r="4" fill="var(--gold)" filter="url(#dotGlow)" style="animation-delay:.8s"/>
+    <circle class="glow-dot" cx="410" cy="95" r="4" fill="var(--gold)" filter="url(#dotGlow)" style="animation-delay:1.2s"/>
+    <circle class="glow-dot" cx="425" cy="240" r="4" fill="var(--gold)" filter="url(#dotGlow)" style="animation-delay:.2s"/>
+    <circle class="glow-dot" cx="630" cy="120" r="5" fill="var(--gold)" filter="url(#dotGlow)" style="animation-delay:1.6s"/>
+    <circle class="glow-dot" cx="740" cy="300" r="4" fill="var(--gold)" filter="url(#dotGlow)" style="animation-delay:.6s"/>
+
+    <!-- Labels -->
+    <text x="100" y="145" font-family="serif" font-size="7" fill="rgba(201,168,76,.6)">América</text>
+    <text x="400" y="88" font-family="serif" font-size="7" fill="rgba(201,168,76,.6)">Europa</text>
+    <text x="415" y="235" font-family="serif" font-size="7" fill="rgba(201,168,76,.6)">África</text>
+    <text x="620" y="112" font-family="serif" font-size="7" fill="rgba(201,168,76,.6)">Asia</text>
+    <text x="720" y="295" font-family="serif" font-size="7" fill="rgba(201,168,76,.6)">Oceanía</text>
+  </svg>
+
+  <div class="world-verse">
+    <p>"Haced discípulos a todas las naciones."</p>
+    <span>Mateo 28:19</span>
   </div>
+</section>
 
-  <footer>
-    <p>"Porque no me avergüenzo del evangelio, porque es poder de Dios para salvación." — Romanos 1:16</p>
-  </footer>
+<!-- TYPEWRITER -->
+<section class="typewriter-section">
+  <div class="tw-bg">
+    <div class="tw-circle" style="width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+    <div class="tw-circle" style="width:400px;height:400px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+    <div class="tw-circle" style="width:200px;height:200px;top:50%;left:50%;transform:translate(-50%,-50%);"></div>
+  </div>
+  <div class="tw-content">
+    <div class="tw-label">✟ Versículo en Vivo</div>
+    <div class="tw-text"><span id="twText"></span><span id="twCursor"></span></div>
+    <div class="tw-ref" id="twRef"></div>
+    <div class="tw-nav" id="twNav"></div>
+  </div>
+</section>
 
-  <script>
-    // ===== STARS =====
-    const starsEl = document.getElementById('stars');
-    for (let i = 0; i < 80; i++) {
-      const s = document.createElement('span');
-      const size = Math.random() * 2.5 + 0.5;
-      s.style.cssText = `
-        width:${size}px; height:${size}px;
-        top:${Math.random()*100}%; left:${Math.random()*100}%;
-        --dur:${3+Math.random()*5}s;
-        --delay:${Math.random()*6}s;
-        --op:${0.2+Math.random()*0.5};
-      `;
-      starsEl.appendChild(s);
+<!-- TIMELINE -->
+<section class="timeline-section" id="timeline">
+  <div class="tl-title">
+    <h2>✟ A través de las Escrituras</h2>
+    <p>El hilo dorado del Evangelismo</p>
+  </div>
+  <div class="timeline" id="timeline"></div>
+</section>
+
+<!-- FLAME CTA -->
+<section class="flame-section">
+  <canvas id="flameCanvas"></canvas>
+  <div class="flame-content">
+    <h2>¿Estás listo para ser testigo?</h2>
+    <p>"El que gana almas es sabio." — Proverbios 11:30</p>
+    <button class="cta-btn" onclick="document.getElementById('citas').scrollIntoView({behavior:'smooth'})">Leer las Escrituras ✟</button>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-cross">✟</span>
+  <p>"Porque de tal manera amó Dios al mundo…" — Juan 3:16</p>
+</footer>
+
+<script>
+/* ============ DATA ============ */
+const quotes=[
+  {text:"Id, y haced discípulos a todas las naciones, bautizándolos en el nombre del Padre, y del Hijo, y del Espíritu Santo.",ref:"Mateo 28:19",n:"01",cat:"mision"},
+  {text:"Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna.",ref:"Juan 3:16",n:"02",cat:"salvacion"},
+  {text:"Recibiréis poder, cuando haya venido sobre vosotros el Espíritu Santo, y me seréis testigos en Jerusalén, en toda Judea, en Samaria, y hasta lo último de la tierra.",ref:"Hechos 1:8",n:"03",cat:"poder"},
+  {text:"¿Cómo, pues, invocarán a aquel en el cual no han creído? ¿Y cómo creerán en aquel de quien no han oído? ¿Y cómo oirán sin haber quien les predique?",ref:"Romanos 10:14",n:"04",cat:"mision"},
+  {text:"No me avergüenzo del evangelio, porque es poder de Dios para salvación a todo aquel que cree; al judío primeramente, y también al griego.",ref:"Romanos 1:16",n:"05",cat:"poder"},
+  {text:"La mies es mucha, mas los obreros pocos; rogad, pues, al Señor de la mies, que envíe obreros a su mies.",ref:"Lucas 10:2",n:"06",cat:"mision"},
+  {text:"Todo aquel que invocare el nombre del Señor, será salvo.",ref:"Romanos 10:13",n:"07",cat:"salvacion"},
+  {text:"El fruto del justo es árbol de vida; y el que gana almas es sabio.",ref:"Proverbios 11:30",n:"08",cat:"fruto"},
+  {text:"Predicad la palabra; que instes a tiempo y fuera de tiempo; redarguye, reprende, exhorta con toda paciencia y doctrina.",ref:"2 Timoteo 4:2",n:"09",cat:"mision"},
+  {text:"La fe es por el oír, y el oír, por la palabra de Dios.",ref:"Romanos 10:17",n:"10",cat:"poder"},
+  {text:"Los que sembraron con lágrimas, con regocijo segarán. Irá andando y llorando el que lleva la preciosa semilla; mas volverá con regocijo, trayendo sus gavillas.",ref:"Salmos 126:5–6",n:"11",cat:"fruto"},
+  {text:"Vosotros sois linaje escogido, real sacerdocio, nación santa, pueblo adquirido por Dios, para que anunciéis las virtudes de aquel que os llamó de las tinieblas a su luz admirable.",ref:"1 Pedro 2:9",n:"12",cat:"mision"},
+];
+
+const typeVerses=[
+  {text:"Vosotros sois la luz del mundo; una ciudad asentada sobre un monte no se puede esconder.",ref:"Mateo 5:14"},
+  {text:"Estad siempre preparados para presentar defensa con mansedumbre y reverencia ante todo el que os demande razón de la esperanza que hay en vosotros.",ref:"1 Pedro 3:15"},
+  {text:"El Espíritu del Señor está sobre mí, por cuanto me ha ungido para dar buenas nuevas a los pobres.",ref:"Lucas 4:18"},
+  {text:"Así alumbre vuestra luz delante de los hombres, para que vean vuestras buenas obras y glorifiquen a vuestro Padre que está en los cielos.",ref:"Mateo 5:16"},
+  {text:"He aquí que no se ha acortado la mano de Jehová para salvar, ni se ha agravado su oído para oír.",ref:"Isaías 59:1"},
+];
+
+const timelineData=[
+  {book:"Isaías 52:7",text:"¡Cuán hermosos son sobre los montes los pies del que trae alegres nuevas, del que anuncia la paz…"},
+  {book:"Mateo 4:17",text:"Desde entonces comenzó Jesús a predicar, y a decir: Arrepentíos, porque el reino de los cielos se ha acercado."},
+  {book:"Marcos 16:15",text:"Id por todo el mundo y predicad el evangelio a toda criatura."},
+  {book:"Hechos 2:38",text:"Pedro les dijo: Arrepentíos, y bautícese cada uno de vosotros en el nombre de Jesucristo para perdón de los pecados."},
+  {book:"Hechos 8:4",text:"Pero los que fueron esparcidos iban por todas partes anunciando el evangelio."},
+  {book:"Romanos 15:20",text:"Y de esta manera me esforcé a predicar el evangelio, no donde Cristo ya hubiese sido nombrado, para no edificar sobre fundamento ajeno."},
+  {book:"Apocalipsis 14:6",text:"Vi volar por en medio del cielo a otro ángel, que tenía el evangelio eterno para predicarlo a los moradores de la tierra."},
+];
+
+/* ============ CURSOR ============ */
+const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
+document.addEventListener('mousemove',e=>{
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';
+});
+document.addEventListener('mousedown',()=>{cur.style.transform='translate(-50%,-50%) scale(1.8)';});
+document.addEventListener('mouseup',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';});
+document.querySelectorAll('button,a,.fb,.qcard').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';});
+  el.addEventListener('mouseleave',()=>{cur.style.width='12px';cur.style.height='12px';});
+});
+
+/* ============ PROGRESS ============ */
+const progBar=document.getElementById('progress');
+window.addEventListener('scroll',()=>{
+  const pct=window.scrollY/(document.body.scrollHeight-window.innerHeight)*100;
+  progBar.style.width=pct+'%';
+});
+
+/* ============ NAV ============ */
+window.addEventListener('scroll',()=>{
+  document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>60);
+});
+
+/* ============ HERO CANVAS - PARTICLES ============ */
+(function(){
+  const cv=document.getElementById('heroCanvas');
+  const ctx=cv.getContext('2d');
+  let W,H,particles=[];
+  function resize(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;}
+  resize();window.addEventListener('resize',resize);
+
+  function Particle(){
+    this.reset=function(){
+      this.x=Math.random()*W;this.y=Math.random()*H;
+      this.r=Math.random()*1.8+.4;this.vx=(Math.random()-.5)*.3;
+      this.vy=-(Math.random()*.5+.1);this.life=0;this.maxLife=120+Math.random()*180;
+      this.hue=40+Math.random()*20;
+    };this.reset();this.life=Math.random()*this.maxLife;
+    this.update=function(){
+      this.x+=this.vx;this.y+=this.vy;this.life++;
+      if(this.life>this.maxLife)this.reset();
+    };
+    this.draw=function(){
+      const t=this.life/this.maxLife;
+      const a=t<.2?t/.2:t>.8?(1-t)/.2:1;
+      ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);
+      ctx.fillStyle=`hsla(${this.hue},70%,70%,${a*.7})`;ctx.fill();
+    };
+  }
+  for(let i=0;i<120;i++){const p=new Particle();particles.push(p);}
+
+  // Connection lines
+  function drawLines(){
+    for(let i=0;i<particles.length;i++){
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<80){
+          ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);
+          ctx.strokeStyle=`rgba(201,168,76,${(1-d/80)*.1})`;ctx.lineWidth=.5;ctx.stroke();
+        }
+      }
     }
+  }
 
-    // ===== QUOTES DATA =====
-    const quotes = [
-      { text: "Id, y haced discípulos a todas las naciones, bautizándolos en el nombre del Padre, y del Hijo, y del Espíritu Santo.", ref: "Mateo 28:19", num: "01", cat: "mision" },
-      { text: "Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna.", ref: "Juan 3:16", num: "02", cat: "salvacion" },
-      { text: "Recibiréis poder, cuando haya venido sobre vosotros el Espíritu Santo, y me seréis testigos en Jerusalén, en toda Judea, en Samaria, y hasta lo último de la tierra.", ref: "Hechos 1:8", num: "03", cat: "poder" },
-      { text: "¿Cómo, pues, invocarán a aquel en el cual no han creído? ¿Y cómo creerán en aquel de quien no han oído? ¿Y cómo oirán sin haber quien les predique?", ref: "Romanos 10:14", num: "04", cat: "mision" },
-      { text: "No me avergüenzo del evangelio, porque es poder de Dios para salvación a todo aquel que cree; al judío primeramente, y también al griego.", ref: "Romanos 1:16", num: "05", cat: "poder" },
-      { text: "La mies es mucha, mas los obreros pocos; rogad, pues, al Señor de la mies, que envíe obreros a su mies.", ref: "Lucas 10:2", num: "06", cat: "mision" },
-      { text: "Porque todo aquel que invocare el nombre del Señor, será salvo.", ref: "Romanos 10:13", num: "07", cat: "salvacion" },
-      { text: "El fruto del justo es árbol de vida; y el que gana almas es sabio.", ref: "Proverbios 11:30", num: "08", cat: "fruto" },
-      { text: "Predicad la palabra; que instes a tiempo y fuera de tiempo; redarguye, reprende, exhorta con toda paciencia y doctrina.", ref: "2 Timoteo 4:2", num: "09", cat: "mision" },
-      { text: "Así que la fe es por el oír, y el oír, por la palabra de Dios.", ref: "Romanos 10:17", num: "10", cat: "poder" },
-      { text: "Los que sembraron con lágrimas, con regocijo segarán. Irá andando y llorando el que lleva la preciosa semilla; mas volverá a venir con regocijo, trayendo sus gavillas.", ref: "Salmos 126:5–6", num: "11", cat: "fruto" },
-      { text: "Pero vosotros sois linaje escogido, real sacerdocio, nación santa, pueblo adquirido por Dios, para que anunciéis las virtudes de aquel que os llamó de las tinieblas a su luz admirable.", ref: "1 Pedro 2:9", num: "12", cat: "mision" },
-    ];
+  function loop(){
+    ctx.clearRect(0,0,W,H);
+    // gradient bg
+    const g=ctx.createRadialGradient(W/2,H*.3,0,W/2,H*.3,Math.max(W,H)*.7);
+    g.addColorStop(0,'rgba(18,34,80,.8)');g.addColorStop(1,'rgba(5,13,31,1)');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    drawLines();
+    particles.forEach(p=>{p.update();p.draw();});
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
 
-    const rotating = [
-      { text: "Vosotros sois la luz del mundo; una ciudad asentada sobre un monte no se puede esconder.", ref: "Mateo 5:14" },
-      { text: "Estad siempre preparados para presentar defensa con mansedumbre y reverencia ante todo el que os demande razón de la esperanza que hay en vosotros.", ref: "1 Pedro 3:15" },
-      { text: "El Espíritu del Señor está sobre mí, por cuanto me ha ungido para dar buenas nuevas a los pobres.", ref: "Lucas 4:18" },
-      { text: "Así alumbre vuestra luz delante de los hombres, para que vean vuestras buenas obras y glorifiquen a vuestro Padre que está en los cielos.", ref: "Mateo 5:16" },
-      { text: "He aquí que no se ha acortado la mano de Jehová para salvar, ni se ha agravado su oído para oír.", ref: "Isaías 59:1" },
-    ];
+/* ============ SPOTLIGHT CANVAS ============ */
+(function(){
+  const cv=document.getElementById('spotCanvas');
+  const ctx=cv.getContext('2d');
+  let W,H,t=0;
+  function resize(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;}
+  resize();window.addEventListener('resize',resize);
+  function loop(){
+    t+=.005;
+    ctx.fillStyle='rgba(4,11,24,.04)';ctx.fillRect(0,0,W,H);
+    // Moving spotlight
+    const cx=W/2+Math.sin(t)*W*.15,cy=H/2+Math.cos(t*.7)*H*.1;
+    const g=ctx.createRadialGradient(cx,cy,0,cx,cy,280);
+    g.addColorStop(0,'rgba(201,168,76,.12)');g.addColorStop(1,'transparent');
+    ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    // Secondary
+    const cx2=W/2+Math.sin(t*1.3+2)*W*.12,cy2=H/2+Math.cos(t*.9)*H*.12;
+    const g2=ctx.createRadialGradient(cx2,cy2,0,cx2,cy2,200);
+    g2.addColorStop(0,'rgba(139,26,26,.08)');g2.addColorStop(1,'transparent');
+    ctx.fillStyle=g2;ctx.fillRect(0,0,W,H);
+    requestAnimationFrame(loop);
+  }
+  ctx.fillStyle='rgba(4,11,24,1)';ctx.fillRect(0,0,W,H);
+  loop();
+})();
 
-    // ===== ROTATING VERSE =====
-    let rotIdx = 0;
-    const verseEl = document.getElementById('rotatingVerse');
-    const refEl = document.getElementById('rotatingRef');
-    const dotsEl = document.getElementById('dots');
-
-    function buildDots() {
-      dotsEl.innerHTML = '';
-      rotating.forEach((_, i) => {
-        const d = document.createElement('div');
-        d.className = 'verse-dot' + (i === 0 ? ' active' : '');
-        d.onclick = () => setVerse(i);
-        dotsEl.appendChild(d);
-      });
-    }
-
-    function setVerse(idx) {
-      verseEl.style.opacity = '0';
-      verseEl.style.transform = 'translateY(10px)';
-      setTimeout(() => {
-        rotIdx = (idx + rotating.length) % rotating.length;
-        verseEl.textContent = `"${rotating[rotIdx].text}"`;
-        refEl.textContent = rotating[rotIdx].ref;
-        verseEl.style.opacity = '1';
-        verseEl.style.transform = 'translateY(0)';
-        document.querySelectorAll('.verse-dot').forEach((d, i) => d.classList.toggle('active', i === rotIdx));
-      }, 400);
-    }
-
-    buildDots();
-    setVerse(0);
-    document.getElementById('prevBtn').onclick = () => setVerse(rotIdx - 1);
-    document.getElementById('nextBtn').onclick = () => setVerse(rotIdx + 1);
-    setInterval(() => setVerse(rotIdx + 1), 6000);
-
-    // ===== RENDER CARDS =====
-    const grid = document.getElementById('quotesGrid');
-    let currentFilter = 'all';
-
-    function renderCards(filter) {
-      grid.innerHTML = '';
-      const filtered = filter === 'all' ? quotes : quotes.filter(q => q.cat === filter);
-      filtered.forEach((q, i) => {
-        const card = document.createElement('div');
-        card.className = 'quote-card';
-        card.style.transitionDelay = `${i * 0.07}s`;
-        card.innerHTML = `
-          <div class="card-glow"></div>
-          <div class="card-top">
-            <span class="card-num">${q.num}</span>
-            <div class="card-line"></div>
-          </div>
-          <p class="quote-text">"${q.text}"</p>
-          <div class="quote-ref">${q.ref}</div>
-        `;
-        grid.appendChild(card);
-        setTimeout(() => card.classList.add('visible'), 50 + i * 80);
-      });
-    }
-
-    renderCards('all');
-
-    // ===== FILTER =====
-    document.getElementById('filterBar').querySelectorAll('.filter-btn').forEach(btn => {
-      btn.onclick = () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderCards(btn.dataset.filter);
-      };
+/* ============ FLAME CANVAS ============ */
+(function(){
+  const cv=document.getElementById('flameCanvas');
+  const ctx=cv.getContext('2d');
+  let W,H;
+  function resize(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;}
+  resize();window.addEventListener('resize',resize);
+  const particles=[];
+  function FP(){
+    this.reset=function(){
+      this.x=W/2+(Math.random()-.5)*80;this.y=H*.8;
+      this.vx=(Math.random()-.5)*1.5;this.vy=-(Math.random()*4+2);
+      this.life=0;this.maxLife=60+Math.random()*40;
+      this.r=Math.random()*8+4;
+    };this.reset();this.life=Math.random()*this.maxLife;
+  }
+  for(let i=0;i<60;i++){const p=new FP();particles.push(p);}
+  function loop(){
+    ctx.fillStyle='rgba(4,11,24,.2)';ctx.fillRect(0,0,W,H);
+    particles.forEach(p=>{
+      p.life++;p.x+=p.vx;p.y+=p.vy;p.vy*=.98;p.vx+=(Math.random()-.5)*.3;
+      if(p.life>p.maxLife)p.reset();
+      const t=p.life/p.maxLife;
+      const a=(t<.3?t/.3:1-t)*0.7;
+      const hue=t<.5?20:40;
+      const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*(1-t*.5));
+      g.addColorStop(0,`hsla(${hue},100%,75%,${a})`);
+      g.addColorStop(1,`hsla(${hue},100%,40%,0)`);
+      ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fill();
     });
+    requestAnimationFrame(loop);
+  }
+  ctx.fillStyle='rgba(4,11,24,1)';ctx.fillRect(0,0,W,H);loop();
+})();
 
-    // ===== INTERSECTION OBSERVER =====
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-      });
-    }, { threshold: 0.15 });
+/* ============ CARDS ============ */
+const grid=document.getElementById('cardsGrid');
+let activeFilter='all';
 
-    observer.observe(document.getElementById('featuredQuote'));
-  </script>
+function renderCards(f){
+  grid.innerHTML='';
+  const list=f==='all'?quotes:quotes.filter(q=>q.cat===f);
+  list.forEach((q,i)=>{
+    const d=document.createElement('div');
+    d.className='qcard';
+    d.style.transitionDelay=`${i*.06}s`;
+    d.innerHTML=`
+      <div class="qcard-glow"></div>
+      <button class="qcard-share" title="Copiar" onclick="copyVerse(event,'${q.text.replace(/'/g,"\\'")} — ${q.ref}')">✟</button>
+      <div class="qcard-header">
+        <span class="qcard-num">${q.n}</span>
+        <div class="qcard-hr"></div>
+        <span class="qcard-cat">${q.cat}</span>
+      </div>
+      <p class="qcard-text">"${q.text}"</p>
+      <div class="qcard-ref">${q.ref}</div>`;
+    // 3D tilt
+    d.addEventListener('mousemove',e=>{
+      const r=d.getBoundingClientRect();
+      const x=(e.clientX-r.left)/r.width-.5;
+      const y=(e.clientY-r.top)/r.height-.5;
+      d.style.transform=`perspective(600px) rotateY(${x*12}deg) rotateX(${-y*8}deg) translateY(-4px)`;
+      d.style.setProperty('--mx',`${(x+.5)*100}%`);
+      d.style.setProperty('--my',`${(y+.5)*100}%`);
+    });
+    d.addEventListener('mouseleave',()=>{d.style.transform='';});
+    grid.appendChild(d);
+    setTimeout(()=>d.classList.add('visible'),50+i*80);
+  });
+}
+renderCards('all');
+
+document.getElementById('filterBar').querySelectorAll('.fb').forEach(btn=>{
+  btn.onclick=()=>{
+    document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+    renderCards(btn.dataset.f);
+  };
+});
+
+/* ============ COPY ============ */
+function copyVerse(e,text){
+  e.stopPropagation();
+  navigator.clipboard.writeText(text).catch(()=>{});
+  const n=document.getElementById('notify');
+  n.classList.add('show');
+  setTimeout(()=>n.classList.remove('show'),2500);
+}
+
+/* ============ STATS COUNTER ============ */
+function animCount(el,target){
+  if(isNaN(target))return;
+  let cur=0;const step=Math.ceil(target/80);
+  const iv=setInterval(()=>{cur=Math.min(cur+step,target);el.textContent=cur.toLocaleString();if(cur>=target)clearInterval(iv);},16);
+}
+const statsObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      const numEl=e.target.querySelector('.stat-num');
+      const t=numEl.dataset.target;
+      if(t!=='∞')animCount(numEl,parseInt(t));
+      statsObs.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('.stat-item').forEach(el=>statsObs.observe(el));
+
+/* ============ TYPEWRITER ============ */
+let twIdx=0,twTyping=false,twTimeout=null;
+const twText=document.getElementById('twText');
+const twRef=document.getElementById('twRef');
+const twNav=document.getElementById('twNav');
+
+function buildNav(){
+  twNav.innerHTML='';
+  typeVerses.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='tw-dot'+(i===0?' on':'');
+    d.onclick=()=>setTwVerse(i);
+    twNav.appendChild(d);
+  });
+}
+buildNav();
+
+function setTwVerse(idx){
+  if(twTimeout)clearTimeout(twTimeout);
+  twIdx=idx;
+  twText.textContent='';twRef.textContent='';
+  document.querySelectorAll('.tw-dot').forEach((d,i)=>d.classList.toggle('on',i===idx));
+  typeVerse(typeVerses[idx].text,typeVerses[idx].ref);
+}
+
+function typeVerse(text,ref,i=0){
+  if(i===0)twText.textContent='';
+  if(i<text.length){
+    twText.textContent+=text[i];
+    twTimeout=setTimeout(()=>typeVerse(text,ref,i+1),28);
+  } else {
+    twRef.textContent='— '+ref;
+    twTimeout=setTimeout(()=>{
+      twIdx=(twIdx+1)%typeVerses.length;
+      document.querySelectorAll('.tw-dot').forEach((d,i)=>d.classList.toggle('on',i===twIdx));
+      erase(text,ref);
+    },4000);
+  }
+}
+
+function erase(text,ref,i=text.length){
+  if(i>0){
+    twText.textContent=text.slice(0,i-1);
+    twTimeout=setTimeout(()=>erase(text,ref,i-1),12);
+  } else {
+    twRef.textContent='';
+    twTimeout=setTimeout(()=>typeVerse(typeVerses[twIdx].text,typeVerses[twIdx].ref),400);
+  }
+}
+
+// Start typewriter when section visible
+const twObs=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting&&twText.textContent===''){
+    setTwVerse(0);twObs.disconnect();
+  }
+},{threshold:.3});
+twObs.observe(document.querySelector('.typewriter-section'));
+
+/* ============ TIMELINE ============ */
+const tlEl=document.getElementById('timeline');
+timelineData.forEach((item,i)=>{
+  const div=document.createElement('div');
+  div.className='tl-item';
+  div.style.transitionDelay=`${i*.1}s`;
+  div.innerHTML=`
+    <div class="tl-dot"></div>
+    <div class="tl-book">${item.book}</div>
+    <div class="tl-verse">"${item.text}"</div>`;
+  tlEl.appendChild(div);
+});
+
+const tlObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');tlObs.unobserve(e.target);}});
+},{threshold:.2});
+document.querySelectorAll('.tl-item').forEach(el=>tlObs.observe(el));
+
+/* ============ GENERIC INTERSECTION ============ */
+const genObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');genObs.unobserve(e.target);}});
+},{threshold:.1});
+document.querySelectorAll('.featured-quote').forEach(el=>genObs.observe(el));
+</script>
 </body>
 </html>

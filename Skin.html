@@ -1,1076 +1,701 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>+SKIN — Reveal Your Healthiest Skin</title>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --sky: #d6eaf4;
-            --sky-light: #eaf4fb;
-            --sky-mid: #b8d9ee;
-            --blue: #0d7fc1;
-            --blue-dark: #0a5f92;
-            --text-dark: #1a2a35;
-            --text-mid: #4a6272;
-            --text-light: #7a9aac;
-            --white: #ffffff;
-            --cream: #f7fbfd;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Jost', sans-serif;
-            background: var(--white);
-            color: var(--text-dark);
-            overflow-x: hidden;
-        }
-
-        /* ─── NAV ─── */
-        nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 60px;
-            height: 70px;
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(13,127,193,0.1);
-            transition: background 0.3s;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-family: 'Jost', sans-serif;
-            font-weight: 600;
-            font-size: 1.35rem;
-            color: var(--text-dark);
-            text-decoration: none;
-            letter-spacing: -0.01em;
-        }
-
-        .logo-plus {
-            color: var(--blue);
-            font-size: 1.5rem;
-            font-weight: 700;
-            line-height: 1;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 36px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 400;
-            color: var(--text-mid);
-            letter-spacing: 0.05em;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover { color: var(--blue); }
-
-        /* ─── HERO ─── */
-        .hero {
-            min-height: 100vh;
-            background: linear-gradient(135deg, var(--sky-light) 0%, var(--sky) 50%, var(--sky-mid) 100%);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-            padding: 70px 60px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Subtle background circles */
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 700px; height: 700px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,255,255,0.5), transparent 70%);
-            top: -200px; right: -100px;
-            pointer-events: none;
-        }
-
-        .hero::after {
-            content: '';
-            position: absolute;
-            width: 400px; height: 400px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(13,127,193,0.08), transparent 70%);
-            bottom: 100px; left: 100px;
-            pointer-events: none;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            animation: fadeLeft 1s ease both;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(13,127,193,0.1);
-            border: 1px solid rgba(13,127,193,0.2);
-            border-radius: 30px;
-            padding: 6px 16px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--blue);
-            margin-bottom: 28px;
-        }
-
-        .hero-badge::before {
-            content: '';
-            width: 6px; height: 6px;
-            border-radius: 50%;
-            background: var(--blue);
-            animation: blink 2s ease infinite;
-        }
-
-        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-        .hero h1 {
-            font-family: 'Libre Baskerville', serif;
-            font-size: clamp(2.4rem, 4.5vw, 3.8rem);
-            font-weight: 700;
-            line-height: 1.1;
-            color: var(--text-dark);
-            margin-bottom: 20px;
-        }
-
-        .hero h1 em {
-            font-style: italic;
-            color: var(--blue);
-        }
-
-        .hero-desc {
-            font-size: 1rem;
-            font-weight: 300;
-            color: var(--text-mid);
-            line-height: 1.7;
-            max-width: 380px;
-            margin-bottom: 40px;
-        }
-
-        .hero-ctas {
-            display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary {
-            background: var(--blue);
-            color: white;
-            padding: 14px 32px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-            text-decoration: none;
-            transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 4px 20px rgba(13,127,193,0.3);
-        }
-
-        .btn-primary:hover {
-            background: var(--blue-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(13,127,193,0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text-dark);
-            padding: 14px 32px;
-            border-radius: 8px;
-            border: 1.5px solid rgba(26,42,53,0.25);
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-            text-decoration: none;
-            transition: border-color 0.2s, background 0.2s, transform 0.2s;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--blue);
-            color: var(--blue);
-            transform: translateY(-2px);
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 36px;
-            margin-top: 56px;
-            padding-top: 32px;
-            border-top: 1px solid rgba(13,127,193,0.15);
-        }
-
-        .hero-stat-val {
-            font-family: 'Libre Baskerville', serif;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--blue);
-        }
-
-        .hero-stat-label {
-            font-size: 0.72rem;
-            font-weight: 400;
-            color: var(--text-light);
-            letter-spacing: 0.05em;
-            margin-top: 2px;
-        }
-
-        /* Hero right — product visual */
-        .hero-visual {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            height: 100%;
-            min-height: 500px;
-            animation: fadeRight 1s ease 0.2s both;
-        }
-
-        /* Glowing oval behind model area */
-        .hero-glow {
-            position: absolute;
-            bottom: 0;
-            width: 420px; height: 520px;
-            background: radial-gradient(ellipse at center bottom, rgba(255,255,255,0.7) 0%, rgba(184,217,238,0.3) 60%, transparent 100%);
-            border-radius: 50% 50% 0 0;
-        }
-
-        /* Product bottles using CSS art */
-        .products-display {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            align-items: flex-end;
-            gap: 18px;
-            padding-bottom: 60px;
-        }
-
-        .product-bottle {
-            position: relative;
-            border-radius: 40px 40px 20px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            animation: floatUp 3s ease-in-out infinite;
-        }
-
-        .product-bottle:nth-child(2) { animation-delay: 0.5s; }
-        .product-bottle:nth-child(3) { animation-delay: 1s; }
-
-        @keyframes floatUp {
-            0%,100% { transform: translateY(0); }
-            50%      { transform: translateY(-10px); }
-        }
-
-        /* Tube */
-        .tube {
-            width: 55px; height: 140px;
-            background: linear-gradient(160deg, #f0f8ff, #d6eaf4, #b8d9ee);
-            border-radius: 30px 30px 16px 16px;
-            box-shadow: 4px 8px 24px rgba(0,0,0,0.12), inset -3px -3px 8px rgba(0,0,0,0.06);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tube::after {
-            content: '+SKIN';
-            position: absolute;
-            bottom: 28px;
-            left: 50%; transform: translateX(-50%);
-            font-size: 0.45rem;
-            font-weight: 600;
-            color: var(--blue);
-            letter-spacing: 0.08em;
-            white-space: nowrap;
-        }
-
-        .tube-cap {
-            width: 38px; height: 18px;
-            background: linear-gradient(160deg, #1a7ab5, #0a5f92);
-            border-radius: 6px 6px 2px 2px;
-            margin-bottom: -2px;
-            box-shadow: 2px 4px 10px rgba(0,0,0,0.2);
-        }
-
-        /* Serum bottle */
-        .serum {
-            width: 45px; height: 110px;
-            background: linear-gradient(160deg, rgba(200,235,255,0.9), rgba(100,180,230,0.7));
-            border-radius: 12px 12px 8px 8px;
-            border: 1px solid rgba(255,255,255,0.6);
-            box-shadow: 4px 8px 24px rgba(0,0,0,0.15), inset -2px -2px 6px rgba(0,0,0,0.08);
-            backdrop-filter: blur(4px);
-            position: relative;
-        }
-
-        .serum::before {
-            content: '';
-            position: absolute;
-            top: 15px; left: 8px; right: 8px; height: 2px;
-            background: rgba(255,255,255,0.5);
-            border-radius: 2px;
-        }
-
-        .serum-cap {
-            width: 20px; height: 30px;
-            background: linear-gradient(to bottom, #e8f4fb, #b8d9ee);
-            border-radius: 10px 10px 4px 4px;
-            margin-bottom: -2px;
-            box-shadow: 1px 3px 8px rgba(0,0,0,0.15);
-        }
-
-        /* Tall bottle */
-        .tall-bottle {
-            width: 50px; height: 160px;
-            background: linear-gradient(160deg, rgba(240,250,255,0.95), rgba(160,210,240,0.8));
-            border-radius: 14px 14px 10px 10px;
-            border: 1px solid rgba(255,255,255,0.7);
-            box-shadow: 5px 10px 30px rgba(0,0,0,0.15), inset -3px -3px 8px rgba(0,0,0,0.05);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .tall-bottle::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 8px; width: 8px; bottom: 0;
-            background: linear-gradient(to right, rgba(255,255,255,0.4), transparent);
-            border-radius: 4px;
-        }
-
-        .pump-cap {
-            width: 28px; height: 20px;
-            background: linear-gradient(160deg, #e0f0fa, #b0d5ec);
-            border-radius: 8px 8px 2px 2px;
-            margin-bottom: -2px;
-            box-shadow: 2px 4px 10px rgba(0,0,0,0.1);
-            position: relative;
-        }
-
-        .pump-nozzle {
-            position: absolute;
-            top: -10px; right: -12px;
-            width: 14px; height: 10px;
-            background: #b0d5ec;
-            border-radius: 4px;
-        }
-
-        /* ─── FEATURES ─── */
-        #features {
-            padding: 100px 60px;
-            background: var(--white);
-        }
-
-        .section-label {
-            font-size: 0.65rem;
-            font-weight: 500;
-            letter-spacing: 0.35em;
-            text-transform: uppercase;
-            color: var(--blue);
-            margin-bottom: 16px;
-            display: block;
-        }
-
-        .section-title {
-            font-family: 'Libre Baskerville', serif;
-            font-size: clamp(1.8rem, 3vw, 2.8rem);
-            font-weight: 700;
-            color: var(--text-dark);
-            line-height: 1.2;
-            max-width: 460px;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 32px;
-            margin-top: 60px;
-        }
-
-        .feature-card {
-            padding: 40px 32px;
-            border-radius: 20px;
-            background: var(--cream);
-            border: 1px solid rgba(13,127,193,0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 50px rgba(13,127,193,0.1);
-            border-color: rgba(13,127,193,0.2);
-        }
-
-        .feature-icon {
-            width: 52px; height: 52px;
-            border-radius: 14px;
-            background: linear-gradient(135deg, rgba(13,127,193,0.12), rgba(13,127,193,0.06));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            margin-bottom: 24px;
-        }
-
-        .feature-card h3 {
-            font-family: 'Libre Baskerville', serif;
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 12px;
-        }
-
-        .feature-card p {
-            font-size: 0.88rem;
-            font-weight: 300;
-            color: var(--text-mid);
-            line-height: 1.7;
-        }
-
-        /* ─── PRODUCTS ─── */
-        #shop {
-            padding: 100px 60px;
-            background: linear-gradient(180deg, var(--cream) 0%, var(--sky-light) 100%);
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            margin-bottom: 50px;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-        }
-
-        .product-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(13,127,193,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 24px 60px rgba(13,127,193,0.15);
-        }
-
-        .product-img {
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-img::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-        }
-
-        .product-card:nth-child(1) .product-img { background: linear-gradient(135deg, #dff0fa, #b8d9ee); }
-        .product-card:nth-child(2) .product-img { background: linear-gradient(135deg, #e8f7f0, #c0e8d8); }
-        .product-card:nth-child(3) .product-img { background: linear-gradient(135deg, #fde8f0, #f5c0d4); }
-        .product-card:nth-child(4) .product-img { background: linear-gradient(135deg, #fdf4e0, #f5dfa0); }
-
-        .product-info {
-            padding: 24px 20px;
-        }
-
-        .product-tag {
-            font-size: 0.6rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--blue);
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-
-        .product-name {
-            font-family: 'Libre Baskerville', serif;
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin-bottom: 6px;
-        }
-
-        .product-desc {
-            font-size: 0.8rem;
-            font-weight: 300;
-            color: var(--text-light);
-            margin-bottom: 16px;
-        }
-
-        .product-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .product-price {
-            font-family: 'Libre Baskerville', serif;
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .add-btn {
-            width: 36px; height: 36px;
-            border-radius: 10px;
-            background: var(--blue);
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            font-weight: 300;
-            transition: background 0.2s, transform 0.2s;
-            line-height: 1;
-        }
-
-        .add-btn:hover { background: var(--blue-dark); transform: scale(1.1); }
-
-        /* ─── ABOUT ─── */
-        #about {
-            padding: 100px 60px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-            background: white;
-        }
-
-        .about-visual {
-            position: relative;
-        }
-
-        .about-card-main {
-            background: linear-gradient(135deg, var(--sky-light), var(--sky));
-            border-radius: 24px;
-            height: 380px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .about-card-main::before {
-            content: '';
-            position: absolute;
-            width: 300px; height: 300px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,255,255,0.6), transparent);
-            top: -80px; right: -80px;
-        }
-
-        .about-badge {
-            position: absolute;
-            bottom: -20px; right: -20px;
-            background: white;
-            border-radius: 16px;
-            padding: 20px 24px;
-            box-shadow: 0 16px 40px rgba(13,127,193,0.15);
-            border: 1px solid rgba(13,127,193,0.1);
-        }
-
-        .about-badge-val {
-            font-family: 'Libre Baskerville', serif;
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--blue);
-            line-height: 1;
-        }
-
-        .about-badge-label {
-            font-size: 0.72rem;
-            color: var(--text-light);
-            margin-top: 4px;
-            font-weight: 400;
-        }
-
-        .about-content .section-title { margin-bottom: 24px; }
-
-        .about-content p {
-            font-size: 0.95rem;
-            font-weight: 300;
-            color: var(--text-mid);
-            line-height: 1.8;
-            margin-bottom: 16px;
-        }
-
-        .about-pillars {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-top: 32px;
-        }
-
-        .pillar {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .pillar-dot {
-            width: 8px; height: 8px;
-            border-radius: 50%;
-            background: var(--blue);
-            flex-shrink: 0;
-            box-shadow: 0 0 0 3px rgba(13,127,193,0.15);
-        }
-
-        .pillar-text {
-            font-size: 0.9rem;
-            font-weight: 400;
-            color: var(--text-dark);
-        }
-
-        /* ─── CTA BANNER ─── */
-        .cta-banner {
-            margin: 0 60px 100px;
-            background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
-            border-radius: 28px;
-            padding: 70px 80px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 40px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-banner::before {
-            content: '';
-            position: absolute;
-            width: 400px; height: 400px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.05);
-            top: -150px; right: -100px;
-        }
-
-        .cta-banner::after {
-            content: '';
-            position: absolute;
-            width: 250px; height: 250px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.04);
-            bottom: -100px; left: 200px;
-        }
-
-        .cta-text h2 {
-            font-family: 'Libre Baskerville', serif;
-            font-size: clamp(1.6rem, 2.5vw, 2.2rem);
-            font-weight: 700;
-            color: white;
-            margin-bottom: 12px;
-        }
-
-        .cta-text p {
-            font-size: 0.95rem;
-            font-weight: 300;
-            color: rgba(255,255,255,0.7);
-        }
-
-        .btn-white {
-            background: white;
-            color: var(--blue);
-            padding: 16px 36px;
-            border-radius: 10px;
-            font-size: 0.88rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-decoration: none;
-            white-space: nowrap;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            position: relative;
-            z-index: 1;
-            flex-shrink: 0;
-        }
-
-        .btn-white:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.2);
-        }
-
-        /* ─── FOOTER ─── */
-        footer {
-            background: var(--text-dark);
-            padding: 60px 60px 32px;
-        }
-
-        .footer-top {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 60px;
-            padding-bottom: 48px;
-            border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
-
-        .footer-brand .logo {
-            color: white;
-            margin-bottom: 16px;
-            display: inline-flex;
-        }
-
-        .footer-brand p {
-            font-size: 0.85rem;
-            font-weight: 300;
-            color: rgba(255,255,255,0.45);
-            line-height: 1.7;
-            max-width: 240px;
-        }
-
-        .footer-col h4 {
-            font-size: 0.7rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.5);
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-
-        .footer-col ul { list-style: none; }
-
-        .footer-col ul li {
-            margin-bottom: 12px;
-        }
-
-        .footer-col ul li a {
-            text-decoration: none;
-            font-size: 0.87rem;
-            font-weight: 300;
-            color: rgba(255,255,255,0.55);
-            transition: color 0.2s;
-        }
-
-        .footer-col ul li a:hover { color: var(--glow, #00b4d8); color: #60c8f0; }
-
-        .footer-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 28px;
-        }
-
-        .footer-bottom p {
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.3);
-        }
-
-        /* ─── ANIMATIONS ─── */
-        @keyframes fadeLeft {
-            from { opacity: 0; transform: translateX(-30px); }
-            to   { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes fadeRight {
-            from { opacity: 0; transform: translateX(30px); }
-            to   { opacity: 1; transform: translateX(0); }
-        }
-
-        /* Scroll reveal */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-
-        /* ─── RESPONSIVE ─── */
-        @media (max-width: 1024px) {
-            .products-grid { grid-template-columns: repeat(2, 1fr); }
-            .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
-        }
-
-        @media (max-width: 768px) {
-            nav { padding: 0 24px; }
-            .nav-links { display: none; }
-            .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; text-align: center; }
-            .hero-ctas { justify-content: center; }
-            .hero-stats { justify-content: center; }
-            .hero-visual { min-height: 300px; }
-            #features, #shop, #about { padding: 70px 24px; }
-            .features-grid { grid-template-columns: 1fr; }
-            #about { grid-template-columns: 1fr; }
-            .cta-banner { margin: 0 24px 70px; padding: 48px 32px; flex-direction: column; text-align: center; }
-            footer { padding: 48px 24px 24px; }
-            .footer-top { grid-template-columns: 1fr 1fr; gap: 30px; }
-            .section-header { flex-direction: column; align-items: flex-start; gap: 16px; }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>La Gran Comisión — Citas Bíblicas sobre el Evangelismo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --gold-dim: #7a5f25;
+      --navy: #0a0f1e;
+      --navy-mid: #121b33;
+      --navy-light: #1c2a4a;
+      --cream: #f5ede0;
+      --cream-dim: #d6c8b2;
+      --white: #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--navy);
+      color: var(--cream);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ===== BACKGROUND STARS ===== */
+    .stars {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .stars span {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--gold-light);
+      opacity: 0;
+      animation: twinkle var(--dur, 4s) ease-in-out infinite var(--delay, 0s);
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; transform: scale(0.5); }
+      50% { opacity: var(--op, 0.4); transform: scale(1); }
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 24px;
+      background: radial-gradient(ellipse at 50% 30%, #1a2d5a 0%, var(--navy) 70%);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 1;
+      pointer-events: none;
+    }
+
+    .hero-subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.65rem, 1.5vw, 0.85rem);
+      letter-spacing: 0.35em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 0.3s;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 9vw, 7rem);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 1.1s ease forwards 0.6s;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold-light);
+    }
+
+    .hero-desc {
+      max-width: 520px;
+      font-size: clamp(0.9rem, 2vw, 1.05rem);
+      line-height: 1.8;
+      color: var(--cream-dim);
+      margin-bottom: 52px;
+      opacity: 0;
+      animation: fadeUp 1.1s ease forwards 0.9s;
+    }
+
+    .divider-cross {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 1.1s;
+    }
+
+    .divider-cross::before,
+    .divider-cross::after {
+      content: '';
+      height: 1px;
+      width: 80px;
+      background: linear-gradient(to right, transparent, var(--gold));
+    }
+    .divider-cross::after { background: linear-gradient(to left, transparent, var(--gold)); }
+
+    .cross-icon {
+      font-size: 1.6rem;
+      color: var(--gold);
+    }
+
+    /* ===== SCROLL CTA ===== */
+    .scroll-cta {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeUp 1s ease forwards 1.5s;
+      cursor: pointer;
+    }
+
+    .scroll-cta span {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--gold-dim);
+      text-transform: uppercase;
+    }
+
+    .scroll-arrow {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* ===== QUOTES SECTION ===== */
+    .quotes-section {
+      position: relative;
+      z-index: 1;
+      padding: 80px 24px 100px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 72px;
+    }
+
+    .section-heading h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.65rem, 1.5vw, 0.8rem);
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .section-heading p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 300;
+      color: var(--cream);
+      font-style: italic;
+    }
+
+    /* ===== QUOTE CARDS ===== */
+    .quotes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 28px;
+    }
+
+    .quote-card {
+      position: relative;
+      background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy-light) 100%);
+      border: 1px solid rgba(201,168,76,0.18);
+      border-radius: 2px;
+      padding: 40px 32px 36px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .quote-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.7s ease, transform 0.7s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+
+    .quote-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,168,76,0.35);
+      border-color: rgba(201,168,76,0.4);
+    }
+
+    .quote-card::before {
+      content: '"';
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 9rem;
+      color: rgba(201,168,76,0.08);
+      line-height: 1;
+      pointer-events: none;
+      transition: color 0.4s;
+    }
+
+    .quote-card:hover::before { color: rgba(201,168,76,0.14); }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+
+    .card-num {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      color: var(--gold-dim);
+      letter-spacing: 0.2em;
+    }
+
+    .card-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(201,168,76,0.25);
+    }
+
+    .quote-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--cream);
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .quote-ref {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    .card-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 80% 20%, rgba(201,168,76,0.06) 0%, transparent 60%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .quote-card:hover .card-glow { opacity: 1; }
+
+    /* ===== FEATURED QUOTE ===== */
+    .featured-quote {
+      position: relative;
+      z-index: 1;
+      margin: 0 auto 100px;
+      max-width: 900px;
+      padding: 0 24px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .featured-quote.visible { opacity: 1; transform: translateY(0); }
+
+    .featured-inner {
+      background: linear-gradient(135deg, #0f1d3a, #0a1528);
+      border: 1px solid rgba(201,168,76,0.3);
+      padding: clamp(40px, 7vw, 80px) clamp(28px, 7vw, 80px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .featured-inner::before,
+    .featured-inner::after {
+      content: '';
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-color: var(--gold);
+      border-style: solid;
+      opacity: 0.4;
+    }
+
+    .featured-inner::before {
+      top: 16px; left: 16px;
+      border-width: 1px 0 0 1px;
+    }
+
+    .featured-inner::after {
+      bottom: 16px; right: 16px;
+      border-width: 0 1px 1px 0;
+    }
+
+    .featured-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      display: block;
+    }
+
+    .featured-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--white);
+      margin-bottom: 28px;
+    }
+
+    .featured-ref {
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      color: var(--gold-light);
+    }
+
+    .featured-glow {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 100%, rgba(201,168,76,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 40px 24px 60px;
+      border-top: 1px solid rgba(201,168,76,0.12);
+    }
+
+    footer p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--gold-dim);
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== CATEGORY FILTER ===== */
+    .filter-bar {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 52px;
+    }
+
+    .filter-btn {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gold-dim);
+      background: transparent;
+      border: 1px solid rgba(201,168,76,0.2);
+      padding: 8px 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      color: var(--navy);
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+
+    /* ===== COUNTER SECTION ===== */
+    .counter-section {
+      position: relative;
+      z-index: 1;
+      background: linear-gradient(180deg, var(--navy) 0%, #0c1529 50%, var(--navy) 100%);
+      padding: 60px 24px;
+      text-align: center;
+      margin-bottom: 80px;
+      border-top: 1px solid rgba(201,168,76,0.1);
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .counter-inner {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .counter-verse {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      font-style: italic;
+      color: var(--cream-dim);
+      line-height: 1.8;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .counter-ref-label {
+      margin-top: 18px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+    }
+
+    .verse-nav {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 24px;
+      margin-top: 28px;
+    }
+
+    .verse-btn {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(201,168,76,0.3);
+      background: transparent;
+      color: var(--gold);
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .verse-btn:hover {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    .verse-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .verse-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gold-dim);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .verse-dot.active {
+      background: var(--gold);
+      transform: scale(1.4);
+    }
+  </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-    <a href="#" class="logo"><span class="logo-plus">+</span>SKIN</a>
-    <ul class="nav-links">
-        <li><a href="#">Inicio</a></li>
-        <li><a href="#shop">Tienda</a></li>
-        <li><a href="#about">Nosotros</a></li>
-        <li><a href="#contact">Contacto</a></li>
-    </ul>
-</nav>
+  <!-- Stars Background -->
+  <div class="stars" id="stars"></div>
 
-<!-- HERO -->
-<section class="hero">
-    <div class="hero-content">
-        <div class="hero-badge">Cuidado Premium de la Piel</div>
-        <h1>Reveal Your<br><em>Healthiest</em> Skin</h1>
-        <p class="hero-desc">Premium skincare products designed to nourish and rejuvenate your skin. Fórmulas científicamente probadas para una piel radiante.</p>
-        <div class="hero-ctas">
-            <a href="#shop" class="btn-primary">Shop Now</a>
-            <a href="#about" class="btn-secondary">Learn More</a>
-        </div>
-        <div class="hero-stats">
-            <div>
-                <div class="hero-stat-val">50K+</div>
-                <div class="hero-stat-label">Clientes felices</div>
-            </div>
-            <div>
-                <div class="hero-stat-val">98%</div>
-                <div class="hero-stat-label">Satisfacción</div>
-            </div>
-            <div>
-                <div class="hero-stat-val">100%</div>
-                <div class="hero-stat-label">Natural</div>
-            </div>
-        </div>
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-subtitle">La Palabra que Transforma el Mundo</p>
+    <h1 class="hero-title">La Gran<br/><em>Comisión</em></h1>
+    <p class="hero-desc">
+      Dios nos llama a compartir las Buenas Nuevas con toda criatura. 
+      Estas escrituras iluminan el corazón del evangelismo bíblico.
+    </p>
+    <div class="divider-cross">
+      <span class="cross-icon">✟</span>
+    </div>
+    <div class="scroll-cta" onclick="document.querySelector('.quotes-section').scrollIntoView({behavior:'smooth'})">
+      <span>Explorar</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ROTATING VERSE BANNER -->
+  <div class="counter-section">
+    <div class="counter-inner">
+      <div class="counter-verse" id="rotatingVerse"></div>
+      <div class="counter-ref-label" id="rotatingRef"></div>
+      <div class="verse-nav">
+        <button class="verse-btn" id="prevBtn">&#8592;</button>
+        <div class="verse-dots" id="dots"></div>
+        <button class="verse-btn" id="nextBtn">&#8594;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUOTES SECTION -->
+  <section class="quotes-section">
+    <div class="section-heading">
+      <h2>✟ Escrituras</h2>
+      <p>Palabras eternas sobre la misión evangelizadora</p>
     </div>
 
-    <div class="hero-visual">
-        <div class="hero-glow"></div>
-        <div class="products-display">
-            <div class="product-bottle">
-                <div class="tube-cap"></div>
-                <div class="tube"></div>
-            </div>
-            <div class="product-bottle" style="align-self: flex-end; margin-bottom: 20px;">
-                <div class="pump-cap"><div class="pump-nozzle"></div></div>
-                <div class="tall-bottle"></div>
-            </div>
-            <div class="product-bottle" style="align-self: flex-end; margin-bottom: 8px;">
-                <div class="serum-cap"></div>
-                <div class="serum"></div>
-            </div>
-        </div>
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" data-filter="all">Todas</button>
+      <button class="filter-btn" data-filter="mision">Misión</button>
+      <button class="filter-btn" data-filter="salvacion">Salvación</button>
+      <button class="filter-btn" data-filter="poder">Poder</button>
+      <button class="filter-btn" data-filter="fruto">Fruto</button>
     </div>
-</section>
 
-<!-- FEATURES -->
-<section id="features">
-    <span class="section-label reveal">Por qué elegirnos</span>
-    <h2 class="section-title reveal">Aquí eres libre de conocer la verdad.</h2>
-    <div class="features-grid">
-        <div class="feature-card reveal">
-            <div class="feature-icon">🌿</div>
-            <h3>Tomamos en cuenta tu opinión</h3>
-            <p>Valoramos las opiniones de las personas referentes a productos y cosméticos para saber qué recomendarles a nuestros usuarios.</p>
-        </div>
-        <div class="feature-card reveal" style="transition-delay:0.1s">
-            <div class="feature-icon">🔬</div>
-            <h3>Respaldado por la Comunidad</h3>
-            <p>No es lo mismo escuchar que un producto funciona a ver personas que realmente digan y afirmen que funciona; con esa premisa te traemos nuestros servicios para que conozcas todas las opiniones.</p>
-        </div>
-        <div class="feature-card reveal" style="transition-delay:0.2s">
-            <div class="feature-icon">♻️</div>
-            <h3>Marcas Conocidas</h3>
-            <p>Publicamos las marcas que ya conoces, la opinión de los usuarios y la tuya, para tener una respuesta precisa a las recomendaciones.</p>
-        </div>
-    </div>
-</section>
+    <div class="quotes-grid" id="quotesGrid"></div>
+  </section>
 
-<!-- PRODUCTS -->
-<section id="shop">
-    <div class="section-header reveal">
-        <div>
-            <span class="section-label">Nuestra colección</span>
-            <h2 class="section-title">Productos Destacados</h2>
-        </div>
-        <a href="#" class="btn-secondary">Ver todo</a>
+  <!-- FEATURED QUOTE -->
+  <div class="featured-quote" id="featuredQuote">
+    <div class="featured-inner">
+      <div class="featured-glow"></div>
+      <span class="featured-label">✟ La Gran Comisión ✟</span>
+      <p class="featured-text">
+        "Id por todo el mundo y predicad el evangelio a toda criatura. 
+        El que creyere y fuere bautizado, será salvo; mas el que no creyere, será condenado."
+      </p>
+      <div class="featured-ref">Marcos 16:15–16</div>
     </div>
-    <div class="products-grid">
-        <div class="product-card reveal">
-            <div class="product-img">💧</div>
-            <div class="product-info">
-                <div class="product-tag">Hidratación</div>
-                <div class="product-name">Hydra Boost Serum</div>
-                <div class="product-desc">Ácido hialurónico de triple acción</div>
-                <div class="product-footer">
-                    <span class="product-price">$42.00</span>
-                    <button class="add-btn">+</button>
-                </div>
-            </div>
-        </div>
-        <div class="product-card reveal" style="transition-delay:0.1s">
-            <div class="product-img">🌱</div>
-            <div class="product-info">
-                <div class="product-tag">Regeneración</div>
-                <div class="product-name">Green Renew Cream</div>
-                <div class="product-desc">Retinol vegetal + vitamina C</div>
-                <div class="product-footer">
-                    <span class="product-price">$58.00</span>
-                    <button class="add-btn">+</button>
-                </div>
-            </div>
-        </div>
-        <div class="product-card reveal" style="transition-delay:0.2s">
-            <div class="product-img">🌸</div>
-            <div class="product-info">
-                <div class="product-tag">Sensible</div>
-                <div class="product-name">Rose Calm Toner</div>
-                <div class="product-desc">Agua de rosas + centella asiática</div>
-                <div class="product-footer">
-                    <span class="product-price">$28.00</span>
-                    <button class="add-btn">+</button>
-                </div>
-            </div>
-        </div>
-        <div class="product-card reveal" style="transition-delay:0.3s">
-            <div class="product-img">☀️</div>
-            <div class="product-info">
-                <div class="product-tag">Protección</div>
-                <div class="product-name">Solar Shield SPF50</div>
-                <div class="product-desc">Protección UVA/UVB sin blanquear</div>
-                <div class="product-footer">
-                    <span class="product-price">$35.00</span>
-                    <button class="add-btn">+</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+  </div>
 
-<!-- ABOUT -->
-<section id="about">
-    <div class="about-visual reveal">
-        <div class="about-card-main">✨</div>
-        <div class="about-badge">
-            <div class="about-badge-val">12+</div>
-            <div class="about-badge-label">Años de experiencia</div>
-        </div>
-    </div>
-    <div class="about-content reveal" style="transition-delay:0.15s">
-        <span class="section-label">Nuestra historia</span>
-        <h2 class="section-title">Elizabeth & Ezequiel</h2>
-        <p>+SKIN nació de una simple convicción: Nuestro propósito fue crear un sitio web por el cual las personas pudieran compartir los productos de cuidado personal que han utilizado y dar una opinión al respecto. Pero no quisimos limitarlo a eso, sino que también puedan comprar el producto y tener un enlace de referencia directo a la tienda.</p>
-        <p>Nuestras fórmulas son el resultado opiniones de investigación y miles de comentarios para asegurarnos de que cada producto funcione real y visiblemente.</p>
-        <div class="about-pillars">
-            <div class="pillar"><div class="pillar-dot"></div><span class="pillar-text">Libre de crueldad animal — 100% cruelty-free</span></div>
-            <div class="pillar"><div class="pillar-dot"></div><span class="pillar-text">Testado dermatológicamente en todos los tipos de piel</span></div>
-            <div class="pillar"><div class="pillar-dot"></div><span class="pillar-text">Fabricado en Europa bajo los más altos estándares</span></div>
-            <div class="pillar"><div class="pillar-dot"></div><span class="pillar-text">Sin fragancias, parabenos ni colorantes artificiales</span></div>
-        </div>
-    </div>
-</section>
+  <footer>
+    <p>"Porque no me avergüenzo del evangelio, porque es poder de Dios para salvación." — Romanos 1:16</p>
+  </footer>
 
-<!-- CTA BANNER -->
-<div class="cta-banner reveal" id="contact">
-    <div class="cta-text">
-        <h2>Empieza tu rutina ideal hoy</h2>
-        <p>Descubre qué productos son perfectos para tu piel con nuestra guía personalizada gratuita.</p>
-    </div>
-    <a href="#shop" class="btn-white">Comenzar ahora →</a>
-</div>
+  <script>
+    // ===== STARS =====
+    const starsEl = document.getElementById('stars');
+    for (let i = 0; i < 80; i++) {
+      const s = document.createElement('span');
+      const size = Math.random() * 2.5 + 0.5;
+      s.style.cssText = `
+        width:${size}px; height:${size}px;
+        top:${Math.random()*100}%; left:${Math.random()*100}%;
+        --dur:${3+Math.random()*5}s;
+        --delay:${Math.random()*6}s;
+        --op:${0.2+Math.random()*0.5};
+      `;
+      starsEl.appendChild(s);
+    }
 
-<!-- FOOTER -->
-<footer>
-    <div class="footer-top">
-        <div class="footer-brand">
-            <a href="#" class="logo"><span class="logo-plus">+</span>SKIN</a>
-            <p>Premium skincare para una piel más sana, más radiante y más tuya.</p>
-        </div>
-        <div class="footer-col">
-            <h4>Productos</h4>
-            <ul>
-                <li><a href="#">Serums</a></li>
-                <li><a href="#">Cremas</a></li>
-                <li><a href="#">Tónicos</a></li>
-                <li><a href="#">Protección solar</a></li>
-            </ul>
-        </div>
-        <div class="footer-col">
-            <h4>Empresa</h4>
-            <ul>
-                <li><a href="#">Nosotros</a></li>
-                <li><a href="#">Sostenibilidad</a></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Prensa</a></li>
-            </ul>
-        </div>
-        <div class="footer-col">
-            <h4>Ayuda</h4>
-            <ul>
-                <li><a href="#">Contacto</a></li>
-                <li><a href="#">Envíos</a></li>
-                <li><a href="#">Devoluciones</a></li>
-                <li><a href="#">FAQ</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        <p>© 2026 +SKIN. Todos los derechos reservados.</p>
-        <p>Hecho con 💙 para tu piel</p>
-    </div>
-</footer>
+    // ===== QUOTES DATA =====
+    const quotes = [
+      { text: "Id, y haced discípulos a todas las naciones, bautizándolos en el nombre del Padre, y del Hijo, y del Espíritu Santo.", ref: "Mateo 28:19", num: "01", cat: "mision" },
+      { text: "Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna.", ref: "Juan 3:16", num: "02", cat: "salvacion" },
+      { text: "Recibiréis poder, cuando haya venido sobre vosotros el Espíritu Santo, y me seréis testigos en Jerusalén, en toda Judea, en Samaria, y hasta lo último de la tierra.", ref: "Hechos 1:8", num: "03", cat: "poder" },
+      { text: "¿Cómo, pues, invocarán a aquel en el cual no han creído? ¿Y cómo creerán en aquel de quien no han oído? ¿Y cómo oirán sin haber quien les predique?", ref: "Romanos 10:14", num: "04", cat: "mision" },
+      { text: "No me avergüenzo del evangelio, porque es poder de Dios para salvación a todo aquel que cree; al judío primeramente, y también al griego.", ref: "Romanos 1:16", num: "05", cat: "poder" },
+      { text: "La mies es mucha, mas los obreros pocos; rogad, pues, al Señor de la mies, que envíe obreros a su mies.", ref: "Lucas 10:2", num: "06", cat: "mision" },
+      { text: "Porque todo aquel que invocare el nombre del Señor, será salvo.", ref: "Romanos 10:13", num: "07", cat: "salvacion" },
+      { text: "El fruto del justo es árbol de vida; y el que gana almas es sabio.", ref: "Proverbios 11:30", num: "08", cat: "fruto" },
+      { text: "Predicad la palabra; que instes a tiempo y fuera de tiempo; redarguye, reprende, exhorta con toda paciencia y doctrina.", ref: "2 Timoteo 4:2", num: "09", cat: "mision" },
+      { text: "Así que la fe es por el oír, y el oír, por la palabra de Dios.", ref: "Romanos 10:17", num: "10", cat: "poder" },
+      { text: "Los que sembraron con lágrimas, con regocijo segarán. Irá andando y llorando el que lleva la preciosa semilla; mas volverá a venir con regocijo, trayendo sus gavillas.", ref: "Salmos 126:5–6", num: "11", cat: "fruto" },
+      { text: "Pero vosotros sois linaje escogido, real sacerdocio, nación santa, pueblo adquirido por Dios, para que anunciéis las virtudes de aquel que os llamó de las tinieblas a su luz admirable.", ref: "1 Pedro 2:9", num: "12", cat: "mision" },
+    ];
 
-<script>
-// Scroll reveal
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.12 });
+    const rotating = [
+      { text: "Vosotros sois la luz del mundo; una ciudad asentada sobre un monte no se puede esconder.", ref: "Mateo 5:14" },
+      { text: "Estad siempre preparados para presentar defensa con mansedumbre y reverencia ante todo el que os demande razón de la esperanza que hay en vosotros.", ref: "1 Pedro 3:15" },
+      { text: "El Espíritu del Señor está sobre mí, por cuanto me ha ungido para dar buenas nuevas a los pobres.", ref: "Lucas 4:18" },
+      { text: "Así alumbre vuestra luz delante de los hombres, para que vean vuestras buenas obras y glorifiquen a vuestro Padre que está en los cielos.", ref: "Mateo 5:16" },
+      { text: "He aquí que no se ha acortado la mano de Jehová para salvar, ni se ha agravado su oído para oír.", ref: "Isaías 59:1" },
+    ];
 
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    // ===== ROTATING VERSE =====
+    let rotIdx = 0;
+    const verseEl = document.getElementById('rotatingVerse');
+    const refEl = document.getElementById('rotatingRef');
+    const dotsEl = document.getElementById('dots');
 
-// Add to cart feedback
-document.querySelectorAll('.add-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const orig = this.textContent;
-        this.textContent = '✓';
-        this.style.background = '#2ecc71';
-        setTimeout(() => {
-            this.textContent = orig;
-            this.style.background = '';
-        }, 1200);
+    function buildDots() {
+      dotsEl.innerHTML = '';
+      rotating.forEach((_, i) => {
+        const d = document.createElement('div');
+        d.className = 'verse-dot' + (i === 0 ? ' active' : '');
+        d.onclick = () => setVerse(i);
+        dotsEl.appendChild(d);
+      });
+    }
+
+    function setVerse(idx) {
+      verseEl.style.opacity = '0';
+      verseEl.style.transform = 'translateY(10px)';
+      setTimeout(() => {
+        rotIdx = (idx + rotating.length) % rotating.length;
+        verseEl.textContent = `"${rotating[rotIdx].text}"`;
+        refEl.textContent = rotating[rotIdx].ref;
+        verseEl.style.opacity = '1';
+        verseEl.style.transform = 'translateY(0)';
+        document.querySelectorAll('.verse-dot').forEach((d, i) => d.classList.toggle('active', i === rotIdx));
+      }, 400);
+    }
+
+    buildDots();
+    setVerse(0);
+    document.getElementById('prevBtn').onclick = () => setVerse(rotIdx - 1);
+    document.getElementById('nextBtn').onclick = () => setVerse(rotIdx + 1);
+    setInterval(() => setVerse(rotIdx + 1), 6000);
+
+    // ===== RENDER CARDS =====
+    const grid = document.getElementById('quotesGrid');
+    let currentFilter = 'all';
+
+    function renderCards(filter) {
+      grid.innerHTML = '';
+      const filtered = filter === 'all' ? quotes : quotes.filter(q => q.cat === filter);
+      filtered.forEach((q, i) => {
+        const card = document.createElement('div');
+        card.className = 'quote-card';
+        card.style.transitionDelay = `${i * 0.07}s`;
+        card.innerHTML = `
+          <div class="card-glow"></div>
+          <div class="card-top">
+            <span class="card-num">${q.num}</span>
+            <div class="card-line"></div>
+          </div>
+          <p class="quote-text">"${q.text}"</p>
+          <div class="quote-ref">${q.ref}</div>
+        `;
+        grid.appendChild(card);
+        setTimeout(() => card.classList.add('visible'), 50 + i * 80);
+      });
+    }
+
+    renderCards('all');
+
+    // ===== FILTER =====
+    document.getElementById('filterBar').querySelectorAll('.filter-btn').forEach(btn => {
+      btn.onclick = () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderCards(btn.dataset.filter);
+      };
     });
-});
-</script>
 
+    // ===== INTERSECTION OBSERVER =====
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.15 });
+
+    observer.observe(document.getElementById('featuredQuote'));
+  </script>
 </body>
 </html>

@@ -1892,15 +1892,6 @@ document.addEventListener('DOMContentLoaded', function() {
     card.addEventListener('mouseleave', function() { card.style.transform = ''; });
   });
 
-  // Soul counter
-  var soulCount = 3000;
-  var soulEl = document.getElementById('soulCount');
-  if (soulEl) {
-    setInterval(function() {
-      soulCount += Math.floor(Math.random() * 80 + 20);
-      soulEl.textContent = soulCount.toLocaleString('es');
-    }, 2800);
-  }
 
   // Prayer form
   document.getElementById('prayerForm').addEventListener('submit', function(e) {

@@ -6,12 +6,9 @@
   <meta name="description" content="La Gran Comisión — Evangelismo Bíblico"/>
   <title>La Gran Comisión — Evangelismo Bíblico</title>
   
-  <!-- CSS -->
+  <!-- CSS - Ruta relativa simple -->
   <link rel="stylesheet" href="assets/css/style.css"/>
   <link rel="icon" href="evange.ico" type="image/x-icon">
-  
-  <!-- DATA (reemplaza PHP) -->
-  <script src="data/data.js"></script>
 </head>
 <body>
 
@@ -29,7 +26,7 @@
 <div id="progress"></div>
 <div id="notify">✟ Versículo copiado al portapapeles</div>
 
-<!-- ===== VERSE OF THE DAY WIDGET (JavaScript lo genera) ===== -->
+<!-- ===== VERSE OF THE DAY WIDGET ===== -->
 <div class="vod-widget" id="vodWidget">
   <span class="vod-tag" id="vodTag">✟ Versículo del día</span>
   <p class="vod-text" id="vodText">"Cargando..."</p>
@@ -60,14 +57,27 @@
 <section class="hero" id="home">
   <canvas id="heroCanvas"></canvas>
   <div class="hero-overlay"></div>
-  
   <div class="hero-cross">
-    <!-- SVG de la cruz (igual que en PHP) -->
     <svg viewBox="0 0 300 440" xmlns="http://www.w3.org/2000/svg">
-      <!-- ... tu SVG ... -->
+      <defs>
+        <radialGradient id="bGrad" cx="50%" cy="25%" r="55%">
+          <stop offset="0%" stop-color="#e8d48a"/>
+          <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect x="140" y="0" width="20" height="440" fill="url(#bGrad)" filter="url(#glow)">
+        <animate attributeName="opacity" values=".4;1;.4" dur="3s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="0" y="115" width="300" height="18" fill="url(#bGrad)" filter="url(#glow)">
+        <animate attributeName="opacity" values=".3;.9;.3" dur="4s" repeatCount="indefinite"/>
+      </rect>
+      <circle cx="150" cy="124" r="28" fill="#e8d48a" opacity=".55" filter="url(#glow)">
+        <animate attributeName="r" values="22;35;22" dur="3.5s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values=".4;.7;.4" dur="3.5s" repeatCount="indefinite"/>
+      </circle>
     </svg>
   </div>
-  
   <div class="hero-content">
     <p class="hero-eyebrow">El Mandato Misionero · <span id="currentYear"></span></p>
     <h1 class="hero-h1">La Gran<em>Comisión</em></h1>
@@ -78,7 +88,6 @@
       <a href="#devo" class="btn-outline">📖 Devocional de Hoy</a>
     </div>
   </div>
-  
   <div class="scroll-hint" onclick="document.querySelector('.stats-section').scrollIntoView({behavior:'smooth'})">
     <span>Descubrir</span>
     <div class="scroll-line"></div>
@@ -87,7 +96,7 @@
 
 <!-- ===== STATS ===== -->
 <section class="stats-section">
-  <!-- ... igual que en PHP, pero los números los pone JS ... -->
+  <div class="stats-bg-pattern"></div>
   <div class="section-header">
     <span class="section-tag">✟ La Palabra en Números</span>
     <p class="section-title-text">El alcance eterno del evangelio</p>
@@ -131,11 +140,9 @@
     <p class="section-title-text" id="verseCount">Cargando versículos...</p>
     <div class="section-divider"></div>
   </div>
-  
   <div class="filter-bar" id="filterBar">
     <!-- Generado por JavaScript -->
   </div>
-  
   <div class="cards-grid" id="cardsGrid">
     <!-- Generado por JavaScript -->
   </div>
@@ -148,7 +155,6 @@
     <p class="section-title-text">Seleccionado aleatoriamente</p>
     <div class="section-divider"></div>
   </div>
-  
   <div class="random-card" id="randomCard">
     <!-- Generado por JavaScript -->
   </div>
@@ -180,11 +186,9 @@
     <p class="section-title-text">Alcanzando todas las naciones</p>
     <div class="section-divider"></div>
   </div>
-  
   <div class="nations-grid" id="nationsGrid">
     <!-- Generado por JavaScript -->
   </div>
-  
   <div class="progress-bar-wrap">
     <div class="progress-label">
       <span>Países Evangelizados</span>
@@ -194,7 +198,6 @@
       <div class="pbar-inner" id="pbNations"></div>
     </div>
   </div>
-  
   <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--cream-d);margin-top:28px;font-size:1rem;">
     "Esta noticia del reino se predicará en todo el mundo..." — Mateo 24:14
   </p>
@@ -256,11 +259,46 @@
     <div class="section-divider"></div>
     <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--cream-d);margin-top:10px;">Hechos 1:8</p>
   </div>
-  
   <div class="world-map-wrap">
     <div id="mapTooltip" class="map-tooltip"></div>
     <svg id="worldSvg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
-      <!-- ... tu SVG con ciudades generadas por JS ... -->
+      <defs>
+        <radialGradient id="mapBg" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="#0e1e45"/>
+          <stop offset="100%" stop-color="#040c1e"/>
+        </radialGradient>
+        <filter id="cityGlow"><feGaussianBlur stdDeviation="3"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect width="1000" height="500" fill="url(#mapBg)" rx="12"/>
+      <g stroke="rgba(201,168,76,0.05)" stroke-width="1">
+        <line x1="0" y1="100" x2="1000" y2="100"/>
+        <line x1="0" y1="200" x2="1000" y2="200"/>
+        <line x1="0" y1="300" x2="1000" y2="300"/>
+        <line x1="0" y1="400" x2="1000" y2="400"/>
+        <line x1="200" y1="0" x2="200" y2="500"/>
+        <line x1="400" y1="0" x2="400" y2="500"/>
+        <line x1="600" y1="0" x2="600" y2="500"/>
+        <line x1="800" y1="0" x2="800" y2="500"/>
+      </g>
+      <g fill="rgba(201,168,76,0.1)" stroke="rgba(201,168,76,0.25)" stroke-width="0.6">
+        <path d="M95,60 L185,55 L230,75 L248,108 L238,162 L218,205 L195,228 L165,238 L140,218 L118,185 L95,152 Z"/>
+        <path d="M188,252 L243,242 L275,262 L283,315 L272,368 L252,408 L220,418 L194,396 L172,352 L165,298 L173,272 Z"/>
+        <path d="M430,55 L498,48 L532,65 L545,98 L528,122 L495,136 L462,130 L435,112 Z"/>
+        <path d="M415,152 L478,140 L518,162 L528,224 L515,295 L493,345 L462,365 L430,358 L403,322 L388,262 L390,202 Z"/>
+        <path d="M515,52 L635,42 L750,62 L818,98 L832,142 L798,175 L740,185 L670,175 L605,185 L548,162 L522,128 Z"/>
+        <path d="M512,158 L568,148 L608,162 L618,198 L600,225 L568,232 L535,218 L515,192 Z"/>
+        <path d="M730,285 L818,272 L858,294 L868,338 L848,368 L808,380 L755,370 L722,345 L712,308 Z"/>
+      </g>
+      <g stroke="rgba(201,168,76,0.35)" stroke-width="0.8" stroke-dasharray="5 4" fill="none">
+        <!-- Ciudades generadas por JS -->
+      </g>
+      <!-- Ciudades generadas por JS -->
+      <g transform="translate(920,460)" opacity=".25">
+        <line x1="0" y1="-22" x2="0" y2="22" stroke="#c9a84c" stroke-width="1"/>
+        <line x1="-22" y1="0" x2="22" y2="0" stroke="#c9a84c" stroke-width="1"/>
+        <circle cx="0" cy="0" r="14" fill="none" stroke="#c9a84c" stroke-width=".5"/>
+        <text y="-26" font-size="8" fill="#c9a84c" text-anchor="middle" font-family="Cinzel,serif">N</text>
+      </g>
     </svg>
     <div class="world-legend">
       <div class="legend-item"><div class="legend-dot origin"></div>Jerusalén (Origen)</div>
@@ -352,14 +390,11 @@
     <p class="section-title-text">Oramos contigo y por ti</p>
     <div class="section-divider"></div>
   </div>
-  
   <div class="prayer-form-wrap">
     <form class="prayer-form" id="prayerForm">
       <input type="text" name="nombre" class="prayer-input" placeholder="Tu nombre (opcional)" maxlength="60"/>
       <input type="text" name="pais" class="prayer-input" placeholder="Tu país (opcional)" maxlength="40"/>
-      <textarea name="oracion" class="prayer-textarea"
-                placeholder="Escribe tu petición de oración..."
-                maxlength="600" required></textarea>
+      <textarea name="oracion" class="prayer-textarea" placeholder="Escribe tu petición de oración..." maxlength="600" required></textarea>
       <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.85rem;color:var(--cream-d);">
         "La oración eficaz del justo puede mucho." — Santiago 5:16
       </p>
@@ -391,11 +426,50 @@
 
 <!-- ===== FOOTER ===== -->
 <footer>
-  <!-- ... tu footer ... -->
+  <svg width="60" height="80" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg" style="margin:0 auto 20px;display:block;opacity:.5;">
+    <rect x="27" y="0" width="6" height="80" fill="#c9a84c"/>
+    <rect x="0" y="20" width="60" height="6" fill="#c9a84c"/>
+    <circle cx="30" cy="23" r="7" fill="#e8d48a" opacity=".8">
+      <animate attributeName="opacity" values=".4;1;.4" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="5;9;5" dur="3s" repeatCount="indefinite"/>
+    </circle>
+  </svg>
+  <p class="footer-verse">"Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito..."</p>
+  <p class="footer-ref">Juan 3:16</p>
+  <div class="footer-links">
+    <a href="#citas">Escrituras</a>
+    <a href="#aleatorio">Aleatorio</a>
+    <a href="#galeria">Galería</a>
+    <a href="#misioneros">Testigos</a>
+    <a href="#mundo">Mundo</a>
+    <a href="#devo">Devocional</a>
+    <a href="#timeline">Cronología</a>
+    <a href="#oracion">Oración</a>
+  </div>
+  <p class="footer-copy">
+    © La Gran Comisión · <span id="footerYear"></span>
+  </p>
 </footer>
 
+<!-- ============================================================ -->
 <!-- ===== SCRIPTS ===== -->
-<script src="./data/data.js"></script>
-<script src="./assets/js/main.js"></script>
+<!-- IMPORTANTE: PRIMERO los datos, LUEGO el main.js -->
+<script src="data/data.js"></script>
+<script src="assets/js/main.js"></script>
+
+<!-- Script de diagnóstico -->
+<script>
+  console.log('🔍 Verificando carga...');
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof BIBLICAL_DATA !== 'undefined') {
+      console.log('✅ BIBLICAL_DATA cargado correctamente');
+      console.log('📊 Cantidad de versículos:', BIBLICAL_DATA.citas.length);
+    } else {
+      console.error('❌ BIBLICAL_DATA NO está definido');
+      console.log('📍 Verifica que data/data.js exista y la ruta sea correcta');
+    }
+  });
+</script>
+
 </body>
 </html>

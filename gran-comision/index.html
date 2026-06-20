@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="La Gran Comisión — Evangelismo Bíblico"/>
+  <title>La Gran Comisión — Evangelismo Bíblico</title>
+  
+  <!-- CSS -->
+  <link rel="stylesheet" href="assets/css/style.css"/>
+  <link rel="icon" href="evange.ico" type="image/x-icon">
+  
+  <!-- DATA (reemplaza PHP) -->
+  <script src="data/data.js"></script>
+</head>
+<body>
+
+<!-- ===== LOADER ===== -->
+<div id="loader">
+  <div class="loader-cross">✟</div>
+  <div class="loader-text">La Gran Comisión · Cargando</div>
+  <div class="loader-bar"></div>
+</div>
+
+<!-- ===== UI SHELL ===== -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div id="cursor-trail"></div>
+<div id="progress"></div>
+<div id="notify">✟ Versículo copiado al portapapeles</div>
+
+<!-- ===== VERSE OF THE DAY WIDGET (JavaScript lo genera) ===== -->
+<div class="vod-widget" id="vodWidget">
+  <span class="vod-tag" id="vodTag">✟ Versículo del día</span>
+  <p class="vod-text" id="vodText">"Cargando..."</p>
+  <span class="vod-ref" id="vodRef"></span>
+</div>
+
+<!-- ===== NAVIGATION ===== -->
+<nav id="mainNav">
+  <div class="nav-brand">
+    <span class="nav-cross">✟</span>
+    <span class="nav-logo">La Gran Comisión</span>
+  </div>
+  <div class="nav-links">
+    <a href="#citas">Escrituras</a>
+    <a href="#galeria">Galería</a>
+    <a href="#misioneros">Testigos</a>
+    <a href="#mundo">Mundo</a>
+    <a href="#timeline">Cronología</a>
+    <a href="#devo">Devocional</a>
+    <a href="#oracion">Oración</a>
+  </div>
+  <div class="nav-actions">
+    <button class="music-btn" id="musicBtn">🎵 Música</button>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-overlay"></div>
+  
+  <div class="hero-cross">
+    <!-- SVG de la cruz (igual que en PHP) -->
+    <svg viewBox="0 0 300 440" xmlns="http://www.w3.org/2000/svg">
+      <!-- ... tu SVG ... -->
+    </svg>
+  </div>
+  
+  <div class="hero-content">
+    <p class="hero-eyebrow">El Mandato Misionero · <span id="currentYear"></span></p>
+    <h1 class="hero-h1">La Gran<em>Comisión</em></h1>
+    <p class="hero-tagline">"Id por todo el mundo y predicad el evangelio a toda criatura."</p>
+    <span class="hero-ref">— Marcos 16:15</span>
+    <div class="hero-ctas">
+      <a href="#citas" class="btn-primary">✟ Explorar Escrituras</a>
+      <a href="#devo" class="btn-outline">📖 Devocional de Hoy</a>
+    </div>
+  </div>
+  
+  <div class="scroll-hint" onclick="document.querySelector('.stats-section').scrollIntoView({behavior:'smooth'})">
+    <span>Descubrir</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ===== STATS ===== -->
+<section class="stats-section">
+  <!-- ... igual que en PHP, pero los números los pone JS ... -->
+  <div class="section-header">
+    <span class="section-tag">✟ La Palabra en Números</span>
+    <p class="section-title-text">El alcance eterno del evangelio</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="stats-grid" id="statsGrid">
+    <!-- Generado por JavaScript -->
+  </div>
+</section>
+
+<!-- ===== PROMESAS ETERNAS ===== -->
+<section class="promises-section">
+  <div class="section-header">
+    <span class="section-tag">⭐ Promesas Eternas</span>
+    <p class="section-title-text">Palabras que no pasarán jamás</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="promises-grid" id="promisesGrid">
+    <!-- Generado por JavaScript -->
+  </div>
+</section>
+
+<!-- ===== SPOTLIGHT ===== -->
+<section class="spotlight">
+  <canvas id="spotCanvas"></canvas>
+  <div class="spotlight-inner">
+    <span class="section-tag">✟ Poder Para Testificar</span>
+    <p class="spotlight-quote">
+      "No me avergüenzo del evangelio, porque es
+      <span class="hl">poder de Dios para salvación</span>
+      a todo aquel que cree."
+    </p>
+    <div class="spotlight-ref">Romanos 1:16</div>
+  </div>
+</section>
+
+<!-- ===== VERSE CARDS ===== -->
+<section class="cards-section" id="citas">
+  <div class="section-header">
+    <span class="section-tag">✟ Escrituras Sobre Evangelismo</span>
+    <p class="section-title-text" id="verseCount">Cargando versículos...</p>
+    <div class="section-divider"></div>
+  </div>
+  
+  <div class="filter-bar" id="filterBar">
+    <!-- Generado por JavaScript -->
+  </div>
+  
+  <div class="cards-grid" id="cardsGrid">
+    <!-- Generado por JavaScript -->
+  </div>
+</section>
+
+<!-- ===== VERSO ALEATORIO ===== -->
+<section class="random-section" id="aleatorio">
+  <div class="section-header">
+    <span class="section-tag">🎲 Versículo del Momento</span>
+    <p class="section-title-text">Seleccionado aleatoriamente</p>
+    <div class="section-divider"></div>
+  </div>
+  
+  <div class="random-card" id="randomCard">
+    <!-- Generado por JavaScript -->
+  </div>
+</section>
+
+<!-- ===== GALERÍA ===== -->
+<section class="gallery-section" id="galeria">
+  <div class="section-header">
+    <span class="section-tag">✟ Imágenes del Mundo</span>
+    <p class="section-title-text">La creación proclama su gloria</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="gallery-grid" id="galleryGrid">
+    <!-- Generado por JavaScript -->
+  </div>
+</section>
+
+<!-- ===== LIGHTBOX ===== -->
+<div id="lightbox">
+  <span class="lb-close" title="Cerrar">✕</span>
+  <img id="lbImg" src="" alt=""/>
+  <p class="lb-caption" id="lbCap"></p>
+</div>
+
+<!-- ===== PAÍSES ===== -->
+<section class="nations-section">
+  <div class="section-header">
+    <span class="section-tag">🌐 El Evangelio en el Mundo</span>
+    <p class="section-title-text">Alcanzando todas las naciones</p>
+    <div class="section-divider"></div>
+  </div>
+  
+  <div class="nations-grid" id="nationsGrid">
+    <!-- Generado por JavaScript -->
+  </div>
+  
+  <div class="progress-bar-wrap">
+    <div class="progress-label">
+      <span>Países Evangelizados</span>
+      <span id="progressLabel">0 / 0 (0%)</span>
+    </div>
+    <div class="pbar-outer">
+      <div class="pbar-inner" id="pbNations"></div>
+    </div>
+  </div>
+  
+  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--cream-d);margin-top:28px;font-size:1rem;">
+    "Esta noticia del reino se predicará en todo el mundo..." — Mateo 24:14
+  </p>
+</section>
+
+<!-- ===== MISIONEROS ===== -->
+<section class="mission-section" id="misioneros">
+  <div class="section-header">
+    <span class="section-tag">⚔️ Testigos Valientes</span>
+    <p class="section-title-text">Ellos llevaron el evangelio hasta el fin</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="mission-grid" id="missionGrid">
+    <!-- Generado por JavaScript -->
+  </div>
+</section>
+
+<!-- ===== TESTIMONIOS ===== -->
+<section class="testimonies-section">
+  <div class="section-header">
+    <span class="section-tag">💬 Voces de la Historia</span>
+    <p class="section-title-text">Misioneros que cambiaron el mundo</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="testimonies-track" id="testimoniesTrack">
+    <!-- Generado por JavaScript -->
+  </div>
+</section>
+
+<!-- ===== PROFECÍAS ===== -->
+<section class="prophecy-section">
+  <div class="section-header">
+    <span class="section-tag">📜 Profecías Cumplidas</span>
+    <p class="section-title-text">Antes de que Cristo viniera, ya estaba escrito</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="prophecy-grid" id="prophecyGrid">
+    <!-- Generado por JavaScript -->
+  </div>
+</section>
+
+<!-- ===== PARALELO AT→NT ===== -->
+<section class="parallelo-section">
+  <div class="section-header">
+    <span class="section-tag">📖 Antiguo → Nuevo Testamento</span>
+    <p class="section-title-text">La misma voz, dos épocas</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="parallelo-section" style="padding:0 24px 40px;" id="paralleloGrid">
+    <!-- Generado por JavaScript -->
+  </div>
+</section>
+
+<!-- ===== MAPA MUNDIAL ===== -->
+<section class="world-section" id="mundo">
+  <div class="section-header">
+    <span class="section-tag">✟ Hasta Lo Último de la Tierra</span>
+    <p class="section-title-text">"Me seréis testigos..."</p>
+    <div class="section-divider"></div>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--cream-d);margin-top:10px;">Hechos 1:8</p>
+  </div>
+  
+  <div class="world-map-wrap">
+    <div id="mapTooltip" class="map-tooltip"></div>
+    <svg id="worldSvg" viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+      <!-- ... tu SVG con ciudades generadas por JS ... -->
+    </svg>
+    <div class="world-legend">
+      <div class="legend-item"><div class="legend-dot origin"></div>Jerusalén (Origen)</div>
+      <div class="legend-item"><div class="legend-dot mission"></div>Ciudades misioneras</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TYPEWRITER ===== -->
+<section class="typewriter-section" id="typewriterSection">
+  <div class="tw-bg"></div>
+  <div class="tw-content">
+    <span class="tw-label">✟ Versículo Vivo ✟</span>
+    <div class="tw-text"><span id="twText"></span><span id="twCursor"></span></div>
+    <div class="tw-ref" id="twRef"></div>
+    <div class="tw-nav" id="twNav"></div>
+  </div>
+</section>
+
+<!-- ===== DEVOCIONAL ===== -->
+<section class="devo-section" id="devo">
+  <div class="section-header">
+    <span class="section-tag">🌅 Devocional de Hoy</span>
+    <p class="section-title-text" id="devoDayTitle">Cargando...</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="devo-wrap" id="devoWrap">
+    <!-- Generado por JavaScript -->
+  </div>
+</section>
+
+<!-- ===== TIMELINE ===== -->
+<section class="timeline-section" id="timeline">
+  <div class="section-header">
+    <span class="section-tag">✟ A Través de las Escrituras</span>
+    <p class="section-title-text">El hilo dorado del evangelismo</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="timeline-wrap" id="timelineWrap">
+    <!-- Generado por JavaScript -->
+  </div>
+</section>
+
+<!-- ===== IGLESIAS APOCALIPSIS ===== -->
+<section class="churches-section">
+  <div class="section-header">
+    <span class="section-tag">🕯️ Las 7 Iglesias del Apocalipsis</span>
+    <p class="section-title-text">Mensajes de Cristo para su novia</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="churches-grid" id="churchesGrid">
+    <!-- Generado por JavaScript -->
+  </div>
+</section>
+
+<!-- ===== LIBROS NT ===== -->
+<section class="books-section">
+  <div class="section-header">
+    <span class="section-tag">📚 Libros del Nuevo Testamento</span>
+    <p class="section-title-text" id="booksCount">Cargando libros...</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="books-grid" id="booksGrid">
+    <!-- Generado por JavaScript -->
+  </div>
+</section>
+
+<!-- ===== QUIZ ===== -->
+<section class="quiz-section">
+  <div class="section-header">
+    <span class="section-tag">📖 Prueba Tu Conocimiento</span>
+    <p class="section-title-text" id="quizCount">Cargando preguntas...</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="quiz-wrap">
+    <div class="quiz-question" id="quizQ">Cargando pregunta...</div>
+    <div class="quiz-options" id="quizOpts"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+      <div class="quiz-score" id="quizScore">0 / 0</div>
+      <button class="quiz-next" id="quizNext">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MURO DE ORACIÓN ===== -->
+<section class="prayer-section" id="oracion">
+  <div class="section-header">
+    <span class="section-tag">🙏 Muro de Oración</span>
+    <p class="section-title-text">Oramos contigo y por ti</p>
+    <div class="section-divider"></div>
+  </div>
+  
+  <div class="prayer-form-wrap">
+    <form class="prayer-form" id="prayerForm">
+      <input type="text" name="nombre" class="prayer-input" placeholder="Tu nombre (opcional)" maxlength="60"/>
+      <input type="text" name="pais" class="prayer-input" placeholder="Tu país (opcional)" maxlength="40"/>
+      <textarea name="oracion" class="prayer-textarea"
+                placeholder="Escribe tu petición de oración..."
+                maxlength="600" required></textarea>
+      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.85rem;color:var(--cream-d);">
+        "La oración eficaz del justo puede mucho." — Santiago 5:16
+      </p>
+      <button type="submit" class="prayer-submit">🙏 Enviar Petición</button>
+    </form>
+    <div class="prayer-success" id="prayerSuccess">
+      <p style="font-size:2rem;">🕊️</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;">"No os afanéis por nada..." — Filipenses 4:6</p>
+    </div>
+    <div class="prayer-list" id="prayerList"></div>
+  </div>
+</section>
+
+<!-- ===== FLAME CTA ===== -->
+<section class="flame-section">
+  <canvas id="flameCanvas"></canvas>
+  <div class="flame-content">
+    <h2 class="flame-title">🔥 ¿Estás listo para ser testigo?</h2>
+    <p class="flame-sub">"El que gana almas es sabio" — Proverbios 11:30</p>
+    <div class="soul-badge"><strong id="soulCount">3,000</strong> almas alcanzadas · y contando...</div>
+    <br/>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:16px;">
+      <a href="#citas" class="btn-primary">🔥 Leer Escrituras</a>
+      <a href="#devo" class="btn-outline">📖 Devocional</a>
+      <a href="#oracion" class="btn-outline">🙏 Orar</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <!-- ... tu footer ... -->
+</footer>
+
+<!-- ===== SCRIPTS ===== -->
+<script src="assets/js/main.js"></script>
+</body>
+</html>

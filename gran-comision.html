@@ -1,0 +1,3266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="La Gran Comisión — Evangelismo Bíblico"/>
+  <meta property="og:title" content="La Gran Comisión — Evangelismo Bíblico"/>
+  <meta property="og:description" content="Id por todo el mundo y predicad el evangelio a toda criatura."/>
+  <title>La Gran Comisión — Evangelismo Bíblico</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✟</text></svg>"/>
+  
+  <style>
+    /* ============================================================
+       ESTILOS COMPLETOS - La Gran Comisión
+       ============================================================ */
+    
+    /* ── FUENTES ── */
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap');
+
+    /* ── VARIABLES ── */
+    :root {
+      --gold: #c9a84c;
+      --gold-d: #a8882e;
+      --gold-l: #e8d48a;
+      --cream: #e8e0d0;
+      --cream-d: #b8b0a0;
+      --bg-dark: #030818;
+      --bg-card: rgba(20,32,64,0.85);
+      --font-serif: 'Cormorant Garamond', serif;
+      --font-display: 'Cinzel', serif;
+      --font-body: 'Lato', sans-serif;
+    }
+
+    /* ── RESET ── */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg-dark);
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-dark); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-d); border-radius: 2px; }
+
+    /* ── LOADER ── */
+    #loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: var(--bg-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity .8s ease, visibility .8s ease;
+    }
+    #loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loader-cross {
+      font-size: 4rem;
+      color: var(--gold);
+      animation: pulseCross 1.5s ease-in-out infinite;
+    }
+    .loader-text {
+      font-family: var(--font-display);
+      font-size: .7rem;
+      letter-spacing: .5em;
+      color: var(--gold-d);
+      margin-top: 20px;
+      text-transform: uppercase;
+    }
+    .loader-bar {
+      width: 160px;
+      height: 2px;
+      background: rgba(201,168,76,0.15);
+      margin-top: 24px;
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+    .loader-bar::after {
+      content: '';
+      position: absolute;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      animation: loadBar 1.8s ease-in-out infinite;
+    }
+    @keyframes pulseCross {
+      0%, 100% { opacity: .4; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.08); }
+    }
+    @keyframes loadBar {
+      0% { left: -100%; }
+      100% { left: 200%; }
+    }
+
+    /* ── NAV ── */
+    #mainNav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 32px;
+      background: rgba(3,8,24,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(201,168,76,0.08);
+      transition: all .4s;
+    }
+    #mainNav.scrolled { background: rgba(3,8,24,0.96); }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--gold-l);
+    }
+    .nav-cross { font-size: 1.3rem; color: var(--gold); }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: .85rem;
+      letter-spacing: .2em;
+      font-weight: 600;
+    }
+    .nav-links {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .nav-links a {
+      color: var(--cream-d);
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-size: .55rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      transition: color .3s;
+      position: relative;
+    }
+    .nav-links a:hover { color: var(--gold-l); }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold);
+      transition: width .3s;
+    }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .music-btn {
+      background: none;
+      border: 1px solid rgba(201,168,76,0.25);
+      color: var(--cream-d);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-family: var(--font-display);
+      font-size: .55rem;
+      letter-spacing: .1em;
+      cursor: pointer;
+      transition: all .3s;
+    }
+    .music-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold-l);
+      background: rgba(201,168,76,0.08);
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .section-tag {
+      font-family: var(--font-display);
+      font-size: .55rem;
+      letter-spacing: .4em;
+      color: var(--gold-d);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .section-title-text {
+      font-family: var(--font-serif);
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 400;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .section-divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 16px auto 0;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 60px;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 20%, rgba(201,168,76,0.06), transparent 60%), var(--bg-dark);
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 80%, rgba(3,8,24,0.6), var(--bg-dark) 70%);
+      pointer-events: none;
+    }
+    .hero-cross {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      height: 440px;
+      opacity: .3;
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-display);
+      font-size: .6rem;
+      letter-spacing: .5em;
+      color: var(--gold-d);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero-h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 8vw, 5.5rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.05;
+      letter-spacing: .04em;
+    }
+    .hero-h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--gold-l), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: block;
+    }
+    .hero-tagline {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--cream-d);
+      margin: 20px 0 8px;
+    }
+    .hero-ref {
+      font-family: var(--font-display);
+      font-size: .65rem;
+      letter-spacing: .3em;
+      color: var(--gold-d);
+      display: block;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 36px;
+    }
+    .btn-primary {
+      font-family: var(--font-display);
+      font-size: .6rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, var(--gold-d), var(--gold));
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all .3s;
+      cursor: pointer;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(201,168,76,0.25);
+    }
+    .btn-outline {
+      font-family: var(--font-display);
+      font-size: .6rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      background: transparent;
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold);
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all .3s;
+      cursor: pointer;
+    }
+    .btn-outline:hover {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.06);
+    }
+    .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: .4;
+      cursor: pointer;
+      transition: opacity .3s;
+    }
+    .scroll-hint:hover { opacity: .8; }
+    .scroll-hint span {
+      font-family: var(--font-display);
+      font-size: .5rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold-d);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+    @keyframes scrollBounce {
+      0%, 100% { transform: scaleY(1) translateY(0); opacity: 1; }
+      50% { transform: scaleY(0.4) translateY(-8px); opacity: 0.4; }
+    }
+
+    /* ── STATS ── */
+    .stats-section {
+      padding: 80px 24px;
+      background: linear-gradient(180deg, var(--bg-dark), #050d1f);
+      position: relative;
+      overflow: hidden;
+    }
+    .stats-bg-pattern {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 20% 50%, rgba(201,168,76,0.03) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 28px;
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(201,168,76,0.08);
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+      transition: all .5s cubic-bezier(.23,1,.32,1);
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .stat-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .stat-card:hover {
+      border-color: rgba(201,168,76,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    }
+    .stat-icon { font-size: 2rem; display: block; margin-bottom: 12px; }
+    .stat-num {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      color: var(--gold-l);
+      font-weight: 400;
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: var(--font-display);
+      font-size: .55rem;
+      letter-spacing: .2em;
+      color: var(--cream-d);
+      margin-top: 8px;
+      text-transform: uppercase;
+    }
+    .stat-verse {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: .75rem;
+      color: var(--gold-d);
+      margin-top: 12px;
+      opacity: .7;
+    }
+
+    /* ── PROMESAS ── */
+    .promises-section {
+      padding: 80px 24px;
+      background: linear-gradient(170deg, #030912, #060f22);
+    }
+    .promises-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .promise-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px;
+      padding: 44px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(201,168,76,.2);
+      transition: all .4s;
+      min-height: 280px;
+    }
+    .promise-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(201,168,76,.5);
+      box-shadow: 0 30px 60px rgba(0,0,0,.6);
+    }
+    .promise-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--c1), var(--c2));
+      opacity: .6;
+    }
+    .promise-icon { font-size: 2.4rem; position: relative; z-index: 1; margin-bottom: 20px; display: block; }
+    .promise-text {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.2rem;
+      color: #fff;
+      line-height: 1.7;
+      position: relative;
+      z-index: 1;
+      flex: 1;
+    }
+    .promise-ref {
+      font-family: var(--font-display);
+      font-size: .65rem;
+      letter-spacing: .3em;
+      color: var(--gold-l);
+      margin-top: 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .promise-line {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 14px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── SPOTLIGHT ── */
+    .spotlight {
+      padding: 80px 24px;
+      background: radial-gradient(ellipse at 30% 40%, rgba(201,168,76,0.06), transparent 60%), var(--bg-dark);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .spotlight-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+    .spotlight-quote {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: #fff;
+      line-height: 1.6;
+      margin: 20px 0 12px;
+    }
+    .spotlight-quote .hl {
+      background: linear-gradient(135deg, var(--gold-l), var(--gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .spotlight-ref {
+      font-family: var(--font-display);
+      font-size: .65rem;
+      letter-spacing: .3em;
+      color: var(--gold-d);
+    }
+
+    /* ── VERSE CARDS ── */
+    .cards-section {
+      padding: 80px 24px;
+      background: #040c1e;
+    }
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      margin-bottom: 36px;
+    }
+    .fb {
+      font-family: var(--font-display);
+      font-size: .5rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(201,168,76,0.15);
+      background: transparent;
+      color: var(--cream-d);
+      cursor: pointer;
+      transition: all .3s;
+    }
+    .fb:hover { border-color: var(--gold-d); color: var(--gold-l); }
+    .fb.on {
+      background: rgba(201,168,76,0.12);
+      border-color: var(--gold);
+      color: var(--gold-l);
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .qcard {
+      background: var(--bg-card);
+      border: 1px solid rgba(201,168,76,0.06);
+      border-radius: 16px;
+      padding: 24px 22px;
+      transition: all .4s cubic-bezier(.23,1,.32,1);
+      opacity: 0;
+      transform: translateY(16px);
+      display: flex;
+      flex-direction: column;
+    }
+    .qcard.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .qcard:hover {
+      border-color: rgba(201,168,76,0.2);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+    .qcard-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .qcard-num {
+      font-family: var(--font-display);
+      font-size: .5rem;
+      color: var(--gold-d);
+      letter-spacing: .1em;
+    }
+    .qcard-hr {
+      flex: 1;
+      height: 1px;
+      background: rgba(201,168,76,0.1);
+    }
+    .qcard-cat {
+      font-family: var(--font-display);
+      font-size: .45rem;
+      letter-spacing: .2em;
+      color: var(--gold-d);
+      text-transform: uppercase;
+    }
+    .qcard-text {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1rem;
+      color: #fff;
+      line-height: 1.7;
+      flex: 1;
+    }
+    .qcard-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(201,168,76,0.06);
+    }
+    .qcard-ref {
+      font-family: var(--font-display);
+      font-size: .55rem;
+      letter-spacing: .2em;
+      color: var(--gold);
+    }
+    .qcard-copy {
+      background: none;
+      border: none;
+      color: var(--gold-d);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: color .3s;
+      padding: 4px 8px;
+    }
+    .qcard-copy:hover { color: var(--gold-l); }
+
+    /* ── RANDOM ── */
+    .random-section {
+      padding: 80px 24px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(201,168,76,.08), transparent 60%), #050d1f;
+      text-align: center;
+    }
+    .random-card {
+      max-width: 720px;
+      margin: 0 auto;
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(201,168,76,.25);
+      border-radius: 24px;
+      padding: 48px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .random-card::before {
+      content: '"';
+      position: absolute;
+      top: -30px;
+      left: 16px;
+      font-family: var(--font-serif);
+      font-size: 14rem;
+      color: rgba(201,168,76,.04);
+      line-height: 1;
+    }
+    .random-text {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      color: #fff;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    .random-ref {
+      font-family: var(--font-display);
+      font-size: .7rem;
+      letter-spacing: .35em;
+      color: var(--gold);
+    }
+    .random-cat {
+      display: inline-block;
+      background: rgba(201,168,76,.15);
+      color: var(--gold-l);
+      font-family: var(--font-display);
+      font-size: .55rem;
+      letter-spacing: .2em;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+    }
+    .random-btn {
+      margin-top: 28px;
+      font-family: var(--font-display);
+      font-size: .6rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      background: transparent;
+      border: 1px solid var(--gold-d);
+      color: var(--gold);
+      padding: 10px 28px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all .3s;
+    }
+    .random-btn:hover {
+      background: rgba(201,168,76,.1);
+      border-color: var(--gold);
+    }
+    .random-timestamp {
+      text-align: center;
+      margin-top: 20px;
+      font-family: var(--font-display);
+      font-size: .55rem;
+      letter-spacing: .3em;
+      color: var(--gold-d);
+    }
+
+    /* ── GALLERY ── */
+    .gallery-section {
+      padding: 80px 24px;
+      background: #030a18;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .gallery-item {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 4/3;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .5s;
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(3,8,24,0.8), transparent);
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+      opacity: 0;
+      transition: opacity .4s;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-caption {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: #fff;
+      font-size: .85rem;
+    }
+
+    /* ── LIGHTBOX ── */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(3,8,24,0.95);
+      backdrop-filter: blur(12px);
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    #lightbox.active { display: flex; }
+    #lightbox img {
+      max-width: 90%;
+      max-height: 75vh;
+      border-radius: 12px;
+      object-fit: contain;
+    }
+    .lb-close {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      font-size: 2rem;
+      color: var(--cream-d);
+      cursor: pointer;
+      transition: color .3s;
+    }
+    .lb-close:hover { color: #fff; }
+    .lb-caption {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: var(--cream-d);
+      margin-top: 20px;
+      font-size: 1.1rem;
+    }
+
+    /* ── NATIONS ── */
+    .nations-section {
+      padding: 80px 24px;
+      background: linear-gradient(135deg, #05102a 0%, #030818 100%);
+      text-align: center;
+    }
+    .nations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 32px;
+      max-width: 900px;
+      margin: 40px auto 0;
+    }
+    .nation-stat { position: relative; }
+    .nation-num {
+      font-family: var(--font-serif);
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      color: var(--gold-l);
+      font-weight: 300;
+      line-height: 1;
+    }
+    .nation-lbl {
+      font-family: var(--font-display);
+      font-size: .58rem;
+      letter-spacing: .3em;
+      color: var(--cream-d);
+      margin-top: 8px;
+      text-transform: uppercase;
+    }
+    .nation-sub {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: .82rem;
+      color: var(--gold-d);
+      margin-top: 4px;
+    }
+    .progress-bar-wrap { max-width: 500px; margin: 36px auto 0; }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-display);
+      font-size: .58rem;
+      color: var(--cream-d);
+      margin-bottom: 8px;
+    }
+    .pbar-outer {
+      height: 6px;
+      background: rgba(255,255,255,.08);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .pbar-inner {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-d), var(--gold-l));
+      border-radius: 3px;
+      width: 0;
+      transition: width 2s cubic-bezier(.23,1,.32,1);
+    }
+    .pbar-inner.animate { width: 93.8%; }
+
+    /* ── MISIONEROS ── */
+    .mission-section {
+      padding: 80px 24px;
+      background: #040c1e;
+    }
+    .mission-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .mcard {
+      background: var(--bg-card);
+      border: 1px solid rgba(201,168,76,0.06);
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+      transition: all .4s;
+    }
+    .mcard:hover {
+      border-color: rgba(201,168,76,0.2);
+      transform: translateY(-4px);
+    }
+    .mcard-icon { font-size: 2.2rem; display: block; margin-bottom: 8px; }
+    .mcard-name {
+      font-family: var(--font-display);
+      color: var(--gold-l);
+      font-size: .9rem;
+    }
+    .mcard-role {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: var(--gold-d);
+      font-size: .8rem;
+    }
+    .mcard-text {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: var(--cream-d);
+      font-size: .9rem;
+      margin: 12px 0;
+      line-height: 1.6;
+    }
+    .mcard-verse {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: var(--gold-d);
+      font-size: .8rem;
+      margin-top: 12px;
+      border-top: 1px solid rgba(201,168,76,0.06);
+      padding-top: 12px;
+    }
+    .mcard-stats {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      margin: 12px 0;
+    }
+    .mstat { text-align: center; }
+    .mstat-num {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      color: var(--gold-l);
+    }
+    .mstat-lbl {
+      font-family: var(--font-display);
+      font-size: .45rem;
+      letter-spacing: .1em;
+      color: var(--cream-d);
+    }
+
+    /* ── TESTIMONIOS ── */
+    .testimonies-section {
+      padding: 80px 24px;
+      background: radial-gradient(ellipse at 30% 50%, #0e1e40, #030a18);
+    }
+    .testimonies-track {
+      display: flex;
+      gap: 24px;
+      max-width: 1300px;
+      margin: 0 auto;
+      overflow-x: auto;
+      padding-bottom: 16px;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .testimonies-track::-webkit-scrollbar { height: 3px; }
+    .testimonies-track::-webkit-scrollbar-track { background: rgba(255,255,255,.05); }
+    .testimonies-track::-webkit-scrollbar-thumb { background: var(--gold-d); border-radius: 3px; }
+    .testi-card {
+      flex: 0 0 320px;
+      scroll-snap-align: start;
+      background: var(--bg-card);
+      border: 1px solid rgba(201,168,76,.18);
+      border-radius: 20px;
+      padding: 36px 28px;
+      transition: all .4s;
+    }
+    .testi-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--gold-d);
+      box-shadow: 0 20px 50px rgba(0,0,0,.5);
+    }
+    .testi-quote {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      color: var(--gold-d);
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+    .testi-text {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--cream);
+      line-height: 1.65;
+      margin-bottom: 24px;
+      flex: 1;
+    }
+    .testi-name {
+      font-family: var(--font-display);
+      font-size: .75rem;
+      color: var(--gold-l);
+      margin-bottom: 2px;
+    }
+    .testi-titulo {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: .85rem;
+      color: var(--gold-d);
+    }
+    .testi-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(201,168,76,.12);
+    }
+    .testi-periodo {
+      font-family: var(--font-display);
+      font-size: .55rem;
+      letter-spacing: .2em;
+      color: var(--cream-d);
+    }
+    .testi-pais { font-size: .9rem; }
+
+    /* ── PROFECÍAS ── */
+    .prophecy-section {
+      padding: 80px 24px;
+      background: #040b1c;
+    }
+    .prophecy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .pcard {
+      background: var(--bg-card);
+      border: 1px solid rgba(201,168,76,0.06);
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+      transition: all .4s;
+    }
+    .pcard:hover {
+      border-color: rgba(201,168,76,0.2);
+      transform: translateY(-4px);
+    }
+    .pcard-icon { font-size: 2rem; display: block; margin-bottom: 8px; }
+    .pcard-tipo {
+      font-family: var(--font-display);
+      font-size: .5rem;
+      letter-spacing: .2em;
+      color: var(--gold-d);
+      text-transform: uppercase;
+    }
+    .pcard-text {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: .95rem;
+      color: #fff;
+      margin: 12px 0;
+      line-height: 1.6;
+    }
+    .pcard-ref {
+      font-family: var(--font-display);
+      font-size: .55rem;
+      letter-spacing: .2em;
+      color: var(--gold);
+    }
+    .pcard-cumpl {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: .8rem;
+      color: var(--cream-d);
+      margin-top: 12px;
+      border-top: 1px solid rgba(201,168,76,0.06);
+      padding-top: 12px;
+    }
+
+    /* ── PARALELO ── */
+    .parallelo-section {
+      padding: 80px 24px;
+      background: #040b1c;
+    }
+    .parallelo-item {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 20px;
+      padding: 28px 0;
+      max-width: 1100px;
+      margin: 0 auto;
+      border-bottom: 1px solid rgba(201,168,76,.08);
+    }
+    .parallelo-item:last-child { border-bottom: none; }
+    .par-col {
+      background: rgba(255,255,255,.03);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .par-label {
+      font-family: var(--font-display);
+      font-size: .52rem;
+      letter-spacing: .4em;
+      color: var(--gold-d);
+      margin-bottom: 8px;
+      display: block;
+    }
+    .par-text {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: .95rem;
+      color: var(--cream-d);
+      line-height: 1.6;
+    }
+    .par-ref {
+      font-family: var(--font-display);
+      font-size: .6rem;
+      color: var(--gold);
+      margin-top: 8px;
+      display: block;
+    }
+    .par-arrow {
+      font-size: 1.5rem;
+      color: var(--gold-d);
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    /* ── WORLD MAP ── */
+    .world-section {
+      padding: 80px 24px;
+      background: #030a18;
+    }
+    .world-map-wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .world-map-wrap svg {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      background: radial-gradient(ellipse at 50% 40%, #0e1e45, #040c1e);
+    }
+    .world-legend {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-display);
+      font-size: .5rem;
+      letter-spacing: .15em;
+      color: var(--cream-d);
+    }
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+    .legend-dot.origin { background: var(--gold-l); }
+    .legend-dot.mission { background: var(--gold); }
+
+    /* ── TYPEWRITER ── */
+    .typewriter-section {
+      padding: 80px 24px;
+      background: linear-gradient(145deg, #030c1e, #081728);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .tw-content { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+    .tw-label {
+      font-family: var(--font-display);
+      font-size: .5rem;
+      letter-spacing: .4em;
+      color: var(--gold-d);
+      text-transform: uppercase;
+    }
+    .tw-text {
+      font-family: var(--font-serif);
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      color: #fff;
+      margin: 20px 0 12px;
+      min-height: 2.5em;
+    }
+    #twCursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.2em;
+      background: var(--gold);
+      vertical-align: text-bottom;
+      animation: blink 0.8s step-end infinite;
+      margin-left: 2px;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .tw-ref {
+      font-family: var(--font-display);
+      font-size: .6rem;
+      letter-spacing: .3em;
+      color: var(--gold);
+      min-height: 1.5em;
+    }
+    .tw-nav {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .tw-nav button {
+      background: none;
+      border: 1px solid rgba(201,168,76,0.2);
+      color: var(--cream-d);
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-family: var(--font-display);
+      font-size: .5rem;
+      letter-spacing: .2em;
+      cursor: pointer;
+      transition: all .3s;
+    }
+    .tw-nav button:hover {
+      border-color: var(--gold);
+      color: var(--gold-l);
+    }
+
+    /* ── DEVOCIONAL ── */
+    .devo-section {
+      padding: 80px 24px;
+      background: linear-gradient(145deg, #030c1e, #081728);
+    }
+    .devo-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 36px;
+      align-items: start;
+    }
+    .devo-date-block {
+      text-align: center;
+      background: rgba(201,168,76,.1);
+      border: 1px solid rgba(201,168,76,.25);
+      border-radius: 16px;
+      padding: 24px 20px;
+      min-width: 120px;
+    }
+    .devo-day-num {
+      font-family: var(--font-serif);
+      font-size: 3.5rem;
+      color: var(--gold-l);
+      line-height: 1;
+    }
+    .devo-month {
+      font-family: var(--font-display);
+      font-size: .6rem;
+      letter-spacing: .4em;
+      color: var(--gold-d);
+      text-transform: uppercase;
+    }
+    .devo-icon-big { font-size: 2.5rem; margin-top: 12px; display: block; }
+    .devo-titulo {
+      font-family: var(--font-display);
+      font-size: .7rem;
+      letter-spacing: .4em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .devo-verse {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.4rem;
+      color: #fff;
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+    .devo-ref {
+      font-family: var(--font-display);
+      font-size: .65rem;
+      letter-spacing: .3em;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: block;
+    }
+    .devo-reflexion {
+      font-family: var(--font-body);
+      font-size: .9rem;
+      color: var(--cream-d);
+      line-height: 1.75;
+      font-weight: 300;
+      border-left: 2px solid rgba(201,168,76,.3);
+      padding-left: 18px;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline-section {
+      padding: 80px 24px;
+      background: #030a18;
+    }
+    .timeline-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      padding-left: 30px;
+    }
+    .timeline-wrap::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, rgba(201,168,76,0.3), transparent);
+    }
+    .tl-item {
+      position: relative;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      background: var(--bg-card);
+      border: 1px solid rgba(201,168,76,0.06);
+      border-radius: 12px;
+      transition: all .4s;
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    .tl-item.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .tl-item:hover {
+      border-color: rgba(201,168,76,0.15);
+      transform: translateX(8px);
+    }
+    .tl-dot {
+      position: absolute;
+      left: -25px;
+      top: 22px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--bg-dark);
+      box-shadow: 0 0 12px rgba(201,168,76,0.3);
+    }
+    .tl-fecha {
+      font-family: var(--font-display);
+      font-size: .5rem;
+      letter-spacing: .2em;
+      color: var(--gold-d);
+    }
+    .tl-evento {
+      font-family: var(--font-display);
+      font-size: .7rem;
+      color: var(--gold-l);
+      margin: 4px 0;
+    }
+    .tl-book {
+      font-family: var(--font-display);
+      font-size: .5rem;
+      color: var(--cream-d);
+      letter-spacing: .1em;
+    }
+    .tl-verse {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: .9rem;
+      color: var(--cream);
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(201,168,76,0.06);
+    }
+
+    /* ── CHURCHES ── */
+    .churches-section {
+      padding: 80px 24px;
+      background: linear-gradient(160deg, #020810, #080f28);
+    }
+    .churches-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .church-card {
+      border-radius: 16px;
+      padding: 28px 24px;
+      border: 1px solid rgba(201,168,76,.15);
+      transition: all .4s;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-card);
+    }
+    .church-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--c, var(--gold)), transparent);
+      transform: scaleX(0);
+      transition: transform .5s;
+    }
+    .church-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(201,168,76,.4);
+    }
+    .church-card:hover::after { transform: scaleX(1); }
+    .church-icon { font-size: 2rem; margin-bottom: 14px; display: block; }
+    .church-nombre {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--gold-l);
+      margin-bottom: 4px;
+    }
+    .church-cap {
+      font-family: var(--font-display);
+      font-size: .55rem;
+      letter-spacing: .25em;
+      color: var(--gold-d);
+    }
+    .church-caracter {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: .9rem;
+      color: var(--cream-d);
+      margin: 10px 0;
+    }
+    .church-mensaje {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: .95rem;
+      color: var(--cream);
+      border-left: 2px solid var(--gold-d);
+      padding-left: 12px;
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+
+    /* ── BOOKS ── */
+    .books-section {
+      padding: 80px 24px;
+      background: #040c1e;
+    }
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 16px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .book-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(201,168,76,.12);
+      border-radius: 12px;
+      padding: 20px 18px;
+      transition: all .35s;
+      text-align: center;
+    }
+    .book-card:hover {
+      border-color: rgba(201,168,76,.45);
+      background: rgba(30,48,90,.9);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,.5);
+    }
+    .book-name {
+      font-family: var(--font-display);
+      font-size: .78rem;
+      color: var(--gold-l);
+      margin-bottom: 6px;
+    }
+    .book-cap {
+      font-family: var(--font-display);
+      font-size: .55rem;
+      letter-spacing: .2em;
+      color: var(--gold-d);
+      margin-bottom: 10px;
+    }
+    .book-verse {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: .85rem;
+      color: var(--cream-d);
+      line-height: 1.5;
+    }
+
+    /* ── QUIZ ── */
+    .quiz-section {
+      padding: 80px 24px;
+      background: #030a18;
+    }
+    .quiz-wrap {
+      max-width: 620px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border: 1px solid rgba(201,168,76,0.06);
+      border-radius: 20px;
+      padding: 40px 36px;
+    }
+    .quiz-question {
+      font-family: var(--font-display);
+      font-size: .8rem;
+      color: var(--gold-l);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+    .quiz-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .quiz-options button {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(201,168,76,0.12);
+      padding: 12px 20px;
+      border-radius: 8px;
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: .85rem;
+      cursor: pointer;
+      transition: all .3s;
+      text-align: left;
+    }
+    .quiz-options button:hover {
+      border-color: var(--gold);
+      background: rgba(201,168,76,0.06);
+    }
+    .quiz-options button.correct {
+      border-color: #4caf50;
+      background: rgba(76,175,80,0.12);
+      color: #81c784;
+    }
+    .quiz-options button.wrong {
+      border-color: #f44336;
+      background: rgba(244,67,54,0.12);
+      color: #ef9a9a;
+    }
+    .quiz-options button:disabled { cursor: default; }
+    .quiz-score {
+      font-family: var(--font-display);
+      font-size: .6rem;
+      color: var(--cream-d);
+      letter-spacing: .2em;
+    }
+    .quiz-next {
+      background: none;
+      border: 1px solid rgba(201,168,76,0.2);
+      color: var(--cream-d);
+      padding: 8px 24px;
+      border-radius: 20px;
+      font-family: var(--font-display);
+      font-size: .5rem;
+      letter-spacing: .2em;
+      cursor: pointer;
+      transition: all .3s;
+    }
+    .quiz-next:hover {
+      border-color: var(--gold);
+      color: var(--gold-l);
+    }
+
+    /* ── PRAYER ── */
+    .prayer-section {
+      padding: 80px 24px;
+      background: linear-gradient(145deg, #030c1e, #081728);
+    }
+    .prayer-form-wrap {
+      max-width: 620px;
+      margin: 0 auto;
+    }
+    .prayer-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .prayer-input, .prayer-textarea {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(201,168,76,0.1);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: var(--cream);
+      font-family: var(--font-body);
+      font-size: .85rem;
+      transition: border-color .3s;
+      width: 100%;
+    }
+    .prayer-input:focus, .prayer-textarea:focus {
+      outline: none;
+      border-color: var(--gold-d);
+    }
+    .prayer-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    .prayer-submit {
+      background: linear-gradient(135deg, var(--gold-d), var(--gold));
+      border: none;
+      color: #fff;
+      padding: 14px;
+      border-radius: 8px;
+      font-family: var(--font-display);
+      font-size: .6rem;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .3s;
+    }
+    .prayer-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(201,168,76,0.2);
+    }
+    .prayer-success {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .prayer-success.active { display: block; }
+    .prayer-list {
+      margin-top: 40px;
+      border-top: 1px solid rgba(201,168,76,0.06);
+      padding-top: 32px;
+    }
+    .prayer-item {
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(201,168,76,0.06);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+    }
+    .prayer-item-name {
+      font-family: var(--font-display);
+      font-size: .6rem;
+      color: var(--gold-d);
+      letter-spacing: .1em;
+      margin-bottom: 6px;
+    }
+    .prayer-item-text {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: .9rem;
+      color: var(--cream-d);
+      line-height: 1.6;
+    }
+
+    /* ── FLAME ── */
+    .flame-section {
+      padding: 80px 24px;
+      background: radial-gradient(ellipse at 50% 60%, rgba(201,168,76,0.04), transparent 60%), var(--bg-dark);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .flame-content { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; }
+    .flame-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      color: #fff;
+      font-weight: 700;
+    }
+    .flame-sub {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.1rem;
+      color: var(--cream-d);
+      margin-top: 8px;
+    }
+    .flame-verse-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin: 36px auto 0;
+    }
+    .flame-verse-card {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(201,168,76,.2);
+      border-radius: 14px;
+      padding: 24px 20px;
+      transition: all .4s;
+    }
+    .flame-verse-card:hover {
+      background: rgba(255,255,255,.09);
+      border-color: rgba(201,168,76,.45);
+      transform: translateY(-4px);
+    }
+    .flame-verse-icon { font-size: 1.8rem; margin-bottom: 10px; display: block; }
+    .flame-verse-text {
+      font-family: var(--font-serif);
+      font-style: italic;
+      color: #fff;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+    .flame-verse-ref {
+      font-family: var(--font-display);
+      font-size: .55rem;
+      letter-spacing: .3em;
+      color: var(--gold);
+    }
+    .flame-highlight {
+      max-width: 580px;
+      margin: 36px auto 0;
+      border-top: 1px solid rgba(201,168,76,.15);
+      padding-top: 30px;
+    }
+    .flame-highlight p {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.7);
+      line-height: 1.75;
+      margin-bottom: 6px;
+    }
+    .flame-highlight span {
+      font-family: var(--font-display);
+      font-size: .58rem;
+      letter-spacing: .35em;
+      color: var(--gold-d);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 60px 24px 40px;
+      background: #02060f;
+      text-align: center;
+      border-top: 1px solid rgba(201,168,76,0.04);
+    }
+    .footer-verse {
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--cream-d);
+    }
+    .footer-ref {
+      font-family: var(--font-display);
+      font-size: .55rem;
+      letter-spacing: .3em;
+      color: var(--gold-d);
+      margin-top: 4px;
+    }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px 24px;
+      margin: 24px 0;
+    }
+    .footer-links a {
+      color: var(--cream-d);
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-size: .5rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      transition: color .3s;
+    }
+    .footer-links a:hover { color: var(--gold-l); }
+    .footer-copy {
+      font-family: var(--font-display);
+      font-size: .45rem;
+      letter-spacing: .1em;
+      color: rgba(255,255,255,0.15);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      #mainNav {
+        padding: 10px 16px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .nav-links {
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+        order: 3;
+        width: 100%;
+      }
+      .nav-links a { font-size: .45rem; }
+      .nav-actions { order: 2; }
+      .hero { min-height: 80vh; padding: 100px 16px 40px; }
+      .hero-h1 { font-size: 2.4rem; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .devo-wrap { grid-template-columns: 1fr; }
+      .devo-date-block {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        justify-content: center;
+      }
+      .parallelo-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+      .par-arrow { transform: rotate(90deg); }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .testimonies-track { padding: 0 16px 16px; }
+      .quiz-wrap { padding: 24px 20px; }
+    }
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .promises-grid { grid-template-columns: 1fr; }
+      .flame-verse-grid { grid-template-columns: 1fr; }
+      .nations-grid { grid-template-columns: 1fr; }
+      .churches-grid { grid-template-columns: 1fr; }
+      .books-grid { grid-template-columns: 1fr 1fr; }
+      .hero-ctas { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== LOADER ===== -->
+<div id="loader">
+  <div class="loader-cross">✟</div>
+  <div class="loader-text">La Gran Comisión · Cargando</div>
+  <div class="loader-bar"></div>
+</div>
+
+<!-- ===== NAVIGATION ===== -->
+<nav id="mainNav">
+  <div class="nav-brand">
+    <span class="nav-cross">✟</span>
+    <span class="nav-logo">La Gran Comisión</span>
+  </div>
+  <div class="nav-links">
+    <a href="#citas">Escrituras</a>
+    <a href="#galeria">Galería</a>
+    <a href="#misioneros">Testigos</a>
+    <a href="#mundo">Mundo</a>
+    <a href="#timeline">Cronología</a>
+    <a href="#devo">Devocional</a>
+    <a href="#oracion">Oración</a>
+  </div>
+  <div class="nav-actions">
+    <button class="music-btn" onclick="toggleMusic()">🎵 Música</button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════════════
+     1. HERO
+     ══════════════════════════════════════════════════════════ -->
+<section class="hero" id="home">
+  <div class="hero-overlay"></div>
+  <div class="hero-cross">
+    <svg viewBox="0 0 300 440" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="bGrad" cx="50%" cy="25%" r="55%">
+          <stop offset="0%" stop-color="#e8d48a"/>
+          <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="glow"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect x="140" y="0" width="20" height="440" fill="url(#bGrad)" filter="url(#glow)">
+        <animate attributeName="opacity" values=".4;1;.4" dur="3s" repeatCount="indefinite"/>
+      </rect>
+      <rect x="0" y="115" width="300" height="18" fill="url(#bGrad)" filter="url(#glow)">
+        <animate attributeName="opacity" values=".3;.9;.3" dur="4s" repeatCount="indefinite"/>
+      </rect>
+      <circle cx="150" cy="124" r="28" fill="#e8d48a" opacity=".55" filter="url(#glow)">
+        <animate attributeName="r" values="22;35;22" dur="3.5s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values=".4;.7;.4" dur="3.5s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">El Mandato Misionero · <span id="yearDisplay"></span></p>
+    <h1 class="hero-h1">La Gran<em>Comisión</em></h1>
+    <p class="hero-tagline">"Id por todo el mundo y predicad el evangelio a toda criatura."</p>
+    <span class="hero-ref">— Marcos 16:15</span>
+    <div class="hero-ctas">
+      <a href="#citas" class="btn-primary">✟ Explorar Escrituras</a>
+      <a href="#devo" class="btn-outline">📖 Devocional de Hoy</a>
+    </div>
+  </div>
+  <div class="scroll-hint" onclick="document.querySelector('.stats-section').scrollIntoView({behavior:'smooth'})">
+    <span>Descubrir</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     2. STATS
+     ══════════════════════════════════════════════════════════ -->
+<section class="stats-section">
+  <div class="stats-bg-pattern"></div>
+  <div class="section-header">
+    <span class="section-tag">✟ La Palabra en Números</span>
+    <p class="section-title-text">El alcance eterno del evangelio</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="stats-grid" id="statsGrid">
+    <!-- Generado por JS -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     3. PROMESAS ETERNAS
+     ══════════════════════════════════════════════════════════ -->
+<section class="promises-section">
+  <div class="section-header">
+    <span class="section-tag">⭐ Promesas Eternas</span>
+    <p class="section-title-text">Palabras que no pasarán jamás</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="promises-grid" id="promisesGrid">
+    <!-- Generado por JS -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     4. SPOTLIGHT
+     ══════════════════════════════════════════════════════════ -->
+<section class="spotlight">
+  <div class="spotlight-inner">
+    <span class="section-tag">✟ Poder Para Testificar</span>
+    <p class="spotlight-quote">
+      "No me avergüenzo del evangelio, porque es
+      <span class="hl">poder de Dios para salvación</span>
+      a todo aquel que cree."
+    </p>
+    <div class="spotlight-ref">Romanos 1:16</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     5. VERSE CARDS
+     ══════════════════════════════════════════════════════════ -->
+<section class="cards-section" id="citas">
+  <div class="section-header">
+    <span class="section-tag">✟ Escrituras Sobre Evangelismo</span>
+    <p class="section-title-text" id="verseCount">Promesas que encienden el corazón</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="filter-bar" id="filterBar">
+    <!-- Generado por JS -->
+  </div>
+  <div class="cards-grid" id="cardsGrid">
+    <!-- Generado por JS -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     6. VERSO ALEATORIO
+     ══════════════════════════════════════════════════════════ -->
+<section class="random-section" id="aleatorio">
+  <div class="section-header">
+    <span class="section-tag">🎲 Versículo del Momento</span>
+    <p class="section-title-text">Seleccionado al azar</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="random-card" id="randomCard">
+    <!-- Generado por JS -->
+  </div>
+  <div class="random-timestamp" id="randomTimestamp"></div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     7. GALERÍA
+     ══════════════════════════════════════════════════════════ -->
+<section class="gallery-section" id="galeria">
+  <div class="section-header">
+    <span class="section-tag">✟ Imágenes del Mundo</span>
+    <p class="section-title-text">La creación proclama su gloria</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="gallery-grid" id="galleryGrid">
+    <!-- Generado por JS -->
+  </div>
+</section>
+
+<!-- ===== LIGHTBOX ===== -->
+<div id="lightbox">
+  <span class="lb-close" onclick="closeLightbox()">✕</span>
+  <img id="lbImg" src="" alt=""/>
+  <p class="lb-caption" id="lbCap"></p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     8. PAÍSES ALCANZADOS
+     ══════════════════════════════════════════════════════════ -->
+<section class="nations-section">
+  <div class="section-header">
+    <span class="section-tag">🌐 El Evangelio en el Mundo</span>
+    <p class="section-title-text">Alcanzando todas las naciones</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="nations-grid" id="nationsGrid">
+    <!-- Generado por JS -->
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-label">
+      <span>Países Evangelizados</span>
+      <span id="progressLabel">183 / 195 (93.8%)</span>
+    </div>
+    <div class="pbar-outer">
+      <div class="pbar-inner" id="pbNations"></div>
+    </div>
+  </div>
+  <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--cream-d);margin-top:28px;font-size:1rem;">
+    "Esta noticia del reino se predicará en todo el mundo..." — Mateo 24:14
+  </p>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     9. MISIONEROS
+     ══════════════════════════════════════════════════════════ -->
+<section class="mission-section" id="misioneros">
+  <div class="section-header">
+    <span class="section-tag">⚔️ Testigos Valientes</span>
+    <p class="section-title-text">Ellos llevaron el evangelio hasta el fin</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="mission-grid" id="missionGrid">
+    <!-- Generado por JS -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     10. TESTIMONIOS HISTÓRICOS
+     ══════════════════════════════════════════════════════════ -->
+<section class="testimonies-section">
+  <div class="section-header">
+    <span class="section-tag">💬 Voces de la Historia</span>
+    <p class="section-title-text">Misioneros que cambiaron el mundo</p>
+    <div class="section-divider"></div>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold-d);margin-top:8px;font-size:.85rem;">
+      Desliza para ver más →
+    </p>
+  </div>
+  <div class="testimonies-track" id="testimoniesTrack">
+    <!-- Generado por JS -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     11. PROFECÍAS
+     ══════════════════════════════════════════════════════════ -->
+<section class="prophecy-section">
+  <div class="section-header">
+    <span class="section-tag">📜 Profecías Cumplidas</span>
+    <p class="section-title-text">Antes de que Cristo viniera, ya estaba escrito</p>
+    <div class="section-divider"></div>
+  </div>
+  <div style="text-align:center;margin-bottom:48px;opacity:.18;pointer-events:none;">
+    <svg width="340" height="190" viewBox="0 0 340 190" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="32" cy="95" rx="30" ry="65" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+      <ellipse cx="308" cy="95" rx="30" ry="65" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+      <rect x="32" y="30" width="276" height="130" rx="4" fill="none" stroke="#c9a84c" stroke-width="1"/>
+      <polygon points="170,4 174,16 187,16 177,24 181,36 170,28 159,36 163,24 153,16 166,16" fill="#c9a84c">
+        <animate attributeName="opacity" values=".4;1;.4" dur="3s" repeatCount="indefinite"/>
+      </polygon>
+      <text x="170" y="170" font-family="Cinzel,serif" font-size="9" fill="#c9a84c" text-anchor="middle" opacity=".6">ΤΕΛΕΣΤAI</text>
+    </svg>
+  </div>
+  <div class="prophecy-grid" id="prophecyGrid">
+    <!-- Generado por JS -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     12. PARALELO AT → NT
+     ══════════════════════════════════════════════════════════ -->
+<section class="parallelo-section">
+  <div class="section-header">
+    <span class="section-tag">📖 Antiguo → Nuevo Testamento</span>
+    <p class="section-title-text">La misma voz, dos épocas</p>
+    <div class="section-divider"></div>
+  </div>
+  <div id="paralleloContainer">
+    <!-- Generado por JS -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     13. MAPA MUNDIAL
+     ══════════════════════════════════════════════════════════ -->
+<section class="world-section" id="mundo">
+  <div class="section-header">
+    <span class="section-tag">✟ Hasta Lo Último de la Tierra</span>
+    <p class="section-title-text">"Me seréis testigos..."</p>
+    <div class="section-divider"></div>
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--cream-d);margin-top:10px;">Hechos 1:8</p>
+  </div>
+  <div class="world-map-wrap">
+    <svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="mapBg" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" stop-color="#0e1e45"/>
+          <stop offset="100%" stop-color="#040c1e"/>
+        </radialGradient>
+        <filter id="cityGlow"><feGaussianBlur stdDeviation="3"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <rect width="1000" height="500" fill="url(#mapBg)" rx="12"/>
+      <g stroke="rgba(201,168,76,0.05)" stroke-width="1">
+        <line x1="0" y1="100" x2="1000" y2="100"/>
+        <line x1="0" y1="200" x2="1000" y2="200"/>
+        <line x1="0" y1="300" x2="1000" y2="300"/>
+        <line x1="0" y1="400" x2="1000" y2="400"/>
+        <line x1="200" y1="0" x2="200" y2="500"/>
+        <line x1="400" y1="0" x2="400" y2="500"/>
+        <line x1="600" y1="0" x2="600" y2="500"/>
+        <line x1="800" y1="0" x2="800" y2="500"/>
+      </g>
+      <g fill="rgba(201,168,76,0.1)" stroke="rgba(201,168,76,0.25)" stroke-width="0.6">
+        <path d="M95,60 L185,55 L230,75 L248,108 L238,162 L218,205 L195,228 L165,238 L140,218 L118,185 L95,152 Z"/>
+        <path d="M188,252 L243,242 L275,262 L283,315 L272,368 L252,408 L220,418 L194,396 L172,352 L165,298 L173,272 Z"/>
+        <path d="M430,55 L498,48 L532,65 L545,98 L528,122 L495,136 L462,130 L435,112 Z"/>
+        <path d="M415,152 L478,140 L518,162 L528,224 L515,295 L493,345 L462,365 L430,358 L403,322 L388,262 L390,202 Z"/>
+        <path d="M515,52 L635,42 L750,62 L818,98 L832,142 L798,175 L740,185 L670,175 L605,185 L548,162 L522,128 Z"/>
+        <path d="M512,158 L568,148 L608,162 L618,198 L600,225 L568,232 L535,218 L515,192 Z"/>
+        <path d="M730,285 L818,272 L858,294 L868,338 L848,368 L808,380 L755,370 L722,345 L712,308 Z"/>
+      </g>
+      <g stroke="rgba(201,168,76,0.35)" stroke-width="0.8" stroke-dasharray="5 4" fill="none">
+        <line x1="505" y1="175" x2="380" y2="220">
+          <animate attributeName="stroke-dashoffset" from="100" to="0" dur="2.5s" repeatCount="indefinite"/>
+        </line>
+        <line x1="505" y1="175" x2="250" y2="300">
+          <animate attributeName="stroke-dashoffset" from="100" to="0" dur="3.2s" repeatCount="indefinite"/>
+        </line>
+        <line x1="505" y1="175" x2="600" y2="250">
+          <animate attributeName="stroke-dashoffset" from="100" to="0" dur="2.8s" repeatCount="indefinite"/>
+        </line>
+        <line x1="505" y1="175" x2="750" y2="220">
+          <animate attributeName="stroke-dashoffset" from="100" to="0" dur="3.5s" repeatCount="indefinite"/>
+        </line>
+        <line x1="505" y1="175" x2="820" y2="320">
+          <animate attributeName="stroke-dashoffset" from="100" to="0" dur="3.0s" repeatCount="indefinite"/>
+        </line>
+        <line x1="505" y1="175" x2="160" y2="180">
+          <animate attributeName="stroke-dashoffset" from="100" to="0" dur="2.2s" repeatCount="indefinite"/>
+        </line>
+        <line x1="505" y1="175" x2="340" y2="130">
+          <animate attributeName="stroke-dashoffset" from="100" to="0" dur="2.6s" repeatCount="indefinite"/>
+        </line>
+      </g>
+      <!-- Ciudades generadas por JS -->
+      <g id="mapCities"></g>
+      <g transform="translate(920,460)" opacity=".25">
+        <line x1="0" y1="-22" x2="0" y2="22" stroke="#c9a84c" stroke-width="1"/>
+        <line x1="-22" y1="0" x2="22" y2="0" stroke="#c9a84c" stroke-width="1"/>
+        <circle cx="0" cy="0" r="14" fill="none" stroke="#c9a84c" stroke-width=".5"/>
+        <text y="-26" font-size="8" fill="#c9a84c" text-anchor="middle" font-family="Cinzel,serif">N</text>
+      </g>
+    </svg>
+    <div class="world-legend">
+      <div class="legend-item"><div class="legend-dot origin"></div>Jerusalén (Origen)</div>
+      <div class="legend-item"><div class="legend-dot mission"></div>Ciudades misioneras</div>
+      <div class="legend-item" style="color:var(--gold-d);font-family:'Cormorant Garamond',serif;font-style:italic;" id="cityCount">8 ciudades</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:40px;">
+    <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.2rem;color:var(--cream-d);">"Haced discípulos a todas las naciones"</p>
+    <span style="font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.3em;color:var(--gold);">Mateo 28:19</span>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     14. TYPEWRITER
+     ══════════════════════════════════════════════════════════ -->
+<section class="typewriter-section">
+  <div class="tw-content">
+    <span class="tw-label">✟ Versículo Vivo ✟</span>
+    <div class="tw-text"><span id="twText"></span><span id="twCursor"></span></div>
+    <div class="tw-ref" id="twRef"></div>
+    <div class="tw-nav" id="twNav">
+      <button onclick="twPrev()">◀ Anterior</button>
+      <button onclick="twNext()">Siguiente ▶</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     15. DEVOCIONAL DEL DÍA
+     ══════════════════════════════════════════════════════════ -->
+<section class="devo-section" id="devo">
+  <div class="section-header">
+    <span class="section-tag">🌅 Devocional de Hoy</span>
+    <p class="section-title-text" id="devoDayName">Una palabra para hoy</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="devo-wrap" id="devoWrap">
+    <!-- Generado por JS -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     16. CRONOLOGÍA
+     ══════════════════════════════════════════════════════════ -->
+<section class="timeline-section" id="timeline">
+  <div class="section-header">
+    <span class="section-tag">✟ A Través de las Escrituras</span>
+    <p class="section-title-text">El hilo dorado del evangelismo</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="timeline-wrap" id="timelineWrap">
+    <!-- Generado por JS -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     17. IGLESIAS DEL APOCALIPSIS
+     ══════════════════════════════════════════════════════════ -->
+<section class="churches-section">
+  <div class="section-header">
+    <span class="section-tag">🕯️ Las 7 Iglesias del Apocalipsis</span>
+    <p class="section-title-text">Mensajes de Cristo para su novia</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="churches-grid" id="churchesGrid">
+    <!-- Generado por JS -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     18. LIBROS DEL NT
+     ══════════════════════════════════════════════════════════ -->
+<section class="books-section">
+  <div class="section-header">
+    <span class="section-tag">📚 Libros del Nuevo Testamento</span>
+    <p class="section-title-text" id="bookCount">27 libros · un solo evangelio</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="books-grid" id="booksGrid">
+    <!-- Generado por JS -->
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     19. QUIZ
+     ══════════════════════════════════════════════════════════ -->
+<section class="quiz-section">
+  <div class="section-header">
+    <span class="section-tag">📖 Prueba Tu Conocimiento</span>
+    <p class="section-title-text" id="quizCount">12 preguntas bíblicas</p>
+    <div class="section-divider"></div>
+  </div>
+  <div class="quiz-wrap">
+    <div class="quiz-question" id="quizQ">Cargando pregunta...</div>
+    <div class="quiz-options" id="quizOpts"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+      <div class="quiz-score" id="quizScore">0 / 12</div>
+      <button class="quiz-next" id="quizNext" onclick="nextQuestion()">Siguiente →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     20. MURO DE ORACIÓN
+     ══════════════════════════════════════════════════════════ -->
+<section class="prayer-section" id="oracion">
+  <div class="section-header">
+    <span class="section-tag">🙏 Muro de Oración</span>
+    <p class="section-title-text">Oramos contigo y por ti</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <div style="text-align:center;margin-bottom:36px;opacity:.25;pointer-events:none;">
+    <svg width="130" height="100" viewBox="0 0 130 100" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="65" cy="62" rx="40" ry="24" fill="none" stroke="#c9a84c" stroke-width="1.2"/>
+      <path d="M25,55 Q12,24 46,32 Q32,55 25,55Z" fill="none" stroke="#c9a84c" stroke-width="1.2">
+        <animate attributeName="d" values="M25,55 Q12,24 46,32 Q32,55 25,55Z;M25,55 Q8,28 48,36 Q34,55 25,55Z;M25,55 Q12,24 46,32 Q32,55 25,55Z" dur="2.2s" repeatCount="indefinite"/>
+      </path>
+      <circle cx="102" cy="50" r="16" fill="none" stroke="#c9a84c" stroke-width="1.2"/>
+      <circle cx="107" cy="47" r="2.5" fill="#c9a84c"/>
+      <path d="M117,50 L126,48 L117,53Z" fill="#c9a84c" opacity=".7"/>
+      <path d="M102,66 Q108,76 116,80" stroke="#c9a84c" stroke-width="1.2" fill="none"/>
+      <ellipse cx="110" cy="71" rx="6" ry="3.5" fill="none" stroke="#c9a84c" stroke-width=".8" transform="rotate(-30,110,71)"/>
+      <ellipse cx="115" cy="77" rx="6" ry="3.5" fill="none" stroke="#c9a84c" stroke-width=".8" transform="rotate(-20,115,77)"/>
+    </svg>
+  </div>
+
+  <div class="prayer-form-wrap">
+    <form class="prayer-form" id="prayerForm" onsubmit="submitPrayer(event)">
+      <input type="text" id="prayerName" class="prayer-input" placeholder="Tu nombre (opcional)" maxlength="60"/>
+      <input type="text" id="prayerCountry" class="prayer-input" placeholder="Tu país (opcional)" maxlength="40"/>
+      <textarea id="prayerText" class="prayer-textarea" placeholder="Escribe tu petición de oración..." maxlength="600" required></textarea>
+      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.85rem;color:var(--cream-d);">
+        "La oración eficaz del justo puede mucho." — Santiago 5:16
+      </p>
+      <button type="submit" class="prayer-submit">🙏 Enviar Petición</button>
+    </form>
+    <div class="prayer-success" id="prayerSuccess">
+      <p style="font-size:2rem;">🕊️</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;">"No os afanéis por nada; sino sean conocidas vuestras peticiones delante de Dios en toda oración." — Filipenses 4:6</p>
+    </div>
+    <div class="prayer-list" id="prayerList">
+      <!-- Generado por JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     21. FLAME CTA
+     ══════════════════════════════════════════════════════════ -->
+<section class="flame-section">
+  <div class="flame-content">
+    <h2 class="flame-title">🔥 ¿Estás listo para ser testigo?</h2>
+    <p class="flame-sub">"El que gana almas es sabio" — Proverbios 11:30</p>
+    <div class="flame-verse-grid">
+      <div class="flame-verse-card">
+        <span class="flame-verse-icon">📖</span>
+        <p class="flame-verse-text">"La fe es por el oír, y el oír por la palabra de Dios."</p>
+        <span class="flame-verse-ref">Romanos 10:17</span>
+      </div>
+      <div class="flame-verse-card">
+        <span class="flame-verse-icon">🌍</span>
+        <p class="flame-verse-text">"¿Y cómo predicarán si no fueren enviados?"</p>
+        <span class="flame-verse-ref">Romanos 10:15</span>
+      </div>
+      <div class="flame-verse-card">
+        <span class="flame-verse-icon">🕊️</span>
+        <p class="flame-verse-text">"Vosotros sois la luz del mundo; la ciudad asentada sobre un monte no se puede esconder."</p>
+        <span class="flame-verse-ref">Mateo 5:14</span>
+      </div>
+    </div>
+    <div class="flame-highlight">
+      <p>"Alzad vuestros ojos y mirad los campos, porque ya están <em style="color:var(--gold-l);font-style:normal;">blancos para la siega.</em>"</p>
+      <span>— Juan 4:35</span>
+    </div>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:32px;">
+      <a href="#citas" class="btn-primary">🔥 Leer Escrituras</a>
+      <a href="#devo" class="btn-outline">📖 Devocional</a>
+      <a href="#oracion" class="btn-outline">🙏 Orar</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     22. FOOTER
+     ══════════════════════════════════════════════════════════ -->
+<footer>
+  <svg width="60" height="80" viewBox="0 0 60 80" xmlns="http://www.w3.org/2000/svg" style="margin:0 auto 20px;display:block;opacity:.5;">
+    <rect x="27" y="0" width="6" height="80" fill="#c9a84c"/>
+    <rect x="0" y="20" width="60" height="6" fill="#c9a84c"/>
+    <circle cx="30" cy="23" r="7" fill="#e8d48a" opacity=".8">
+      <animate attributeName="opacity" values=".4;1;.4" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="r" values="5;9;5" dur="3s" repeatCount="indefinite"/>
+    </circle>
+  </svg>
+  <p class="footer-verse">"Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito..."</p>
+  <p class="footer-ref">Juan 3:16</p>
+  <div class="footer-links">
+    <a href="#citas">Escrituras</a>
+    <a href="#aleatorio">Aleatorio</a>
+    <a href="#galeria">Galería</a>
+    <a href="#misioneros">Testigos</a>
+    <a href="#mundo">Mundo</a>
+    <a href="#devo">Devocional</a>
+    <a href="#timeline">Cronología</a>
+    <a href="#oracion">Oración</a>
+  </div>
+  <p class="footer-copy" id="footerCopy">
+    © La Gran Comisión · 2025 · Generado el <span id="footerDate"></span> ·
+    <span id="footerVerses"></span> versículos ·
+    27 libros NT
+  </p>
+</footer>
+
+<script>
+// ================================================================
+//  DATA — Todos los datos en JavaScript (sin PHP)
+// ================================================================
+
+const DATA = {
+  // ── CATEGORÍAS ──
+  categorias: {
+    all: 'Todas',
+    mision: 'Misión',
+    poder: 'Poder',
+    promesa: 'Promesa',
+    discipulado: 'Discipulado',
+    fruto: 'Fruto',
+    amor: 'Amor'
+  },
+
+  // ── ESTADÍSTICAS ──
+  estadisticas: [
+    { simbolo: '📖', num: 66, etiqueta: 'Libros de la Biblia', verso: 'Toda Escritura es inspirada por Dios' },
+    { simbolo: '✟', num: 27, etiqueta: 'Libros del NT', verso: 'El Nuevo Testamento en Cristo' },
+    { simbolo: '🌍', num: 195, etiqueta: 'Países del Mundo', verso: 'Id por todo el mundo' },
+    { simbolo: '🕊️', num: 12, etiqueta: 'Apóstoles', verso: 'Seréis mis testigos' }
+  ],
+
+  // ── VERSÍCULOS ──
+  citas: [
+    { n: '1', ref: 'Mateo 28:19', cat: 'mision', texto: 'Por tanto, id, y haced discípulos a todas las naciones, bautizándolos en el nombre del Padre, y del Hijo, y del Espíritu Santo.' },
+    { n: '2', ref: 'Marcos 16:15', cat: 'mision', texto: 'Id por todo el mundo y predicad el evangelio a toda criatura.' },
+    { n: '3', ref: 'Hechos 1:8', cat: 'poder', texto: 'Recibiréis poder, cuando haya venido sobre vosotros el Espíritu Santo, y me seréis testigos en Jerusalén, en toda Judea, en Samaria, y hasta lo último de la tierra.' },
+    { n: '4', ref: 'Romanos 1:16', cat: 'poder', texto: 'No me avergüenzo del evangelio, porque es poder de Dios para salvación a todo aquel que cree.' },
+    { n: '5', ref: 'Juan 3:16', cat: 'amor', texto: 'Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna.' },
+    { n: '6', ref: 'Hechos 4:12', cat: 'poder', texto: 'En ningún otro hay salvación; porque no hay otro nombre bajo el cielo, dado a los hombres, en que podamos ser salvos.' },
+    { n: '7', ref: 'Romanos 10:14', cat: 'mision', texto: '¿Cómo creerán en aquel de quien no han oído? ¿Y cómo oirán sin haber quien les predique?' },
+    { n: '8', ref: '1 Corintios 9:16', cat: 'mision', texto: '¡Ay de mí si no anunciare el evangelio!' },
+    { n: '9', ref: 'Colosenses 4:3', cat: 'mision', texto: 'Orando también a la vez por nosotros, para que el Señor nos abra puerta para la palabra.' },
+    { n: '10', ref: '2 Timoteo 4:2', cat: 'mision', texto: 'Predica la palabra; insta a tiempo y fuera de tiempo; redarguye, reprende, exhorta con toda paciencia y doctrina.' },
+    { n: '11', ref: 'Lucas 24:47', cat: 'mision', texto: 'Se predicará en su nombre el arrepentimiento y el perdón de pecados en todas las naciones.' },
+    { n: '12', ref: 'Juan 20:21', cat: 'mision', texto: 'Como me envió el Padre, así también yo os envío.' },
+    { n: '13', ref: 'Efesios 6:19', cat: 'poder', texto: 'Orad por mí, a fin de que al abrir mi boca me sea dada palabra para dar a conocer el misterio del evangelio.' },
+    { n: '14', ref: 'Filipenses 1:27', cat: 'discipulado', texto: 'Solamente que os comportéis como es digno del evangelio de Cristo.' },
+    { n: '15', ref: '1 Pedro 3:15', cat: 'discipulado', texto: 'Estad siempre preparados para presentar defensa con mansedumbre y reverencia ante todo el que os demande razón de la esperanza que hay en vosotros.' },
+    { n: '16', ref: 'Gálatas 6:9', cat: 'fruto', texto: 'No nos cansemos, pues, de hacer bien; porque a su tiempo segaremos, si no desmayamos.' },
+    { n: '17', ref: 'Salmos 96:3', cat: 'mision', texto: 'Proclamad entre las naciones su gloria, en todos los pueblos sus maravillas.' },
+    { n: '18', ref: 'Isaías 52:7', cat: 'promesa', texto: '¡Cuán hermosos son los pies del que trae alegres nuevas, del que publica salvación!' },
+    { n: '19', ref: 'Apocalipsis 14:6', cat: 'mision', texto: 'Vi volar por en medio del cielo a otro ángel, que tenía el evangelio eterno para predicarlo a los moradores de la tierra.' },
+    { n: '20', ref: 'Josué 1:9', cat: 'promesa', texto: 'Mira que te mando que te esfuerces y seas valiente; no temas ni desmayes, porque Jehová tu Dios estará contigo en dondequiera que vayas.' },
+    { n: '21', ref: 'Mateo 10:7', cat: 'mision', texto: 'Y yendo, predicad, diciendo: El reino de los cielos se ha acercado.' },
+    { n: '22', ref: 'Marcos 1:17', cat: 'discipulado', texto: 'Venid en pos de mí, y haré que seáis pescadores de hombres.' },
+    { n: '23', ref: 'Juan 4:35', cat: 'fruto', texto: 'Alzad vuestros ojos y mirad los campos, porque ya están blancos para la siega.' },
+    { n: '24', ref: 'Hechos 5:42', cat: 'mision', texto: 'Y todos los días, en el templo y por las casas, no cesaban de enseñar y predicar a Jesucristo.' },
+    { n: '25', ref: 'Hechos 17:6', cat: 'poder', texto: 'Estos que trastornan el mundo entero también han venido acá.' },
+    { n: '26', ref: 'Romanos 15:13', cat: 'promesa', texto: 'Y el Dios de esperanza os llene de todo gozo y paz en el creer, para que abundéis en esperanza por el poder del Espíritu Santo.' },
+    { n: '27', ref: '1 Corintios 1:17', cat: 'mision', texto: 'No me envió Cristo a bautizar, sino a predicar el evangelio; no con sabiduría de palabras, para que no se haga vana la cruz de Cristo.' },
+    { n: '28', ref: '1 Corintios 2:2', cat: 'poder', texto: 'Pues me propuse no saber entre vosotros cosa alguna sino a Jesucristo, y a éste crucificado.' },
+    { n: '29', ref: '2 Corintios 4:5', cat: 'mision', texto: 'Porque no nos predicamos a nosotros mismos, sino a Jesucristo como Señor.' },
+    { n: '30', ref: '2 Corintios 4:7', cat: 'poder', texto: 'Tenemos este tesoro en vasos de barro, para que la excelencia del poder sea de Dios, y no de nosotros.' },
+    { n: '31', ref: 'Efesios 2:10', cat: 'discipulado', texto: 'Somos hechura suya, creados en Cristo Jesús para buenas obras.' },
+    { n: '32', ref: 'Filipenses 2:15', cat: 'mision', texto: 'Resplandecéis como luminares en el mundo.' },
+    { n: '33', ref: 'Colosenses 4:5-6', cat: 'discipulado', texto: 'Andad sabiamente para con los de afuera, redimiendo el tiempo. Sea vuestra palabra siempre con gracia.' },
+    { n: '34', ref: '1 Tesalonicenses 2:8', cat: 'amor', texto: 'Tan grande es nuestro afecto por vosotros, que hubiéramos querido entregaros no sólo el evangelio de Dios, sino también nuestras propias vidas.' },
+    { n: '35', ref: '2 Timoteo 1:8', cat: 'poder', texto: 'No te avergüences de dar testimonio de nuestro Señor, sino participa de las aflicciones por el evangelio según el poder de Dios.' },
+    { n: '36', ref: 'Hebreos 4:12', cat: 'poder', texto: 'Porque la palabra de Dios es viva y eficaz, y más cortante que toda espada de dos filos.' },
+    { n: '37', ref: 'Santiago 5:20', cat: 'fruto', texto: 'El que haga volver al pecador del error de su camino, salvará de muerte un alma, y cubrirá multitud de pecados.' },
+    { n: '38', ref: '1 Juan 4:19', cat: 'amor', texto: 'Nosotros le amamos a él, porque él nos amó primero.' },
+    { n: '39', ref: 'Judas 1:23', cat: 'mision', texto: 'A otros salvad, arrebatándolos del fuego; y de otros tened misericordia con temor.' },
+    { n: '40', ref: 'Mateo 5:14', cat: 'discipulado', texto: 'Vosotros sois la luz del mundo; una ciudad asentada sobre un monte no se puede esconder.' }
+  ],
+
+  // ── PROMESAS ETERNAS ──
+  promesasEternas: [
+    { texto: 'Porque yo sé los pensamientos que tengo acerca de vosotros, dice Jehová, pensamientos de paz, y no de mal, para daros el fin que esperáis.', ref: 'Jeremías 29:11', color_from: '#1a0a00', color_to: '#3d1f00', icono: '🌟' },
+    { texto: 'Y he aquí yo estoy con vosotros todos los días, hasta el fin del mundo.', ref: 'Mateo 28:20', color_from: '#001a1a', color_to: '#003d3d', icono: '✟' },
+    { texto: 'No me elegisteis vosotros a mí, sino que yo os elegí a vosotros, y os he puesto para que vayáis y llevéis fruto, y vuestro fruto permanezca.', ref: 'Juan 15:16', color_from: '#0a001a', color_to: '#1f0033', icono: '🍇' }
+  ],
+
+  // ── GALERÍA ──
+  gallery: [
+    { src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80', caption: 'El camino del testigo' },
+    { src: 'https://images.unsplash.com/photo-1490730141103-6cac27aaab94?w=800&q=80', caption: 'Luz que no puede esconderse' },
+    { src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80', caption: 'Las naciones esperan' },
+    { src: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800&q=80', caption: 'Sembrar en la oscuridad' },
+    { src: 'https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=800&q=80', caption: 'La mies es mucha' },
+    { src: 'https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?w=800&q=80', caption: 'Hasta lo último de la tierra' },
+    { src: 'https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=800&q=80', caption: 'La creación proclama su gloria' },
+    { src: 'https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5?w=800&q=80', caption: 'Iglesias en todo el mundo' },
+    { src: 'https://images.unsplash.com/photo-1462275646964-a0e3386b89fa?w=800&q=80', caption: 'Oración que mueve montañas' }
+  ],
+
+  // ── PAÍSES ──
+  paises: {
+    total: 195,
+    alcanzados: 183,
+    traducciones: 3589,
+    creyentesMill: 2400
+  },
+
+  // ── MISIONEROS ──
+  misioneros: [
+    { icono: '✝️', nombre: 'Pablo de Tarso', rol: 'Apóstol a los Gentiles', texto: 'Predicó el evangelio desde Jerusalén hasta Roma, estableciendo iglesias en todo el Imperio.', viajes: 4, epistolas: 13, iglesias: 14, verso: 'Todo lo puedo en Cristo que me fortalece.' },
+    { icono: '⚓', nombre: 'Pedro', rol: 'Apóstol', texto: 'Predicó en Pentecostés y abrió la puerta del evangelio a los gentiles.', viajes: 0, epistolas: 2, iglesias: 0, verso: 'Estad siempre preparados para presentar defensa.' },
+    { icono: '🕊️', nombre: 'Felipe', rol: 'Evangelista', texto: 'Llevó el evangelio a Samaria y bautizó al eunuco etíope.', viajes: 0, epistolas: 0, iglesias: 0, verso: 'La fe es por el oír, y el oír por la palabra de Dios.' },
+    { icono: '🔥', nombre: 'Bernabé', rol: 'Compañero de Pablo', texto: 'Hombre de fe lleno del Espíritu Santo, acompañó a Pablo en su primer viaje misionero.', viajes: 0, epistolas: 0, iglesias: 0, verso: 'Fue un hombre bueno, y lleno del Espíritu Santo y de fe.' },
+    { icono: '🌿', nombre: 'Timoteo', rol: 'Discípulo de Pablo', texto: 'Pastor de la iglesia en Éfeso, recibió el encargo de predicar la palabra.', viajes: 0, epistolas: 2, iglesias: 0, verso: 'Haz obra de evangelista, cumple tu ministerio.' },
+    { icono: '💧', nombre: 'Lucas', rol: 'Médico y Historiador', texto: 'Escribió el Evangelio y los Hechos, documentando la expansión del evangelio.', viajes: 0, epistolas: 2, iglesias: 0, verso: 'He escrito en orden la historia de Jesús.' }
+  ],
+
+  // ── TESTIMONIOS ──
+  testimonios: [
+    { nombre: 'William Carey', titulo: 'Padre de las Misiones Modernas', frase: '"Espera grandes cosas de Dios; intenta grandes cosas para Dios."', periodo: '1761–1834', pais: '🇮🇳 India' },
+    { nombre: 'Hudson Taylor', titulo: 'Misionero en China', frase: '"Dios no ha llamado a los exitosos, sino a los fieles."', periodo: '1832–1905', pais: '🇨🇳 China' },
+    { nombre: 'Amy Carmichael', titulo: 'Misionera en la India', frase: '"Puedes darles sin amar, pero no puedes amar sin dar."', periodo: '1867–1951', pais: '🇮🇳 India' },
+    { nombre: 'Jim Elliot', titulo: 'Mártir en Ecuador', frase: '"No es necio el que da lo que no puede guardar para ganar lo que no puede perder."', periodo: '1927–1956', pais: '🇪🇨 Ecuador' },
+    { nombre: 'Gladys Aylward', titulo: 'Misionera en China', frase: '"No soy grande, pero Dios y yo somos una mayoría."', periodo: '1902–1970', pais: '🇨🇳 China' },
+    { nombre: 'D.L. Moody', titulo: 'Evangelista Americano', frase: '"El mundo todavía no ha visto lo que Dios puede hacer con un hombre que se entrega completamente a Él."', periodo: '1837–1899', pais: '🇺🇸 EE.UU.' }
+  ],
+
+  // ── PROFECÍAS ──
+  profecias: [
+    { icono: '🌟', tipo: 'Mesías', texto: 'De la descendencia de David vendrá el Mesías.', ref: 'Isaías 11:1', cumplimiento: 'Jesús de Nazaret' },
+    { icono: '🏛️', tipo: 'Nacimiento', texto: 'Nacerá en Belén de Judea.', ref: 'Miqueas 5:2', cumplimiento: 'Mateo 2:1' },
+    { icono: '✝️', tipo: 'Muerte', texto: 'Sería traspasado por nuestras rebeliones.', ref: 'Isaías 53:5', cumplimiento: 'Crucifixión de Cristo' },
+    { icono: '🌅', tipo: 'Resurrección', texto: 'No verá corrupción.', ref: 'Salmos 16:10', cumplimiento: 'Resurrección de Jesús' },
+    { icono: '🌍', tipo: 'Evangelio', texto: 'El evangelio será predicado en todo el mundo.', ref: 'Mateo 24:14', cumplimiento: 'Iglesia universal' }
+  ],
+
+  // ── PARALELOS ──
+  paralelos: [
+    { at: { ref: 'Isaías 52:7', texto: '¡Cuán hermosos son los pies del que trae alegres nuevas!' }, nt: { ref: 'Romanos 10:15', texto: '¿Y cómo predicarán si no fueren enviados?' } },
+    { at: { ref: 'Joel 2:28', texto: 'Derramaré mi Espíritu sobre toda carne.' }, nt: { ref: 'Hechos 2:16-17', texto: 'Esto es lo dicho por el profeta Joel: En los postreros días derramaré de mi Espíritu.' } },
+    { at: { ref: 'Isaías 49:6', texto: 'Te di por luz de las naciones, para que seas mi salvación hasta lo último de la tierra.' }, nt: { ref: 'Hechos 13:47', texto: 'Te he puesto para luz de los gentiles, a fin de que seas para salvación hasta lo último de la tierra.' } },
+    { at: { ref: 'Génesis 12:3', texto: 'En ti serán benditas todas las familias de la tierra.' }, nt: { ref: 'Gálatas 3:8', texto: 'La Escritura vio que Dios había de justificar por la fe a los gentiles.' } },
+    { at: { ref: 'Salmos 22:27', texto: 'Se acordarán y se convertirán a Jehová todos los confines de la tierra.' }, nt: { ref: 'Apocalipsis 7:9', texto: 'Una gran multitud de todas naciones, tribus, pueblos y lenguas.' } }
+  ],
+
+  // ── CIUDADES MAPA ──
+  ciudades: [
+    { nombre: 'Jerusalén', x: 505, y: 175, tipo: 'origen', dato: 'Origen del evangelio' },
+    { nombre: 'Antioquía', x: 480, y: 205, tipo: 'mision', dato: 'Base misionera' },
+    { nombre: 'Éfeso', x: 565, y: 225, tipo: 'mision', dato: 'Iglesia fundada por Pablo' },
+    { nombre: 'Corinto', x: 580, y: 260, tipo: 'mision', dato: 'Iglesia problemática' },
+    { nombre: 'Roma', x: 630, y: 245, tipo: 'mision', dato: 'Capital del Imperio' },
+    { nombre: 'Filipos', x: 590, y: 240, tipo: 'mision', dato: 'Primera iglesia en Europa' },
+    { nombre: 'Tesalónica', x: 570, y: 235, tipo: 'mision', dato: 'Carta de Pablo' },
+    { nombre: 'Samos', x: 530, y: 215, tipo: 'mision', dato: 'Visitada por Pablo' }
+  ],
+
+  // ── TYPEWRITER ──
+  typewriter: [
+    { texto: 'Porque de tal manera amó Dios al mundo, que ha dado a su Hijo unigénito, para que todo aquel que en él cree, no se pierda, mas tenga vida eterna.', ref: 'Juan 3:16' },
+    { texto: 'Jesucristo es el mismo ayer, y hoy, y por los siglos.', ref: 'Hebreos 13:8' },
+    { texto: 'No temas, porque yo estoy contigo; no desmayes, porque yo soy tu Dios que te esfuerzo.', ref: 'Isaías 41:10' },
+    { texto: 'Y conoceréis la verdad, y la verdad os hará libres.', ref: 'Juan 8:32' }
+  ],
+
+  // ── DEVOCIONALES ──
+  devocionales: [
+    { titulo: 'Domingo — Día de Adoración', icono: '☀️', texto: 'Alabad a Jehová, naciones todas; pueblos todos, alabadle. Porque ha engrandecido sobre nosotros su misericordia.', ref: 'Salmos 117:1-2', reflexion: 'Hoy es el día de reunirnos como cuerpo y proclamar juntos la grandeza de Dios ante el mundo.' },
+    { titulo: 'Lunes — Nuevo Comienzo', icono: '🌱', texto: 'Por la misericordia de Jehová no hemos sido consumidos, porque nunca decayeron sus misericordias. Nuevas son cada mañana.', ref: 'Lamentaciones 3:22-23', reflexion: 'Cada semana comienza con misericordias nuevas. Sal hoy y lleva esa esperanza a alguien que la necesita.' },
+    { titulo: 'Martes — Fuerza en la Obra', icono: '⚡', texto: 'Todo lo puedo en Cristo que me fortalece.', ref: 'Filipenses 4:13', reflexion: 'No evangelizamos con nuestra propia fuerza. Es Cristo en nosotros quien obra lo que parece imposible.' },
+    { titulo: 'Miércoles — Perseverancia', icono: '🔥', texto: 'No nos cansemos, pues, de hacer bien; porque a su tiempo segaremos, si no desmayamos.', ref: 'Gálatas 6:9', reflexion: 'A mitad de semana, recuerda que tu labor no es en vano. El fruto viene en su tiempo.' },
+    { titulo: 'Jueves — La Palabra Obra', icono: '📖', texto: 'Así será mi palabra que sale de mi boca; no volverá a mí vacía, sino que hará lo que yo quiero.', ref: 'Isaías 55:11', reflexion: 'Cuando compartes la Palabra, puedes confiar en que Dios la usa para sus propósitos, aunque no lo veas.' },
+    { titulo: 'Viernes — Cruz y Gloria', icono: '✟', texto: 'Mas lejos esté de mí gloriarme, sino en la cruz de nuestro Señor Jesucristo.', ref: 'Gálatas 6:14', reflexion: 'El evangelio es siempre la Cruz. No hay otro mensaje que tenga el poder de transformar vidas eternas.' },
+    { titulo: 'Sábado — Preparación', icono: '🌅', texto: 'Apareja tu obra fuera, y ten listo en el campo; después edificarás tu casa.', ref: 'Proverbios 24:27', reflexion: 'El descanso y la preparación son parte de la Gran Comisión. Recarga hoy para testificar mañana.' }
+  ],
+
+  // ── LIBROS NT ──
+  librosNT: [
+    { libro: 'Mateo', cap: 28, verso: 'Haced discípulos a todas las naciones.' },
+    { libro: 'Marcos', cap: 16, verso: 'Predicad el evangelio a toda criatura.' },
+    { libro: 'Lucas', cap: 24, verso: 'Se predicará arrepentimiento y perdón en su nombre.' },
+    { libro: 'Juan', cap: 20, verso: 'Como me envió el Padre, así también yo os envío.' },
+    { libro: 'Hechos', cap: 1, verso: 'Me seréis testigos hasta lo último de la tierra.' },
+    { libro: 'Romanos', cap: 1, verso: 'No me avergüenzo del evangelio, es poder de Dios.' },
+    { libro: '1 Corintios', cap: 9, verso: '¡Ay de mí si no anunciare el evangelio!' },
+    { libro: '2 Corintios', cap: 5, verso: 'Somos embajadores en nombre de Cristo.' },
+    { libro: 'Gálatas', cap: 1, verso: 'Si alguno os predicare distinto evangelio, sea anatema.' },
+    { libro: 'Efesios', cap: 6, verso: 'Calzados con el apresto del evangelio de la paz.' },
+    { libro: 'Filipenses', cap: 1, verso: 'Para mí el vivir es Cristo, y el morir es ganancia.' },
+    { libro: 'Colosenses', cap: 1, verso: 'A fin de presentar perfecto en Cristo a todo hombre.' },
+    { libro: '1 Tesalonicenses', cap: 1, verso: 'Fuisteis ejemplo a todos los creyentes.' },
+    { libro: '2 Tesalonicenses', cap: 3, verso: 'El Señor guarde vuestros corazones.' },
+    { libro: '1 Timoteo', cap: 2, verso: 'Dios quiere que todos los hombres sean salvos.' },
+    { libro: '2 Timoteo', cap: 4, verso: 'Haz obra de evangelista, cumple tu ministerio.' },
+    { libro: 'Tito', cap: 2, verso: 'Aparezca la gracia de Dios.' },
+    { libro: 'Filemón', cap: 1, verso: 'Recíbele como a mí mismo.' },
+    { libro: 'Hebreos', cap: 4, verso: 'La palabra de Dios es viva y eficaz.' },
+    { libro: 'Santiago', cap: 5, verso: 'El que haga volver al pecador, salvará un alma.' },
+    { libro: '1 Pedro', cap: 3, verso: 'Estad siempre preparados para presentar defensa.' },
+    { libro: '2 Pedro', cap: 3, verso: 'El Señor es paciente para que todos se arrepientan.' },
+    { libro: '1 Juan', cap: 4, verso: 'Le amamos a él, porque él nos amó primero.' },
+    { libro: '2 Juan', cap: 1, verso: 'Andad en la verdad.' },
+    { libro: '3 Juan', cap: 1, verso: 'Bien haces en ayudar a los hermanos.' },
+    { libro: 'Judas', cap: 1, verso: 'Contended ardientemente por la fe.' },
+    { libro: 'Apocalipsis', cap: 14, verso: 'El evangelio eterno para predicarlo a los moradores.' }
+  ],
+
+  // ── IGLESIAS APOCALIPSIS ──
+  iglesiasAp: [
+    { nombre: 'Éfeso', cap: '2:1-7', caracter: 'Laboriosa pero sin primer amor', mensaje: 'Recuerda de dónde has caído; arrepiéntete.', icono: '🕯️', color: '#8b6914' },
+    { nombre: 'Esmirna', cap: '2:8-11', caracter: 'Perseguida y fiel', mensaje: 'Sé fiel hasta la muerte, y yo te daré la corona de vida.', icono: '👑', color: '#4a7c9e' },
+    { nombre: 'Pérgamo', cap: '2:12-17', caracter: 'Firme pero tolerante al error', mensaje: 'Arrepiéntete de las doctrinas equivocadas.', icono: '⚔️', color: '#7a3c3c' },
+    { nombre: 'Tiatira', cap: '2:18-29', caracter: 'Amor y fe, pero toleraba a Jezabel', mensaje: 'Retenéd lo que tenéis hasta que yo venga.', icono: '🌸', color: '#6a4c93' },
+    { nombre: 'Sardis', cap: '3:1-6', caracter: 'Con nombre de viva pero muerta', mensaje: 'Fortalece las cosas que están a punto de morir.', icono: '💀', color: '#3d6b4f' },
+    { nombre: 'Filadelfia', cap: '3:7-13', caracter: 'Fiel con poca fuerza', mensaje: 'He puesto delante de ti una puerta abierta.', icono: '🚪', color: '#8a6a28' },
+    { nombre: 'Laodicea', cap: '3:14-22', caracter: 'Tibia, ni fría ni caliente', mensaje: 'Sé fervoroso y arrepiéntete. Estoy a la puerta.', icono: '🌡️', color: '#8b3a1a' }
+  ],
+
+  // ── TIMELINE ──
+  timeline: [
+    { fecha: 'c. 30 d.C.', evento: 'Pentecostés', libro: 'Hechos 2', texto: 'Y fueron todos llenos del Espíritu Santo, y comenzaron a hablar en otras lenguas.' },
+    { fecha: 'c. 35', evento: 'Conversión de Pablo', libro: 'Hechos 9', texto: 'Saulo, Saulo, ¿por qué me persigues?' },
+    { fecha: 'c. 46', evento: 'Primer viaje misionero', libro: 'Hechos 13-14', texto: 'Apartadme a Bernabé y a Saulo para la obra.' },
+    { fecha: 'c. 49', evento: 'Concilio de Jerusalén', libro: 'Hechos 15', texto: 'El evangelio es para judíos y gentiles.' },
+    { fecha: 'c. 50', evento: 'Segundo viaje misionero', libro: 'Hechos 16-18', texto: 'Pasa a Macedonia y ayúdanos.' },
+    { fecha: 'c. 53', evento: 'Tercer viaje misionero', libro: 'Hechos 18-21', texto: 'He completado el ministerio.' },
+    { fecha: 'c. 60', evento: 'Pablo en Roma', libro: 'Hechos 28', texto: 'Predicando el reino de Dios.' },
+    { fecha: 'c. 95', evento: 'Apocalipsis escrito', libro: 'Apocalipsis 1', texto: 'Yo soy el Alfa y la Omega.' }
+  ],
+
+  // ── QUIZ ──
+  quiz: [
+    { pregunta: '¿En qué libro está escrita La Gran Comisión?', opciones: ['Lucas 10:2', 'Mateo 28:19', 'Hechos 2:41', 'Juan 3:16'], correcta: 1 },
+    { pregunta: '¿Cuántas almas creyeron en Pentecostés?', opciones: ['500', '1,000', '3,000', '5,000'], correcta: 2 },
+    { pregunta: '¿Qué apóstol predicó el sermón de Pentecostés?', opciones: ['Juan', 'Pablo', 'Pedro', 'Felipe'], correcta: 2 },
+    { pregunta: '"El que gana almas es sabio." ¿Dónde está esta cita?', opciones: ['Isaías 52:7', 'Proverbios 11:30', 'Daniel 12:3', 'Romanos 10:14'], correcta: 1 },
+    { pregunta: '¿A quién se llama "Apóstol de los Gentiles"?', opciones: ['Pedro', 'Bernabé', 'Pablo', 'Timoteo'], correcta: 2 },
+    { pregunta: '¿Qué ciudad fue base del primer viaje misionero de Pablo?', opciones: ['Jerusalén', 'Roma', 'Antioquía', 'Corinto'], correcta: 2 },
+    { pregunta: '"Yo soy el camino, la verdad y la vida." (Juan)', opciones: ['10:10', '14:6', '3:16', '8:12'], correcta: 1 },
+    { pregunta: '¿Cuántos libros tiene el Nuevo Testamento?', opciones: ['24', '27', '29', '39'], correcta: 1 },
+    { pregunta: '¿Quién bautizó al eunuco etíope?', opciones: ['Pedro', 'Pablo', 'Felipe', 'Bernabé'], correcta: 2 },
+    { pregunta: '"La fe es por el oír, y el oír por la palabra de Dios." ¿De dónde?', opciones: ['Efesios 2:8', 'Hebreos 11:1', 'Romanos 10:17', 'Juan 3:36'], correcta: 2 },
+    { pregunta: '¿En qué ciudad fue convertida Lidia, la primera convertida de Europa?', opciones: ['Atenas', 'Tesalónica', 'Filipos', 'Corinto'], correcta: 2 },
+    { pregunta: '¿Cuántos viajes misioneros registra el libro de los Hechos de Pablo?', opciones: ['2', '3', '4', '5'], correcta: 1 }
+  ]
+};
+
+// ── ORACIONES GUARDADAS (localStorage) ──
+let savedPrayers = [];
+
+function loadPrayers() {
+  try {
+    const data = localStorage.getItem('gc_prayers');
+    if (data) savedPrayers = JSON.parse(data);
+  } catch(e) { savedPrayers = []; }
+  renderPrayers();
+}
+
+function savePrayers() {
+  localStorage.setItem('gc_prayers', JSON.stringify(savedPrayers));
+}
+
+// ================================================================
+//  RENDER FUNCTIONS
+// ================================================================
+
+// ── STATS ──
+function renderStats() {
+  const grid = document.getElementById('statsGrid');
+  grid.innerHTML = DATA.estadisticas.map((s, i) => `
+    <div class="stat-card" style="transition-delay:${i*0.1}s" id="stat-${i}">
+      <span class="stat-icon">${s.simbolo}</span>
+      <div class="stat-num" data-target="${s.num}">0</div>
+      <div class="stat-label">${s.etiqueta}</div>
+      <div class="stat-verse">${s.verso}</div>
+    </div>
+  `).join('');
+}
+
+// ── PROMESAS ──
+function renderPromises() {
+  const grid = document.getElementById('promisesGrid');
+  grid.innerHTML = DATA.promesasEternas.map(p => `
+    <div class="promise-card" style="--c1:${p.color_from};--c2:${p.color_to};">
+      <span class="promise-icon">${p.icono}</span>
+      <p class="promise-text">"${p.texto}"</p>
+      <div>
+        <div class="promise-line"></div>
+        <div class="promise-ref">— ${p.ref}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── VERSE CARDS ──
+function renderVerseCards(filter = 'all') {
+  const grid = document.getElementById('cardsGrid');
+  const citas = filter === 'all' 
+    ? DATA.citas 
+    : DATA.citas.filter(c => c.cat === filter);
+  
+  document.getElementById('verseCount').textContent = `${citas.length} promesas que encienden el corazón`;
+  
+  grid.innerHTML = citas.map((c, i) => `
+    <div class="qcard" data-cat="${c.cat}" style="transition-delay:${Math.min(i*0.02, 0.5)}s">
+      <div class="qcard-header">
+        <span class="qcard-num">${c.n}</span>
+        <div class="qcard-hr"></div>
+        <span class="qcard-cat">${DATA.categorias[c.cat] || c.cat}</span>
+      </div>
+      <p class="qcard-text">"${c.texto}"</p>
+      <div class="qcard-footer">
+        <span class="qcard-ref">${c.ref}</span>
+        <button class="qcard-copy" onclick="copyVerse('${c.texto} — ${c.ref}')" title="Copiar">✟</button>
+      </div>
+    </div>
+  `).join('');
+
+  // Intersection Observer para animaciones
+  setTimeout(() => {
+    document.querySelectorAll('.qcard').forEach(el => el.classList.add('visible'));
+  }, 100);
+}
+
+function renderFilterBar() {
+  const bar = document.getElementById('filterBar');
+  bar.innerHTML = Object.entries(DATA.categorias).map(([key, label]) => `
+    <button class="fb ${key === 'all' ? 'on' : ''}" data-f="${key}" onclick="filterVerses('${key}')">
+      ${label}
+    </button>
+  `).join('');
+}
+
+let currentFilter = 'all';
+
+function filterVerses(cat) {
+  currentFilter = cat;
+  document.querySelectorAll('.fb').forEach(b => b.classList.toggle('on', b.dataset.f === cat));
+  renderVerseCards(cat);
+}
+
+// ── VERSO ALEATORIO ──
+function renderRandom() {
+  const citas = DATA.citas;
+  const v = citas[Math.floor(Math.random() * citas.length)];
+  const card = document.getElementById('randomCard');
+  card.innerHTML = `
+    <span class="random-cat">${DATA.categorias[v.cat] || v.cat}</span>
+    <p class="random-text">"${v.texto}"</p>
+    <div class="random-ref">— ${v.ref}</div>
+    <br/>
+    <button class="random-btn" onclick="renderRandom()">🔀 Nuevo Versículo Aleatorio</button>
+    <button class="random-btn" style="margin-left:10px;" onclick="copyVerse('${v.texto} — ${v.ref}')">✟ Copiar</button>
+  `;
+  document.getElementById('randomTimestamp').textContent = 
+    `Generado de ${citas.length} versículos · ${new Date().toLocaleTimeString()}`;
+}
+
+// ── GALERÍA ──
+function renderGallery() {
+  const grid = document.getElementById('galleryGrid');
+  const shuffled = [...DATA.gallery].sort(() => Math.random() - 0.5);
+  grid.innerHTML = shuffled.map(img => `
+    <div class="gallery-item" onclick="openLightbox('${img.src}','${img.caption}')">
+      <img src="${img.src}" alt="${img.caption}" loading="lazy"/>
+      <div class="gallery-overlay">
+        <span class="gallery-caption">${img.caption}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── LIGHTBOX ──
+function openLightbox(src, caption) {
+  document.getElementById('lightbox').classList.add('active');
+  document.getElementById('lbImg').src = src;
+  document.getElementById('lbCap').textContent = caption;
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+}
+
+// ── NATIONS ──
+function renderNations() {
+  const grid = document.getElementById('nationsGrid');
+  const p = DATA.paises;
+  grid.innerHTML = `
+    <div class="nation-stat">
+      <div class="nation-num" data-target="${p.alcanzados}">0</div>
+      <div class="nation-lbl">Países Alcanzados</div>
+      <div class="nation-sub">de ${p.total} países totales</div>
+    </div>
+    <div class="nation-stat">
+      <div class="nation-num" data-target="${p.traducciones}">0</div>
+      <div class="nation-lbl">Traducciones Bíblicas</div>
+      <div class="nation-sub">idiomas con la Palabra</div>
+    </div>
+    <div class="nation-stat">
+      <div class="nation-num" data-target="${p.creyentesMill}">0</div>
+      <div class="nation-lbl">Millones de Creyentes</div>
+      <div class="nation-sub">alrededor del mundo</div>
+    </div>
+  `;
+  document.getElementById('progressLabel').textContent = 
+    `${p.alcanzados} / ${p.total} (${Math.round(p.alcanzados/p.total*100)}%)`;
+}
+
+// ── MISIONEROS ──
+function renderMisioneros() {
+  const grid = document.getElementById('missionGrid');
+  grid.innerHTML = DATA.misioneros.map(m => `
+    <div class="mcard">
+      <span class="mcard-icon">${m.icono}</span>
+      <div class="mcard-name">${m.nombre}</div>
+      <div class="mcard-role">${m.rol}</div>
+      <p class="mcard-text">${m.texto}</p>
+      ${(m.viajes > 0 || m.epistolas > 0 || m.iglesias > 0) ? `
+      <div class="mcard-stats">
+        ${m.viajes > 0 ? `<div class="mstat"><div class="mstat-num">${m.viajes}</div><div class="mstat-lbl">Viajes</div></div>` : ''}
+        ${m.iglesias > 0 ? `<div class="mstat"><div class="mstat-num">${m.iglesias}</div><div class="mstat-lbl">Iglesias</div></div>` : ''}
+        ${m.epistolas > 0 ? `<div class="mstat"><div class="mstat-num">${m.epistolas}</div><div class="mstat-lbl">Epístolas</div></div>` : ''}
+      </div>` : ''}
+      <div class="mcard-verse">${m.verso}</div>
+    </div>
+  `).join('');
+}
+
+// ── TESTIMONIOS ──
+function renderTestimonios() {
+  const track = document.getElementById('testimoniesTrack');
+  track.innerHTML = DATA.testimonios.map(t => `
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <p class="testi-text">${t.frase}</p>
+      <div class="testi-meta">
+        <div>
+          <div class="testi-name">${t.nombre}</div>
+          <div class="testi-titulo">${t.titulo}</div>
+          <div class="testi-periodo">${t.periodo}</div>
+        </div>
+        <span class="testi-pais">${t.pais}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── PROFECÍAS ──
+function renderProfecias() {
+  const grid = document.getElementById('prophecyGrid');
+  grid.innerHTML = DATA.profecias.map(p => `
+    <div class="pcard">
+      <span class="pcard-icon">${p.icono}</span>
+      <div class="pcard-tipo">${p.tipo}</div>
+      <p class="pcard-text">"${p.texto}"</p>
+      <div class="pcard-ref">${p.ref}</div>
+      <div class="pcard-cumpl">✓ Cumplido en ${p.cumplimiento}</div>
+    </div>
+  `).join('');
+}
+
+// ── PARALELOS ──
+function renderParalelos() {
+  const container = document.getElementById('paralleloContainer');
+  container.innerHTML = DATA.paralelos.map(p => `
+    <div class="parallelo-item">
+      <div class="par-col">
+        <span class="par-label">📜 Antiguo Testamento</span>
+        <p class="par-text">"${p.at.texto}"</p>
+        <span class="par-ref">${p.at.ref}</span>
+      </div>
+      <div class="par-arrow">→</div>
+      <div class="par-col">
+        <span class="par-label">✟ Nuevo Testamento</span>
+        <p class="par-text">"${p.nt.texto}"</p>
+        <span class="par-ref">${p.nt.ref}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── MAPA CIUDADES ──
+function renderMapCities() {
+  const g = document.getElementById('mapCities');
+  g.innerHTML = DATA.ciudades.map(c => {
+    if (c.tipo === 'origen') {
+      return `
+        <g class="map-city">
+          <circle cx="${c.x}" cy="${c.y}" r="14" fill="rgba(232,212,138,0.12)" filter="url(#cityGlow)">
+            <animate attributeName="r" values="10;20;10" dur="2.5s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="${c.x}" cy="${c.y}" r="6" fill="#e8d48a" filter="url(#cityGlow)"/>
+          <text x="${c.x+10}" y="${c.y-10}" font-family="Cinzel,serif" font-size="8" fill="#e8d48a" font-weight="600">${c.nombre}</text>
+        </g>
+      `;
+    } else {
+      return `
+        <g class="map-city">
+          <circle cx="${c.x}" cy="${c.y}" r="7" fill="rgba(201,168,76,0.15)" filter="url(#cityGlow)">
+            <animate attributeName="r" values="5;9;5" dur="${2.5+(c.x%10)/5}s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="${c.x}" cy="${c.y}" r="3.5" fill="#c9a84c"/>
+          <text x="${c.x+7}" y="${c.y-5}" font-family="Cinzel,serif" font-size="6.5" fill="rgba(201,168,76,0.8)">${c.nombre}</text>
+        </g>
+      `;
+    }
+  }).join('');
+  document.getElementById('cityCount').textContent = `${DATA.ciudades.length} ciudades`;
+}
+
+// ── TYPEWRITER ──
+let twIndex = 0;
+let twCharIndex = 0;
+let twTimeout = null;
+let twIsDeleting = false;
+
+function typeWriter() {
+  const verses = DATA.typewriter;
+  const textEl = document.getElementById('twText');
+  const refEl = document.getElementById('twRef');
+  
+  if (!verses.length) return;
+  
+  const currentVerse = verses[twIndex];
+  const fullText = currentVerse.texto;
+  
+  if (!twIsDeleting) {
+    if (twCharIndex < fullText.length) {
+      textEl.textContent = fullText.substring(0, twCharIndex + 1);
+      twCharIndex++;
+      twTimeout = setTimeout(typeWriter, 30 + Math.random() * 20);
+    } else {
+      refEl.textContent = `— ${currentVerse.ref}`;
+      twIsDeleting = true;
+      twTimeout = setTimeout(typeWriter, 3000);
+    }
+  } else {
+    if (twCharIndex > 0) {
+      textEl.textContent = fullText.substring(0, twCharIndex - 1);
+      twCharIndex--;
+      twTimeout = setTimeout(typeWriter, 15 + Math.random() * 10);
+    } else {
+      twIsDeleting = false;
+      twIndex = (twIndex + 1) % verses.length;
+      refEl.textContent = '';
+      twTimeout = setTimeout(typeWriter, 500);
+    }
+  }
+}
+
+function twPrev() {
+  if (twTimeout) clearTimeout(twTimeout);
+  twIndex = (twIndex - 1 + DATA.typewriter.length) % DATA.typewriter.length;
+  twCharIndex = 0;
+  twIsDeleting = false;
+  document.getElementById('twText').textContent = '';
+  document.getElementById('twRef').textContent = '';
+  setTimeout(typeWriter, 200);
+}
+
+function twNext() {
+  if (twTimeout) clearTimeout(twTimeout);
+  twIndex = (twIndex + 1) % DATA.typewriter.length;
+  twCharIndex = 0;
+  twIsDeleting = false;
+  document.getElementById('twText').textContent = '';
+  document.getElementById('twRef').textContent = '';
+  setTimeout(typeWriter, 200);
+}
+
+// ── DEVOCIONAL ──
+function renderDevotional() {
+  const now = new Date();
+  const day = now.getDay();
+  const d = DATA.devocionales[day];
+  const dayNames = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+  
+  document.getElementById('devoDayName').textContent = `Una palabra para este ${dayNames[day]}`;
+  
+  const wrap = document.getElementById('devoWrap');
+  wrap.innerHTML = `
+    <div class="devo-date-block">
+      <div class="devo-day-num">${String(now.getDate()).padStart(2,'0')}</div>
+      <div class="devo-month">${now.toLocaleString('es', {month:'short', year:'numeric'}).toUpperCase()}</div>
+      <span class="devo-icon-big">${d.icono}</span>
+    </div>
+    <div class="devo-content">
+      <div class="devo-titulo">${d.titulo}</div>
+      <p class="devo-verse">"${d.texto}"</p>
+      <span class="devo-ref">— ${d.ref}</span>
+      <p class="devo-reflexion">${d.reflexion}</p>
+    </div>
+  `;
+}
+
+// ── TIMELINE ──
+function renderTimeline() {
+  const wrap = document.getElementById('timelineWrap');
+  wrap.innerHTML = DATA.timeline.map((item, i) => `
+    <div class="tl-item" style="transition-delay:${i*0.06}s">
+      <div class="tl-dot"></div>
+      <div class="tl-fecha">${item.fecha}</div>
+      <div class="tl-evento">${item.evento}</div>
+      <div class="tl-book">${item.libro}</div>
+      <div class="tl-verse">"${item.texto}"</div>
+    </div>
+  `).join('');
+  
+  // Observer para animaciones
+  setTimeout(() => {
+    document.querySelectorAll('.tl-item').forEach(el => el.classList.add('visible'));
+  }, 200);
+}
+
+// ── IGLESIAS APOCALIPSIS ──
+function renderChurches() {
+  const grid = document.getElementById('churchesGrid');
+  grid.innerHTML = DATA.iglesiasAp.map(ig => `
+    <div class="church-card" style="--c:${ig.color};">
+      <span class="church-icon">${ig.icono}</span>
+      <div class="church-nombre">${ig.nombre}</div>
+      <div class="church-cap">Apocalipsis ${ig.cap}</div>
+      <div class="church-caracter">${ig.caracter}</div>
+      <div class="church-mensaje">"${ig.mensaje}"</div>
+    </div>
+  `).join('');
+}
+
+// ── LIBROS NT ──
+function renderBooks() {
+  const grid = document.getElementById('booksGrid');
+  grid.innerHTML = DATA.librosNT.map(l => `
+    <div class="book-card">
+      <div class="book-name">${l.libro}</div>
+      <div class="book-cap">Cap. ${l.cap}</div>
+      <div class="book-verse">${l.verso}</div>
+    </div>
+  `).join('');
+  document.getElementById('bookCount').textContent = `${DATA.librosNT.length} libros · un solo evangelio`;
+}
+
+// ── QUIZ ──
+let quizIndex = 0;
+let quizScore = 0;
+let quizAnswered = false;
+
+function renderQuiz() {
+  const q = DATA.quiz[quizIndex];
+  if (!q) return;
+  
+  document.getElementById('quizQ').textContent = q.pregunta;
+  document.getElementById('quizScore').textContent = `${quizScore} / ${DATA.quiz.length}`;
+  document.getElementById('quizCount').textContent = `${DATA.quiz.length} preguntas bíblicas`;
+  
+  const opts = document.getElementById('quizOpts');
+  opts.innerHTML = q.opciones.map((opt, i) => `
+    <button onclick="answerQuiz(${i})" data-idx="${i}">${opt}</button>
+  `).join('');
+  
+  quizAnswered = false;
+  document.getElementById('quizNext').disabled = true;
+  document.getElementById('quizNext').style.opacity = '0.5';
+}
+
+function answerQuiz(idx) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  
+  const q = DATA.quiz[quizIndex];
+  const buttons = document.querySelectorAll('#quizOpts button');
+  
+  buttons.forEach((btn, i) => {
+    btn.disabled = true;
+    if (i === q.correcta) btn.classList.add('correct');
+    if (i === idx && i !== q.correcta) btn.classList.add('wrong');
+  });
+  
+  if (idx === q.correcta) quizScore++;
+  document.getElementById('quizScore').textContent = `${quizScore} / ${DATA.quiz.length}`;
+  document.getElementById('quizNext').disabled = false;
+  document.getElementById('quizNext').style.opacity = '1';
+}
+
+function nextQuestion() {
+  quizIndex++;
+  if (quizIndex >= DATA.quiz.length) {
+    quizIndex = 0;
+    quizScore = 0;
+  }
+  renderQuiz();
+}
+
+// ── ORACIONES ──
+function renderPrayers() {
+  const list = document.getElementById('prayerList');
+  if (!savedPrayers.length) {
+    list.innerHTML = '';
+    return;
+  }
+  const recent = [...savedPrayers].reverse().slice(0, 6);
+  list.innerHTML = `
+    <h3 style="font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.4em;color:var(--gold-d);text-align:center;margin-bottom:24px;">
+      ✟ ${recent.length} PETICIONES RECIENTES ✟
+    </h3>
+    ${recent.map(p => `
+      <div class="prayer-item">
+        <div class="prayer-item-name">
+          🙏 ${p.nombre || 'Anónimo'}
+          ${p.pais ? ` · ${p.pais}` : ''}
+          <span style="float:right;font-family:'Cinzel',serif;font-size:.5rem;color:var(--gold-d);letter-spacing:.1em;">
+            ${new Date(p.fecha).toLocaleDateString('es', {day:'2-digit',month:'2-digit'})}
+          </span>
+        </div>
+        <p class="prayer-item-text">${p.oracion}</p>
+      </div>
+    `).join('')}
+  `;
+}
+
+function submitPrayer(e) {
+  e.preventDefault();
+  const nombre = document.getElementById('prayerName').value.trim();
+  const pais = document.getElementById('prayerCountry').value.trim();
+  const oracion = document.getElementById('prayerText').value.trim();
+  
+  if (!oracion) return;
+  
+  savedPrayers.push({ nombre, pais, oracion, fecha: new Date().toISOString() });
+  savePrayers();
+  renderPrayers();
+  
+  document.getElementById('prayerForm').style.display = 'none';
+  document.getElementById('prayerSuccess').classList.add('active');
+  
+  setTimeout(() => {
+    document.getElementById('prayerForm').reset();
+    document.getElementById('prayerForm').style.display = 'flex';
+    document.getElementById('prayerSuccess').classList.remove('active');
+  }, 4000);
+}
+
+// ── COPY VERSE ──
+function copyVerse(text) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(() => {
+      showNotification('✟ Versículo copiado al portapapeles');
+    }).catch(() => {
+      fallbackCopy(text);
+    });
+  } else {
+    fallbackCopy(text);
+  }
+}
+
+function fallbackCopy(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  document.body.appendChild(ta);
+  ta.select();
+  document.execCommand('copy');
+  document.body.removeChild(ta);
+  showNotification('✟ Versículo copiado al portapapeles');
+}
+
+function showNotification(msg) {
+  const el = document.getElementById('notify');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ── MUSIC ──
+let musicPlaying = false;
+let audioCtx = null;
+
+function toggleMusic() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  
+  if (musicPlaying) {
+    musicPlaying = false;
+    document.getElementById('musicBtn').textContent = '🎵 Música';
+    return;
+  }
+  
+  musicPlaying = true;
+  document.getElementById('musicBtn').textContent = '🔇 Silenciar';
+  
+  // Sonido ambiente simple
+  playAmbientSound();
+}
+
+function playAmbientSound() {
+  if (!musicPlaying || !audioCtx) return;
+  
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.type = 'sine';
+    osc.frequency.value = 440;
+    gain.gain.setValueAtTime(0.03, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 2);
+    osc.start(audioCtx.currentTime);
+    osc.stop(audioCtx.currentTime + 2);
+    
+    setTimeout(playAmbientSound, 3000);
+  } catch(e) {
+    // Silencio
+  }
+}
+
+// ── COUNTERS ──
+function animateCounters() {
+  const counters = document.querySelectorAll('.stat-num, .nation-num');
+  counters.forEach(el => {
+    const target = parseInt(el.dataset.target || '0');
+    let current = 0;
+    const step = Math.max(1, Math.floor(target / 60));
+    const interval = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = current.toLocaleString('es');
+      if (current >= target) clearInterval(interval);
+    }, 25);
+  });
+}
+
+// ── PROGRESS BAR ──
+function initProgressBar() {
+  const pb = document.getElementById('pbNations');
+  if (!pb) return;
+  const obs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      pb.classList.add('animate');
+      obs.disconnect();
+    }
+  }, { threshold: 0.4 });
+  obs.observe(pb);
+}
+
+// ── STATS OBSERVER ──
+function initStatsObserver() {
+  document.querySelectorAll('.stat-card').forEach(el => {
+    const obs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        el.classList.add('visible');
+        obs.disconnect();
+      }
+    }, { threshold: 0.3 });
+    obs.observe(el);
+  });
+}
+
+// ── NAV SCROLL ──
+function initNavScroll() {
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 80);
+  });
+}
+
+// ── FOOTER ──
+function renderFooter() {
+  document.getElementById('yearDisplay').textContent = new Date().getFullYear();
+  document.getElementById('footerDate').textContent = new Date().toLocaleDateString('es', {
+    day: '2-digit', month: '2-digit', year: 'numeric',
+    hour: '2-digit', minute: '2-digit', second: '2-digit'
+  });
+  document.getElementById('footerVerses').textContent = DATA.citas.length;
+}
+
+// ================================================================
+//  INIT
+// ================================================================
+
+function init() {
+  // Render all sections
+  renderStats();
+  renderPromises();
+  renderFilterBar();
+  renderVerseCards('all');
+  renderRandom();
+  renderGallery();
+  renderNations();
+  renderMisioneros();
+  renderTestimonios();
+  renderProfecias();
+  renderParalelos();
+  renderMapCities();
+  renderDevotional();
+  renderTimeline();
+  renderChurches();
+  renderBooks();
+  renderQuiz();
+  loadPrayers();
+  renderFooter();
+  
+  // Init animations
+  animateCounters();
+  initProgressBar();
+  initStatsObserver();
+  initNavScroll();
+  
+  // Start typewriter after delay
+  setTimeout(typeWriter, 1500);
+  
+  // Hide loader
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+  }, 1200);
+}
+
+// Run on DOM ready
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

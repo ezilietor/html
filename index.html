@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3Gotitas</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3288789686511521"
+     crossorigin="anonymous"></script>
+<link rel="icon" href="/logo.ico">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #05080d;
+  --surface:   #090e15;
+  --surface2:  #0d1520;
+  --border:    rgba(255,255,255,0.055);
+  --text:      #cdd6e0;
+  --muted:     #465568;
+  --muted2:    #6a7f96;
+  --white:     #eef2f7;
+  --faith:     #e8b86d;
+  --faith-dim: rgba(232,184,109,0.08);
+  --cyber:     #00e5a0;
+  --cyber-dim: rgba(0,229,160,0.07);
+  --blog:      #7c9fff;
+  --blog-dim:  rgba(124,159,255,0.07);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Space Grotesk',sans-serif;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  overflow-x:hidden;
+}
+.bg-noise{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:0.028;}
+.bg-lines{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,0.018) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,0.018) 1px,transparent 1px);
+  background-size:60px 60px;}
+.bg-glow{position:fixed;z-index:0;pointer-events:none;border-radius:50%;filter:blur(140px);}
+.glow-1{width:700px;height:500px;top:-200px;left:-200px;background:rgba(0,229,160,0.028);}
+.glow-2{width:600px;height:600px;bottom:-250px;right:-150px;background:rgba(124,159,255,0.03);}
+.glow-3{width:500px;height:400px;top:40%;left:40%;background:rgba(232,184,109,0.025);}
+
+main{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:90px 32px 70px;}
+
+.header{text-align:center;margin-bottom:72px;animation:up 1s cubic-bezier(0.16,1,0.3,1) both;}
+.status-bar{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.2em;
+  color:var(--muted);border:1px solid var(--border);border-radius:100px;
+  padding:6px 16px;margin-bottom:36px;background:var(--surface2);}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--cyber);
+  box-shadow:0 0 8px var(--cyber);animation:blink 2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+.header h1{
+  font-family:'Syne',sans-serif;font-size:clamp(2.8rem,7vw,5.8rem);
+  font-weight:800;line-height:1;letter-spacing:-0.03em;color:var(--white);margin-bottom:6px;}
+.header h1 .accent{position:relative;display:inline-block;
+  color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,0.12);}
+.header h1 .accent::after{content:attr(data-text);position:absolute;left:0;top:0;
+  background:linear-gradient(120deg,var(--cyber) 0%,var(--blog) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;-webkit-text-stroke:0;}
+
+.tagline{font-family:'JetBrains Mono',monospace;font-size:0.75rem;
+  color:var(--muted2);letter-spacing:0.05em;margin-top:20px;}
+.tagline b{color:var(--cyber);font-weight:400;}
+
+.divider-wrap{width:100%;max-width:1100px;display:flex;align-items:center;gap:16px;
+  margin-bottom:16px;animation:up 0.8s 0.05s cubic-bezier(0.16,1,0.3,1) both;}
+.divider-line{flex:1;height:1px;background:var(--border);}
+.divider-label{font-family:'JetBrains Mono',monospace;font-size:0.58rem;
+  letter-spacing:0.25em;color:var(--muted);text-transform:uppercase;}
+
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+  width:100%;max-width:1100px;}
+
+.card{
+  position:relative;background:var(--surface);border:1px solid var(--border);
+  border-radius:20px;padding:40px 32px 36px;text-decoration:none;color:inherit;
+  overflow:hidden;display:flex;flex-direction:column;
+  transition:transform 0.45s cubic-bezier(0.16,1,0.3,1),border-color 0.4s,box-shadow 0.4s;
+  animation:up 0.9s cubic-bezier(0.16,1,0.3,1) both;}
+.card:nth-child(1){animation-delay:0.1s;}
+.card:nth-child(2){animation-delay:0.22s;}
+.card:nth-child(3){animation-delay:0.34s;}
+
+.card-glow{position:absolute;inset:0;border-radius:20px;opacity:0;transition:opacity 0.5s;pointer-events:none;}
+.faith    .card-glow{background:radial-gradient(ellipse 70% 50% at 50% 0%,var(--faith-dim),transparent);}
+.cyber-c  .card-glow{background:radial-gradient(ellipse 70% 50% at 50% 0%,var(--cyber-dim),transparent);}
+.blog-c   .card-glow{background:radial-gradient(ellipse 70% 50% at 50% 0%,var(--blog-dim),transparent);}
+.card:hover .card-glow{opacity:1;}
+
+.card-bar{position:absolute;top:0;left:0;right:0;height:2px;
+  transform:scaleX(0);transform-origin:left;transition:transform 0.5s cubic-bezier(0.16,1,0.3,1);}
+.faith  .card-bar{background:linear-gradient(90deg,var(--faith),transparent);}
+.cyber-c .card-bar{background:linear-gradient(90deg,var(--cyber),transparent);}
+.blog-c  .card-bar{background:linear-gradient(90deg,var(--blog),transparent);}
+.card:hover .card-bar{transform:scaleX(1);}
+
+.faith:hover  {transform:translateY(-10px);border-color:rgba(232,184,109,0.3);box-shadow:0 40px 80px rgba(0,0,0,0.6);}
+.cyber-c:hover{transform:translateY(-10px);border-color:rgba(0,229,160,0.3); box-shadow:0 40px 80px rgba(0,0,0,0.6);}
+.blog-c:hover {transform:translateY(-10px);border-color:rgba(124,159,255,0.3);box-shadow:0 40px 80px rgba(0,0,0,0.6);}
+
+.card-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;
+  justify-content:center;font-size:22px;margin-bottom:28px;
+  transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);}
+.faith  .card-icon{background:var(--faith-dim); border:1px solid rgba(232,184,109,0.2);}
+.cyber-c .card-icon{background:var(--cyber-dim);border:1px solid rgba(0,229,160,0.2);}
+.blog-c  .card-icon{background:var(--blog-dim); border:1px solid rgba(124,159,255,0.2);}
+.card:hover .card-icon{transform:scale(1.08) rotate(-5deg);}
+.card-icon svg { width: 26px; height: 26px; stroke-width: 1.8; }
+
+.card-label{font-family:'JetBrains Mono',monospace;font-size:0.58rem;
+  letter-spacing:0.28em;text-transform:uppercase;font-weight:400;margin-bottom:10px;}
+.faith  .card-label{color:var(--faith);}
+.cyber-c .card-label{color:var(--cyber);}
+.blog-c  .card-label{color:var(--blog);}
+
+.card h2{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:700;
+  line-height:1.1;color:var(--white);margin-bottom:12px;letter-spacing:-0.02em;}
+.card p{font-size:0.82rem;font-weight:400;color:var(--muted2);line-height:1.75;flex:1;}
+
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;}
+.pill{font-family:'JetBrains Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;
+  padding:3px 10px;border-radius:4px;text-transform:uppercase;
+  background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.18);color:var(--cyber);}
+
+.card-foot{margin-top:28px;display:flex;align-items:center;justify-content:space-between;}
+.cta{display:inline-flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:0.65rem;
+  letter-spacing:0.14em;text-transform:uppercase;font-weight:500;transition:gap 0.3s;}
+.faith  .cta{color:var(--faith);}
+.cyber-c .cta{color:var(--cyber);}
+.blog-c  .cta{color:var(--blog);}
+.card:hover .cta{gap:14px;}
+.cta svg{width:13px;height:13px;transition:transform 0.3s;}
+.card:hover .cta svg{transform:translateX(3px);}
+
+.card-n{font-family:'Syne',sans-serif;font-size:5rem;font-weight:800;line-height:1;
+  opacity:0.03;position:absolute;bottom:14px;right:24px;color:var(--white);
+  pointer-events:none;transition:opacity 0.4s;letter-spacing:-0.05em;}
+.card:hover .card-n{opacity:0.055;}
+
+footer{position:relative;z-index:1;padding:22px 32px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;}
+.foot-left{display:flex;align-items:center;gap:14px;}
+.foot-left span,.foot-right{font-family:'JetBrains Mono',monospace;
+  font-size:0.62rem;letter-spacing:0.12em;color:var(--muted);}
+.sep{opacity:0.3;}
+.foot-right{display:flex;align-items:center;gap:8px;}
+.online-dot{width:6px;height:6px;border-radius:50%;background:var(--cyber);
+  box-shadow:0 0 6px var(--cyber);animation:blink 2s ease-in-out infinite;}
+
+@keyframes up{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+
+@media(max-width:900px){.cards{grid-template-columns:1fr 1fr;}.card:nth-child(3){grid-column:1/-1;}}
+@media(max-width:560px){
+  .cards{grid-template-columns:1fr;}.card:nth-child(3){grid-column:auto;}
+  .card{padding:32px 24px 28px;}main{padding:64px 20px 48px;}
+  footer{flex-direction:column;gap:12px;text-align:center;}}
+</style>
+</head>
+<body>
+
+<div class="bg-noise"></div>
+<div class="bg-lines"></div>
+<div class="bg-glow glow-1"></div>
+<div class="bg-glow glow-2"></div>
+<div class="bg-glow glow-3"></div>
+
+<main>
+  <header class="header">
+    <div class="status-bar">
+      <span class="status-dot"></span>
+      server online &nbsp;·&nbsp; ddns activo &nbsp;·&nbsp; 2026
+    </div>
+    <h1>El&nbsp;<span class="accent" data-text="Ezilietor">Ezilietor</span><br>Site</h1>
+    <p class="tagline">Ezequiel Jiménez &nbsp;/&nbsp; <b>~/home/server</b></p>
+  </header>
+
+  <div class="divider-wrap">
+    <div class="divider-line"></div>
+    <span class="divider-label">Secciones</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="cards">
+
+    <a href="/gran-comision.html" class="card faith">
+      <div class="card-glow"></div>
+      <div class="card-bar"></div>
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z" />
+          <path d="M2 17l10 5 10-5" />
+          <path d="M2 12l10 5 10-5" />
+        </svg>
+      </div>
+      <div class="card-label">Misión · 01</div>
+      <h2>Evangelismo</h2>
+      <p>Acepta a Jesucristo como tu único Señor y Salvador. Reconoce, arrepiéntete y conviértete a Él.</p>
+      <div class="card-foot">
+        <div class="cta">Visitar
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+      <span class="card-n">01</span>
+    </a>
+
+    <a href="/portafolio.html" class="card cyber-c">
+      <div class="card-glow"></div>
+      <div class="card-bar"></div>
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+          <path d="M7 11V7a5 5 0 0110 0v4" />
+        </svg>
+      </div>
+      <div class="card-label">Portafolio · 02</div>
+      <h2>Seguridad<br>Informática</h2>
+      <p>Proyectos, CTFs y prácticas de campo. Redes, análisis de vulnerabilidades y hardening de sistemas.</p>
+      <div class="pills">
+        <span class="pill">Redes</span>
+        <span class="pill">Linux</span>
+        <span class="pill">Kali</span>
+        <span class="pill">CTF</span>
+        <span class="pill">Pentesting</span>
+        <span class="pill">OSINT</span>
+      </div>
+      <div class="card-foot">
+        <div class="cta">Ver proyectos
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+      <span class="card-n">02</span>
+    </a>
+
+    <a href="/wordpress" class="card blog-c">
+      <div class="card-glow"></div>
+      <div class="card-bar"></div>
+      <div class="card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 19l7-7 3 3-7 7-3-3z" />
+          <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
+          <path d="M2 2l7.586 7.586" />
+          <path d="M11 11l-4 4" />
+        </svg>
+      </div>
+      <div class="card-label">Blog · 03</div>
+      <h2>Artículos<br>&amp; Notas</h2>
+      <p>Publicaciones sobre aprendizaje, tecnología y experiencias del día a día en el servidor.</p>
+      <div class="card-foot">
+        <div class="cta">Ir al blog
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </div>
+      <span class="card-n">03</span>
+    </a>
+
+  </div>
+</main>
+
+<footer>
+  <div class="foot-left">
+    <span>Estudiante</span>
+    <span class="sep">·</span>
+    <span>Seguridad Informática</span>
+    <span class="sep">·</span>
+    <span>ezilietor.vercel.app</span>
+  </div>
+  <div class="foot-right">
+    <span class="online-dot"></span>
+    online
+  </div>
+</footer>
+
+</body>
+</html>

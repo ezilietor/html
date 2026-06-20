@@ -1,0 +1,115 @@
+---
+import { profile, skills, languages } from '../data/profile.js';
+---
+<section id="sobre-mi" class="section">
+  <div class="wrap">
+    <p class="eyebrow eyebrow--on-paper">
+      <span data-i18n="es">Registro 01</span><span data-i18n="en">Entry 01</span>
+    </p>
+    <div class="section-head">
+      <h2><span data-i18n="es">Sobre mí</span><span data-i18n="en">About me</span></h2>
+    </div>
+
+    <div class="about-grid">
+      <p class="about-bio">
+        <span data-i18n="es">{profile.bio.es}</span>
+        <span data-i18n="en">{profile.bio.en}</span>
+      </p>
+
+      <div class="about-side">
+        <div>
+          <h3 class="about-side__title">
+            <span data-i18n="es">Stack & habilidades</span><span data-i18n="en">Stack & skills</span>
+          </h3>
+          <ul class="skills-list">
+            {skills.map((skill) => (
+              <li class="tag">
+                <span data-i18n="es">{skill.es}</span>
+                <span data-i18n="en">{skill.en}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="about-side__title">
+            <span data-i18n="es">Idiomas</span><span data-i18n="en">Languages</span>
+          </h3>
+          <ul class="lang-list">
+            {languages.map((lang) => (
+              <li>
+                <span class="lang-list__name">
+                  <span data-i18n="es">{lang.name.es}</span><span data-i18n="en">{lang.name.en}</span>
+                </span>
+                <span class="lang-list__level">
+                  <span data-i18n="es">{lang.level.es}</span><span data-i18n="en">{lang.level.en}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: var(--space-5);
+  }
+
+  .about-bio {
+    font-size: 1.1rem;
+    line-height: 1.75;
+    color: var(--color-ink);
+    max-width: 62ch;
+  }
+
+  .about-side {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .about-side__title {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-soft);
+    margin-bottom: var(--space-2);
+  }
+
+  .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .lang-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.6em 0;
+    border-bottom: 1px solid var(--color-paper-line);
+    font-size: 0.95rem;
+  }
+
+  .lang-list li:last-child {
+    border-bottom: none;
+  }
+
+  .lang-list__level {
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: var(--color-coral);
+  }
+
+  @media (max-width: 860px) {
+    .about-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+  }
+</style>

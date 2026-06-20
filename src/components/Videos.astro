@@ -1,0 +1,137 @@
+---
+import { YOUTUBE_CHANNEL_URL } from '../lib/youtube.js';
+
+interface Video {
+  id: string;
+  title: string;
+  publishedAt: string | null;
+  thumbnail: string;
+  url: string;
+}
+
+interface Props {
+  videos: Video[];
+}
+const { videos } = Astro.props;
+
+function formatDate(iso: string | null) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  return d.toLocaleDateString('es-DO', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+---
+<section id="videos" class="section">
+  <div class="wrap">
+    <p class="eyebrow eyebrow--on-paper">
+      <span data-i18n="es">Registro 03</span><span data-i18n="en">Entry 03</span>
+    </p>
+    <div class="section-head">
+      <h2>Videos</h2>
+      <a class="btn btn--ink" href={YOUTUBE_CHANNEL_URL} target="_blank" rel="noopener noreferrer">
+        <span data-i18n="es">Ver canal completo</span><span data-i18n="en">View full channel</span> ↗
+      </a>
+    </div>
+
+    {videos.length > 0 ? (
+      <div class="video-grid">
+        {videos.map((video) => (
+          <a class="card video-card" href={video.url} target="_blank" rel="noopener noreferrer">
+            <div class="video-card__thumb">
+              <img src={video.thumbnail} alt={video.title} loading="lazy" width="320" height="180" />
+              <span class="video-card__play" aria-hidden="true">▶</span>
+            </div>
+            <h3 class="video-card__title">{video.title}</h3>
+            {video.publishedAt && <span class="video-card__date">{formatDate(video.publishedAt)}</span>}
+          </a>
+        ))}
+      </div>
+    ) : (
+      <p class="empty-state">
+        <span data-i18n="es">
+          No se pudieron cargar los videos en este momento. Visítalos directamente en
+        </span>
+        <span data-i18n="en">
+          Videos couldn't be loaded right now. Visit them directly on
+        </span>{' '}
+        <a href={YOUTUBE_CHANNEL_URL} target="_blank" rel="noopener noreferrer">YouTube ↗</a>
+      </p>
+    )}
+  </div>
+</section>
+
+<style>
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--space-3);
+  }
+
+  .video-card {
+    text-decoration: none;
+    color: inherit;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .video-card__thumb {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: var(--color-navy);
+    overflow: hidden;
+  }
+
+  .video-card__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.25s ease;
+  }
+
+  .video-card:hover .video-card__thumb img {
+    transform: scale(1.05);
+  }
+
+  .video-card__play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-paper-raised);
+    font-size: 1.6rem;
+    background: rgba(15, 35, 46, 0.18);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .video-card:hover .video-card__play {
+    opacity: 1;
+  }
+
+  .video-card__title {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: var(--color-ink);
+    padding: var(--space-2) var(--space-3) 0;
+  }
+
+  .video-card__date {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    color: var(--color-ink-soft);
+    padding: 0.5em var(--space-3) var(--space-3);
+  }
+
+  .empty-state {
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    color: var(--color-ink-soft);
+  }
+
+  .empty-state a {
+    color: var(--color-coral);
+  }
+</style>
